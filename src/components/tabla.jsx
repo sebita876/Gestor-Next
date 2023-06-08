@@ -1,4 +1,5 @@
-export function Tabla ({tipo,fecha,id,categoria}){
+
+export function Articulo ({tipo,fecha,id,categoria}){
     return <tr>
         <td>{tipo}</td>
         <td>{fecha}</td>

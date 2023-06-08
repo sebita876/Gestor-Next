@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react"
 import { Lista } from "@/components/lista";
-import { Tabla } from "@/components/tabla";
+import { Articulo } from "@/components/tabla";
 import axios from "axios";
 
 export default function Inventario (){
@@ -17,7 +17,7 @@ export default function Inventario (){
       const herramientas = await axios.get('/api/inventario').then( res =>{
         const lista=res.data.datos
         const newComponent = lista.map(dato=>(
-          <Tabla key={dato._id}id={dato.id}categoria={dato.categoria}/>))
+          <Articulo key={dato._id}id={dato.id}categoria={dato.categoria}/>))
         setListaArticulo([...listaArticulo,newComponent])
       })
     }catch(error)
@@ -42,7 +42,7 @@ export default function Inventario (){
     const fecha= document.getElementById("fecha").value
     const id = document.getElementById("id").value
     const categoria= document.getElementById("categoria").value
-    const newComponent = <Tabla 
+    const newComponent = <Articulo
       tipo={tipo}
       fecha={fecha} 
       id={id} 
@@ -73,7 +73,7 @@ export default function Inventario (){
         <div className="perfil"/>
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
-          <div className="botoncabe1" onClick={AgregarArticulo}/>
+          <div className="botoncabe1" onClick={AgregarCat}/>
           <button onClick={()=>TraerArticulos()}>EXAMPLE</button>
           <div className="botoncabe2" />
           <div className="botoncabe3"/>
@@ -85,13 +85,13 @@ export default function Inventario (){
           <h1 className="h1">Categorias</h1>
           <ul>
             <li className="li">Todos</li>
-              {listaCat.map((componente, index) => (<div key={index}>{componente}</div>))}
+              {listaCat}
           </ul>
         </div>
         <div className="resto">
           <table>
               <tbody>
-                {listaArticulo.map((componente, index) => (<tr key={index}>{componente}</tr>))}
+                {listaArticulo}
               </tbody>
           </table>
         </div>
