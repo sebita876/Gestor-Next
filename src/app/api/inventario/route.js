@@ -5,7 +5,7 @@ import Herramienta from '@/bd/models/herramientas';
 export async function GET(req,res) {
   await Conectar()
   const Herramientas = await Herramienta.find();
-  return NextResponse.json({status: 200, message:'Herramientas', data: Herramientas})
+  return NextResponse.json({status: 200, message:'Herramientas', datos: Herramientas})
 }
 
 export async function POST(request) {

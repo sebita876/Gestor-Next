@@ -14,7 +14,12 @@ export default function Inventario (){
   }
   const TraerArticulos = async ()=>{
     try{
-      const herramientas = await axios.get('/api/inventario').then( data => console.log(data.data))
+      const herramientas = await axios.get('/api/inventario').then( res =>{
+        const lista=res.data.datos
+        const newComponent = lista.map(dato=>(
+          <Tabla key={dato._id}id={dato.id}categoria={dato.categoria}/>))
+        setListaArticulo([...listaArticulo,newComponent])
+      })
     }catch(error)
     {
       console.log(error)
@@ -70,7 +75,7 @@ export default function Inventario (){
           <div className="botoncabe1" onClick={openModal}/>
           <div className="botoncabe1" onClick={AgregarArticulo}/>
           <button onClick={()=>TraerArticulos()}>EXAMPLE</button>
-          <div className="botoncabe2"/>
+          <div className="botoncabe2" />
           <div className="botoncabe3"/>
           <div className="botoncabe4"/>
         </div>
@@ -85,7 +90,9 @@ export default function Inventario (){
         </div>
         <div className="resto">
           <table>
-            {listaArticulo.map((componente, index) => (<div key={index}>{componente}</div>))}
+              <tbody>
+                {listaArticulo.map((componente, index) => (<tr key={index}>{componente}</tr>))}
+              </tbody>
           </table>
         </div>
       </div>
