@@ -6,8 +6,4 @@ function Conectar ()
         console.log('conectao');
     })
 }
-Conectar()
-mongoose.connection.on('close',_=>{
-    console.log('desconectao');
-})
 export default Conectar;
