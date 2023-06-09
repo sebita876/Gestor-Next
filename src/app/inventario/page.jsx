@@ -2,8 +2,6 @@
 import { useEffect, useState } from "react"
 import { Lista } from "@/components/lista";
 import { Articulo } from "@/components/articulo";
-import { Izquierda } from "@/components/izquierda";
-import { Resto } from "@/components/resto";
 import axios from "axios";
 
 export default function Inventario (){
@@ -46,7 +44,9 @@ export default function Inventario (){
     closeModal()
   }
   const GuardarArticulo = async (tipo,fecha,id,categoria) => {
+    
     try{
+      closeModal()
       await axios.post('/api/articulo',{
         tipo:tipo,
         fecha:fecha,
@@ -90,39 +90,52 @@ export default function Inventario (){
     <div className="fondo3">
       {modalOpen && (
         <div className="contenedor3">
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <input type="text" placeholder="Tipo" id="tipo"/>
-              <input type="text" placeholder="Fecha" id="fecha"/>
-              <input type="text" placeholder="Id"id="id"/>
-              <input type="text" placeholder="Categoria" id="categoria"/>
-               <button onClick={()=>{AgregarArticulo}}>Cerrar</button>
-             </div>
-            </div>
-        </div>)}
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <input type="text" placeholder="Tipo" id="tipo"/>
+            <input type="text" placeholder="Fecha" id="fecha"/>
+            <input type="text" placeholder="Id"id="id"/>
+            <input type="text" placeholder="Categoria" id="categoria"/>
+             <button onClick={()=>{GuardarArticulo()}}>Cerrar</button>
+           </div>
+          </div>
+      </div>
+        )}
       {modalOpen2 && (
         <div className="contenedor3">
-          <div className="modal-overlay">
-            <div className="modal-content">
-              <input type="text" placeholder="Nombre" id="nombre"/>
-              <button onClick={()=>{AgregarCat}}>Cerrar</button>
-            </div>
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <input type="text" placeholder="Nombre" id="nombre"/>
+            <button onClick={()=>{AgregarCat}}>Cerrar</button>
           </div>
-        </div>)}
+        </div>
+      </div>
+       )}
       <header className="header" >
         <div className="perfil"/>
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
           <div className="botoncabe1" onClick={AgregarArticulo}/>
-          <button onClick={AgregarCat()}>example</button>
           <div className="botoncabe2" />
           <div className="botoncabe3"/>
           <div className="botoncabe4"/>
         </div>
       </header>
       <div className="contenedor">
-        <Izquierda/>
-        <Resto/>
+      <div className="izquierda" >
+        <h1 className="h1">Categorias</h1>
+            <ul>
+                <li className="li" >Todos</li>
+                    {listaCat}
+            </ul>
+    </div>
+        <div className="resto">
+        <table>
+            <tbody>
+              {listaArticulo}
+            </tbody>
+        </table>
+    </div>
       </div>
     </div>
     )
