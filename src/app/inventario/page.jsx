@@ -1,10 +1,13 @@
 'use client'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Lista } from "@/components/lista";
 import { Articulo } from "@/components/articulo";
 import axios from "axios";
 
 export default function Inventario (){
+  useEffect(()=>{
+    TraerArticulos()
+  },[])
   const [modalOpen, setModalOpen] = useState(false)
   let [listaArticulo,setListaArticulo]=useState([])
   const BorrarListaArticulos=()=>{
@@ -36,7 +39,7 @@ export default function Inventario (){
   }
   const GuardarArticulo = async (tipo,fecha,id,categoria) => {
     try{
-      await axios.post('/api/inventario',{
+      await axios.post('/api/articulo',{
         tipo:tipo,
         fecha:fecha,
         id:id,
@@ -48,7 +51,7 @@ export default function Inventario (){
     }};
   const TraerArticulos = async ()=>{
     try{
-      const herramientas = await axios.get('/api/inventario').then( res =>{
+      const herramientas = await axios.get('/api/articulo').then( res =>{
         const lista=res.data.datos
         console.log(listaArticulo)
         const newComponent = lista.map(dato=>(
@@ -81,7 +84,7 @@ export default function Inventario (){
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
           <div className="botoncabe1" onClick={AgregarArticulo}/>
-          <button onClick={()=>{BorrarListaArticulos(),TraerArticulos()}}>EXAMPLE</button>
+          <button onClick={()=>{GuardarArticulo();}}>EXAMPLE</button>
           <div className="botoncabe2" />
           <div className="botoncabe3"/>
           <div className="botoncabe4"/>
