@@ -7,6 +7,7 @@ import axios from "axios";
 export default function Inventario (){
   useEffect(()=>{
     TraerArticulos()
+    TraerCat()
   },[])
   const [modalOpen, setModalOpen] = useState(false)
   const openModal = () => {
@@ -22,6 +23,7 @@ export default function Inventario (){
   const closeModal2 = () => {
     setModalOpen2(false)
   }
+//------------------------------------------------ARTICULO--------------------------------------------------------//
   let [listaArticulo,setListaArticulo]=useState([])
   const BorrarListaArticulos=()=>{
     const array=[]
@@ -69,23 +71,35 @@ export default function Inventario (){
     }catch(error){
       console.log(error)
     }}
+//---------------------------------------CATEGORIA-----------------------------------------------//
   const [listaCat,setListaCat]=useState([])
   const AgregarCat=()=>{
-    const nombre = document.getElementById("nombre")
-    const newComponent=<Lista valor={nombre}></Lista>
-    guardarCat(nombre)
+    closeModal2()
+    const nombre = document.getElementById("nombre").value
+    const newComponent=<Lista nombre={nombre}/>
     setListaCat([...listaCat,newComponent])
+    guardarCat(nombre)
   }
   const guardarCat=async (nombre)=>{
-    // try{
-    //   await axios.post('/api/categoria',{
-    //     nombre:nombre
-    //     })
-    //     .then( data => console.log('guardao'))
-    // }catch (error) {
-    //   console.log(error)
-    // }};
-  }
+    try{
+      await axios.post('/api/categoria',{
+        nombre:nombre
+        })
+        .then( data => console.log('guardao'))
+    }catch (error) {
+      console.log(error)
+    }};
+  const TraerCat = async ()=>{
+    try{
+      const categorias = await axios.get('/api/categoria').then( res =>{
+        const lista=res.data.datos
+        const newComponent = lista.map(dato=>(
+          <Lista key={dato._id}nombre={dato.nombre}/>))
+        setListaCat([...listaCat,newComponent])
+      })
+    }catch(error){
+      console.log(error)
+    }}
   return (
     <div className="fondo3">
       {modalOpen && (
@@ -106,7 +120,7 @@ export default function Inventario (){
         <div className="modal-overlay">
           <div className="modal-content">
             <input type="text" placeholder="Nombre" id="nombre"/>
-            <button onClick={()=>{AgregarCat}}>Cerrar</button>
+            <button onClick={AgregarCat}>Cerrar</button>
           </div>
         </div>
       </div>
@@ -115,7 +129,7 @@ export default function Inventario (){
         <div className="perfil"/>
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
-          <div className="botoncabe1" onClick={AgregarArticulo}/>
+          <div className="botoncabe1" onClick={openModal2}/>
           <div className="botoncabe2" />
           <div className="botoncabe3"/>
           <button></button>
