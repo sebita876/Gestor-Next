@@ -1,42 +1,19 @@
 'use client'
 import { useState } from "react"
 import { Lista } from "@/components/lista";
-import { Articulo } from "@/components/tabla";
+import { Articulo } from "@/components/articulo";
 import axios from "axios";
 
 export default function Inventario (){
   const [modalOpen, setModalOpen] = useState(false)
+  const [listaArticulo,setListaArticulo]=useState([])
+  const [listaCat,setListaCat]=useState([])
   const openModal = () => {
     setModalOpen(true)
   }
   const closeModal = () => {
     setModalOpen(false)
   }
-  const TraerArticulos = async ()=>{
-    try{
-      const herramientas = await axios.get('/api/inventario').then( res =>{
-        const lista=res.data.datos
-        const newComponent = lista.map(dato=>(
-          <Articulo key={dato._id}id={dato.id}categoria={dato.categoria}/>))
-        setListaArticulo([...listaArticulo,newComponent])
-      })
-    }catch(error)
-    {
-      console.log(error)
-    }
-  }
-  const GuardarArticulo = async (categoria) => {
-    try{
-      console.log('enviado')
-      await axios.post('/api/inventario',
-        {categoria: categoria}
-      ).then( data => console.log(data.message))
-    }catch (error) {
-      console.log(error)
-    }
-  };
-  const [listaArticulo,setListaArticulo]=useState([])
-  const [listaCat,setListaCat]=useState([])
   const AgregarArticulo=()=>{
     const tipo = document.getElementById("tipo").value
     const fecha= document.getElementById("fecha").value
@@ -48,9 +25,32 @@ export default function Inventario (){
       id={id} 
       categoria={categoria}/>
     setListaArticulo([...listaArticulo,newComponent])
-    GuardarArticulo(categoria);
+    GuardarArticulo(tipo,fecha,id,categoria);
     closeModal()
-  } 
+  }
+  const GuardarArticulo = async (tipo,fecha,id,categoria) => {
+    try{
+      await axios.post('/api/inventario',{
+        tipo:tipo,
+        fecha:fecha,
+        id:id,
+        categoria:categoria
+        })
+        .then( data => console.log(data.message))
+    }catch (error) {
+      console.log(error)
+    }};
+  const TraerArticulos = async ()=>{
+    try{
+      const herramientas = await axios.get('/api/inventario').then( res =>{
+        const lista=res.data.datos
+        const newComponent = lista.map(dato=>(
+          <Articulo key={dato._id}tipo={dato.tipo}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}/>))
+        setListaArticulo([...listaArticulo,newComponent])
+      })
+    }catch(error){
+      console.log(error)
+    }}
   const AgregarCat=()=>{
     const newComponent=<Lista valor={prompt("ingrese el valor")}></Lista>
     setListaCat([...listaCat,newComponent])
@@ -73,7 +73,7 @@ export default function Inventario (){
         <div className="perfil"/>
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
-          <div className="botoncabe1" onClick={AgregarCat}/>
+          <div className="botoncabe1" onClick={AgregarArticulo}/>
           <button onClick={()=>TraerArticulos()}>EXAMPLE</button>
           <div className="botoncabe2" />
           <div className="botoncabe3"/>

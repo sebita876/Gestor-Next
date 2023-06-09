@@ -10,14 +10,16 @@ export async function GET(req,res) {
 
 export async function POST(request) {
   try {
-    const { categoria } = await request.json()
-    const nuevaHerramienta = new Herramienta({ categoria });
+    const requesData = await request.json()
+    const { tipo,fecha,id,categoria } = requesData
+    console.log(tipo,fecha)
+    const nuevaHerramienta = new Herramienta({ tipo,fecha,id,categoria  });
+    console.log(nuevaHerramienta)
     await nuevaHerramienta.save();
     console.log('Guardado exitosamente');
     return NextResponse.json({status: 200, message:'Guardado exitosamente', data: nuevaHerramienta})
   } catch (error) {
     console.error(error);
-    
   }
 }
 
