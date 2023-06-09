@@ -96,7 +96,7 @@ export default function Inventario (){
             <input type="text" placeholder="Fecha" id="fecha"/>
             <input type="text" placeholder="Id"id="id"/>
             <input type="text" placeholder="Categoria" id="categoria"/>
-             <button onClick={()=>{GuardarArticulo()}}>Cerrar</button>
+             <button onClick={()=>{AgregarArticulo()}}>Cerrar</button>
            </div>
           </div>
       </div>
@@ -118,6 +118,7 @@ export default function Inventario (){
           <div className="botoncabe1" onClick={AgregarArticulo}/>
           <div className="botoncabe2" />
           <div className="botoncabe3"/>
+          <button></button>
           <div className="botoncabe4"/>
         </div>
       </header>
