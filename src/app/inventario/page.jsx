@@ -6,7 +6,13 @@ import axios from "axios";
 
 export default function Inventario (){
   const [modalOpen, setModalOpen] = useState(false)
-  const [listaArticulo,setListaArticulo]=useState([])
+  let [listaArticulo,setListaArticulo]=useState([])
+  const BorrarListaArticulos=()=>{
+    const array=[]
+    setListaArticulo(listaArticulo=array)
+    console.log('este es el que borra')
+    console.log(listaArticulo)
+  }
   const [listaCat,setListaCat]=useState([])
   const openModal = () => {
     setModalOpen(true)
@@ -36,7 +42,7 @@ export default function Inventario (){
         id:id,
         categoria:categoria
         })
-        .then( data => console.log(data.message))
+        .then( data => console.log('guardao'))
     }catch (error) {
       console.log(error)
     }};
@@ -44,6 +50,7 @@ export default function Inventario (){
     try{
       const herramientas = await axios.get('/api/inventario').then( res =>{
         const lista=res.data.datos
+        console.log(listaArticulo)
         const newComponent = lista.map(dato=>(
           <Articulo key={dato._id}tipo={dato.tipo}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}/>))
         setListaArticulo([...listaArticulo,newComponent])
@@ -74,7 +81,7 @@ export default function Inventario (){
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
           <div className="botoncabe1" onClick={AgregarArticulo}/>
-          <button onClick={()=>TraerArticulos()}>EXAMPLE</button>
+          <button onClick={()=>{BorrarListaArticulos(),TraerArticulos()}}>EXAMPLE</button>
           <div className="botoncabe2" />
           <div className="botoncabe3"/>
           <div className="botoncabe4"/>
