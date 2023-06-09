@@ -1,5 +1,5 @@
 
-export function Lista ({valor})
+export function Lista ({nombre})
 {   
-    return <li className="li">{valor}</li>  
+    return <li className="li">{nombre}</li>  
 }

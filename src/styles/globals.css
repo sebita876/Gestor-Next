@@ -228,6 +228,7 @@ td{
   font-family: Consolas, monaco, monospace;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 ul{
   list-style-position: inside;
