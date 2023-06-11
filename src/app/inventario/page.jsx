@@ -5,6 +5,9 @@ import { Articulo } from "@/components/articulo";
 import axios from "axios";
 
 export default function Inventario (){
+  // const prueba=async()=>{
+  //   axios.get = await axios.get('/api/categoria/[id]')
+  // }
   useEffect(()=>{
     TraerArticulos()
     TraerCat()
@@ -46,7 +49,6 @@ export default function Inventario (){
     closeModal()
   }
   const GuardarArticulo = async (tipo,fecha,id,categoria) => {
-    
     try{
       closeModal()
       await axios.post('/api/articulo',{
@@ -99,7 +101,19 @@ export default function Inventario (){
       })
     }catch(error){
       console.log(error)
-    }}
+    }
+  }
+  const ActualizarCat = async (nombre,actualizar) =>{
+    try{
+      const CategoriaActualizar = await axios.put('/api/categoria', {
+        nombre:nombre,
+        actualizar:actualizar
+      })
+      console.log(CategoriaActualizar.data)
+    }catch(error){
+      console.log(error)
+    }
+  }
   return (
     <div className="fondo3">
       {modalOpen && (
@@ -114,7 +128,7 @@ export default function Inventario (){
            </div>
           </div>
       </div>
-        )}
+      )}
       {modalOpen2 && (
         <div className="contenedor3">
         <div className="modal-overlay">
@@ -132,26 +146,26 @@ export default function Inventario (){
           <div className="botoncabe1" onClick={openModal2}/>
           <div className="botoncabe2" />
           <div className="botoncabe3"/>
-          <button></button>
+          <button onClick={()=>ActualizarCat()}>example</button>
           <div className="botoncabe4"/>
         </div>
       </header>
-      <div className="contenedor">
+    <div className="contenedor">
       <div className="izquierda" >
         <h1 className="h1">Categorias</h1>
-            <ul>
-                <li className="li" >Todos</li>
-                    {listaCat}
-            </ul>
-    </div>
-        <div className="resto">
+          <ul>
+            <li className="li" >Todos</li>
+            {listaCat}
+          </ul>
+      </div>
+      <div className="resto">
         <table>
-            <tbody>
-              {listaArticulo}
-            </tbody>
+          <tbody>
+            {listaArticulo}
+          </tbody>
         </table>
-    </div>
       </div>
     </div>
+  </div>
     )
 }
