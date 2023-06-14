@@ -3,11 +3,10 @@ import { useEffect, useState } from "react"
 import { Lista } from "@/components/lista";
 import { Articulo } from "@/components/articulo";
 import axios from "axios";
+import { useParams} from 'next/navigation'
+import { Resto } from "@/components/resto";
 
 export default function Inventario (){
-  // const prueba=async()=>{
-  //   axios.get = await axios.get('/api/categoria/[id]')
-  // }
   useEffect(()=>{
     TraerArticulos()
     TraerCat()
@@ -114,6 +113,16 @@ export default function Inventario (){
       console.log(error)
     }
   }
+  
+  const BorrarCat = async ()=>{
+    try{
+      const response = await axios.delete('/api/categoria', {
+        data: { nombre: 'olaaaaaaaaaaaaa' },
+      });
+    }catch(error){
+      console.log(error)
+    }
+  }
   return (
     <div className="fondo3">
       {modalOpen && (
@@ -146,7 +155,7 @@ export default function Inventario (){
           <div className="botoncabe1" onClick={openModal2}/>
           <div className="botoncabe2" />
           <div className="botoncabe3"/>
-          <button onClick={()=>ActualizarCat()}>example</button>
+          <button onClick={()=>BorrarCat()}>example</button>
           <div className="botoncabe4"/>
         </div>
       </header>
@@ -158,13 +167,7 @@ export default function Inventario (){
             {listaCat}
           </ul>
       </div>
-      <div className="resto">
-        <table>
-          <tbody>
-            {listaArticulo}
-          </tbody>
-        </table>
-      </div>
+      <Resto lista={listaArticulo}/>
     </div>
   </div>
     )
