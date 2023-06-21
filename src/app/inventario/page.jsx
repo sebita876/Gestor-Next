@@ -25,15 +25,15 @@ export default function Inventario (){
   const closeModal2 = () => {
     setModalOpen2(false)
   }
-//------------------------------------------------ARTICULO--------------------------------------------------------//
+//_______________________________________________ARTICULO_________________________________________________//
   let [listaArticulo,setListaArticulo]=useState([])
-  const BorrarListaArticulos=()=>{
+  const BorrarListaArticulos=()=>{ 
     const array=[]
     setListaArticulo(listaArticulo=array)
     console.log('este es el que borra')
     console.log(listaArticulo)
   }
-  const AgregarArticulo=()=>{
+  const AgregarArticulo=()=>{//_________________________Agregar Articulo__________________________//
     const tipo = document.getElementById("tipo").value
     const fecha= document.getElementById("fecha").value
     const id = document.getElementById("id").value
@@ -47,7 +47,7 @@ export default function Inventario (){
     GuardarArticulo(tipo,fecha,id,categoria);
     closeModal()
   }
-  const GuardarArticulo = async (tipo,fecha,id,categoria) => {
+  const GuardarArticulo = async (tipo,fecha,id,categoria) => {//___________________Guardar Articulo_______________//
     try{
       closeModal()
       await axios.post('/api/articulo',{
@@ -60,7 +60,7 @@ export default function Inventario (){
     }catch (error) {
       console.log(error)
     }};
-  const TraerArticulos = async ()=>{
+  const TraerArticulos = async ()=>{//_________________________Traer Articulo__________________________//
     try{
       const herramientas = await axios.get('/api/articulo').then( res =>{
         const lista=res.data.datos
@@ -72,16 +72,16 @@ export default function Inventario (){
     }catch(error){
       console.log(error)
     }}
-//---------------------------------------CATEGORIA-----------------------------------------------//
+//_______________________________________________CATEGORIA_______________________________________________//
   const [listaCat,setListaCat]=useState([])
-  const AgregarCat=()=>{
+  const AgregarCat=()=>{ //_________________________Agregar Categoria__________________________//
     closeModal2()
     const nombre = document.getElementById("nombre").value
     const newComponent=<Lista nombre={nombre}/>
     setListaCat([...listaCat,newComponent])
     guardarCat(nombre)
   }
-  const guardarCat=async (nombre)=>{
+  const guardarCat=async (nombre)=>{//_________________________Guardar Categoria__________________________//
     try{
       await axios.post('/api/categoria',{
         nombre:nombre
@@ -90,7 +90,7 @@ export default function Inventario (){
     }catch (error) {
       console.log(error)
     }};
-  const TraerCat = async ()=>{
+  const TraerCat = async ()=>{//_________________________Traer Categorias__________________________//
     try{
       const categorias = await axios.get('/api/categoria').then( res =>{
         const lista=res.data.datos
@@ -102,7 +102,7 @@ export default function Inventario (){
       console.log(error)
     }
   }
-  const ActualizarCat = async (nombre,actualizar) =>{
+  const ActualizarCat = async (nombre,actualizar) =>{//______________Actualizar Categoria___________//
     try{
       const CategoriaActualizar = await axios.put('/api/categoria', {
         nombre:nombre,
@@ -113,14 +113,15 @@ export default function Inventario (){
       console.log(error)
     }
   }
-  
   const BorrarCat = async ()=>{
     try{
-      const response = await axios.delete('/api/categoria', {
-        data: { nombre: 'olaaaaaaaaaaaaa' },
-      });
+      const response = await axios.put('/api/categoria', {
+        nombre:'ola'
+      })
     }catch(error){
-      console.log(error)
+      console.log('este es el error')
+
+      console.log(error.config.data)
     }
   }
   return (
