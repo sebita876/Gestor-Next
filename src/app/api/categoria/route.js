@@ -29,7 +29,7 @@ export async function PUT(req){
     const {nombre,actualizar}=requesData
     const id = await Categoria.find({nombre:nombre})
     if(actualizar != undefined){
-      const Update = await Categoria.findByIdAndUpdate(id[0]._id,{nombre:actualizar,id:_id},{new:true})
+      const Update = await Categoria.findByIdAndUpdate(id[0]._id,{nombre:actualizar},{new:true})
       return NextResponse.json({status: 200, message:'Actualizado exitosamente', data: Update})
   }else{
       const Deleted = await Categoria.findByIdAndDelete(id[0]._id)

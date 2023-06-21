@@ -21,6 +21,7 @@ export default function Inventario (){
   const [modalOpen2, setModalOpen2] = useState(false)
   const openModal2 = () => {
     setModalOpen2(true)
+    setModalOpen4(false)
   }
   const closeModal2 = () => {
     setModalOpen2(false)
@@ -28,16 +29,25 @@ export default function Inventario (){
   const [modalOpen3, setModalOpen3] = useState(false)
   const openModal3 = () => {
     setModalOpen3(true)
+    setModalOpen4(false)
   }
   const closeModal3 = () => {
     setModalOpen3(false)
   }
   const [modalOpen4, setModalOpen4] = useState(false)
   const openModal4 = () => {
-    setModalOpen4(true)
+    setModalOpen4(!modalOpen4)
   }
   const closeModal4 = () => {
     setModalOpen4(false)
+  }
+  const [modalOpen5, setModalOpen5] = useState(false)
+  const openModal5 = () => {
+    setModalOpen5(true)
+    setModalOpen4(false)
+  }
+  const closeModal5 = () => {
+    setModalOpen5(false)
   }
 //_______________________________________________ARTICULO_________________________________________________//
   let [listaArticulo,setListaArticulo]=useState([])
@@ -122,13 +132,18 @@ export default function Inventario (){
       console.log(error)
     }
   }
-  const ActualizarCat = async (nombre,actualizar) =>{//______________Actualizar Categoria___________//
-    try{
+  const ActualizarCat = async () =>{//______________Actualizar Categoria___________//
+    try{     
+      closeModal5()
+      const nombre = document.getElementById("nombre").value
+      const actualizar = document.getElementById("nuevo").value
+      console.log(nombre,actualizar)
       const CategoriaActualizar = await axios.put('/api/categoria', {
         nombre:nombre,
         actualizar:actualizar
       })
-      console.log(CategoriaActualizar.data)
+      BorrarListaCat()
+      TraerCat()
     }catch(error){
       console.log(error)
     }
@@ -171,6 +186,17 @@ export default function Inventario (){
         </div>
       </div>
        )}
+       {modalOpen5 && (
+        <div className="contenedor3">
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <input type="text" placeholder="Actualizar" id="nombre"/>
+            <input type="text" placeholder="Nuevo" id="nuevo"/>
+            <button onClick={ActualizarCat}>Cerrar</button>
+          </div>
+        </div>
+      </div>
+       )}
        {modalOpen3 && (
         <div className="contenedor3">
         <div className="modal-overlay">
@@ -185,8 +211,8 @@ export default function Inventario (){
         <div className="perfil"/>
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
-          <div className="botoncabe1" onClick={openModal2}/>
-          <div className="botoncabe2" onClick={openModal3} />
+          <div className="botoncabe1"/>
+          <div className="botoncabe2"/>
           <div className="botoncabe3"/>
           <button>example</button>
           <div className="botoncabe4"/>
@@ -202,13 +228,12 @@ export default function Inventario (){
           <div className="medioizquierda">
             {modalOpen4 &&(
               <div className="desplegable">
-              <li className="li">Borrar Cat</li>
-              <li className="li">Editar Cat</li>
-              <li className="li">Añadir Cat</li>
+              <li className="li2" onClick={openModal3}>Borrar Cat</li>
+              <li className="li2" onClick={openModal5}>Editar Cat</li>
+              <li className="li2" onClick={openModal2}>Añadir Cat</li>
               <button onClick={closeModal4}>Cerrar</button>
             </div>
             )}
-            
             <div className="btn" onClick={openModal4}/>
           </div>
           
