@@ -174,7 +174,7 @@
 .header {
   background-color: black;
   height: 20%;
-  min-height: 20%; /* Establece una altura mínima para el encabezado */
+  min-height: 20%; 
   width: 100%;
   z-index: -1;
 }
@@ -195,6 +195,35 @@
   background: linear-gradient(red, #ff4444);
   width: 15%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.medioizquierda{
+  width: 50%;
+  height: 50%;
+  align-self: flex-end;
+  margin-top: auto;
+  display: flex;
+  margin-right: auto;
+  flex-direction: column;
+}
+.btn{
+  align-self: flex-end;
+  width: 30px;
+  height: 30px;
+  margin-top: auto;
+  margin-right: auto;
+  background-image: url('../../public/menu.png');
+  background-size: cover;
+  cursor: pointer;
+}
+.desplegable{
+  margin-top: auto;
+  margin-right: auto;
+  align-self: flex-end;
+  background-color: #64b2e6;
+  height: 80%;
+  width: 130%;
 }
 .perfil {
   float: left;
@@ -229,9 +258,10 @@ td{
 }
 .li{
   font-family: Consolas, monaco, monospace;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  align-self: flex-start;
 }
 ul{
   list-style-position: inside;
@@ -368,7 +398,6 @@ width: 7%;
   Font-family: Consolas, monaco, monospace;
   font-size: 15px;
 }
-
 .modal-content button {
   margin-top: 10px;
 }
