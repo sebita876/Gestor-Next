@@ -25,6 +25,20 @@ export default function Inventario (){
   const closeModal2 = () => {
     setModalOpen2(false)
   }
+  const [modalOpen3, setModalOpen3] = useState(false)
+  const openModal3 = () => {
+    setModalOpen3(true)
+  }
+  const closeModal3 = () => {
+    setModalOpen3(false)
+  }
+  const [modalOpen4, setModalOpen4] = useState(false)
+  const openModal4 = () => {
+    setModalOpen4(true)
+  }
+  const closeModal4 = () => {
+    setModalOpen4(false)
+  }
 //_______________________________________________ARTICULO_________________________________________________//
   let [listaArticulo,setListaArticulo]=useState([])
   const BorrarListaArticulos=()=>{ 
@@ -73,7 +87,13 @@ export default function Inventario (){
       console.log(error)
     }}
 //_______________________________________________CATEGORIA_______________________________________________//
-  const [listaCat,setListaCat]=useState([])
+  let [listaCat,setListaCat]=useState([])
+  const BorrarListaCat=()=>{ 
+    const array=[]
+    setListaCat(listaCat=array)
+    console.log('este es el que borra')
+    console.log(listaArticulo)
+  }
   const AgregarCat=()=>{ //_________________________Agregar Categoria__________________________//
     closeModal2()
     const nombre = document.getElementById("nombre").value
@@ -113,15 +133,17 @@ export default function Inventario (){
       console.log(error)
     }
   }
-  const BorrarCat = async ()=>{
+  const BorrarCat = async ()=>{//------------------Borrar Categoria---------------------------------//
+    closeModal3()
     try{
+      const nombre = document.getElementById("borrar").value
       const response = await axios.put('/api/categoria', {
-        nombre:'ola'
+        nombre:nombre
       })
+      BorrarListaCat()
+      TraerCat()
     }catch(error){
-      console.log('este es el error')
-
-      console.log(error.config.data)
+      console.log(error)
     }
   }
   return (
@@ -149,14 +171,24 @@ export default function Inventario (){
         </div>
       </div>
        )}
+       {modalOpen3 && (
+        <div className="contenedor3">
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <input type="text" placeholder="Nombre" id="borrar"/>
+            <button onClick={BorrarCat}>Cerrar</button>
+          </div>
+        </div>
+      </div>
+       )}
       <header className="header" >
         <div className="perfil"/>
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
           <div className="botoncabe1" onClick={openModal2}/>
-          <div className="botoncabe2" />
+          <div className="botoncabe2" onClick={openModal3} />
           <div className="botoncabe3"/>
-          <button onClick={()=>BorrarCat()}>example</button>
+          <button>example</button>
           <div className="botoncabe4"/>
         </div>
       </header>
@@ -167,6 +199,19 @@ export default function Inventario (){
             <li className="li" >Todos</li>
             {listaCat}
           </ul>
+          <div className="medioizquierda">
+            {modalOpen4 &&(
+              <div className="desplegable">
+              <li className="li">Borrar Cat</li>
+              <li className="li">Editar Cat</li>
+              <li className="li">Añadir Cat</li>
+              <button onClick={closeModal4}>Cerrar</button>
+            </div>
+            )}
+            
+            <div className="btn" onClick={openModal4}/>
+          </div>
+          
       </div>
       <Resto lista={listaArticulo}/>
     </div>
