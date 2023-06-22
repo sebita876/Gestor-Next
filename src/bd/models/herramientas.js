@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const herramientasSchema = new mongoose.Schema({
-  tipo:{
+  nombre:{
     type: String,
     require:true
   },

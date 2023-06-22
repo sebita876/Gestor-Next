@@ -261,11 +261,11 @@
   background-size: cover;
 }
 .resto {
-  height: 520px;
+  height: 500px;
   width: 100%;
 }
 .resto table{
-  height: 500px;
+  height: 463px;
   display: flex;
   flex-direction: column;
 }
@@ -282,6 +282,7 @@ td{
 .h1{
   font-family: Consolas, monaco, monospace;
   font-size: 120%;
+  text-align: center;
 }
 .li{
   font-family: Consolas, monaco, monospace;

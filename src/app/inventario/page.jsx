@@ -49,28 +49,46 @@ export default function Inventario (){
   const closeModal5 = () => {
     setModalOpen5(false)
   }
+  const [modalOpen6, setModalOpen6] = useState(false)
+  const openModal6 = () => {
+    setModalOpen6(true)
+  }
+  const closeModal6 = () => {
+    setModalOpen6(false)
+  }
+  const [modalOpen7, setModalOpen7] = useState(false)
+  const openModal7 = () => {
+    setModalOpen7(true)
+  }
+  const closeModal7 = () => {
+    setModalOpen7(false)
+  }
 //_______________________________________________ARTICULO_________________________________________________//
   let [listaArticulo,setListaArticulo]=useState([])
+  const BorrarListaArticulo=()=>{ 
+    const array=[]
+    setListaArticulo(listaArticulo=array)
+  }
   
   const AgregarArticulo=()=>{//_________________________Agregar Articulo__________________________//
-    
-    
-    const tipo = document.getElementById("tipo").value
+    const nombre = document.getElementById("nombre").value
     const id = document.getElementById("id").value
     const categoria= document.getElementById("categoria").value
     const newComponent = <Articulo
-      tipo={tipo}
+      nombre={nombre}
       id={id} 
       categoria={categoria}/>
     setListaArticulo([...listaArticulo,newComponent])
-    GuardarArticulo(tipo,id,categoria);
+    GuardarArticulo(nombre,id,categoria);
+    BorrarListaArticulo()
+    TraerArticulos()
     closeModal()
   }
-  const GuardarArticulo = async (tipo,id,categoria) => {//___________________Guardar Articulo_______________//
+  const GuardarArticulo = async (nombre,id,categoria) => {//___________________Guardar Articulo_______________//
     try{
       closeModal()
       await axios.post('/api/articulo',{
-        tipo:tipo,
+        nombre:nombre,
         id:id,
         categoria:categoria
         })
@@ -80,11 +98,10 @@ export default function Inventario (){
     }};
   const TraerArticulos = async ()=>{//_________________________Traer Articulo__________________________//
     try{
-      
       const herramientas = await axios.get('/api/articulo').then( res =>{
         const lista=res.data.datos
         const newComponent = lista.map(dato=>(
-          <Articulo key={dato._id}tipo={dato.tipo}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}/>))
+          <Articulo key={dato._id}nombre={dato.nombre}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}/>))
         setListaArticulo([...listaArticulo,newComponent])
         console.log(listaArticulo)
       })
@@ -92,6 +109,35 @@ export default function Inventario (){
     }catch(error){
       console.log(error)
     }}
+    const ActualizarArticulo = async () =>{//______________Actualizar Articulo___________//
+      try{     
+        closeModal6()
+        const id = document.getElementById("id").value
+        const nombre = document.getElementById("nombre").value
+        const categoria = document.getElementById("categoria").value
+        const CategoriaActualizar = await axios.put('/api/articulo', {
+          id:id,
+          nombre:nombre,
+          categoria:categoria
+        })
+        BorrarListaArticulo()
+        TraerArticulos()
+      }catch(error){
+        console.log(error)
+      }}
+      const BorrarArticulo = async ()=>{//------------------Borrar Articulos---------------------------------//
+        closeModal7()
+        try{
+          const id = document.getElementById("borrar").value
+          const response = await axios.put('/api/articulo', {
+            id:id
+          })
+          console.log(response)
+          BorrarListaArticulo()
+          TraerArticulos()
+        }catch(error){
+          console.log(error)
+        }}   
 //_______________________________________________CATEGORIA_______________________________________________//
   let [listaCat,setListaCat]=useState([])
   const BorrarListaCat=()=>{ 
@@ -160,10 +206,21 @@ export default function Inventario (){
       {modalOpen && (
         <div className="contenedor3">
           <div className="modal-overlay">
-              <input type="text" placeholder="Tipo" id="tipo" className="inputt"/>
+              <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <input type="text" placeholder="Id"id="id" className="inputt"/>
               <input type="text" placeholder="Categoria" id="categoria" className="inputt"/>
               <button onClick={()=>{AgregarArticulo()}}>Cerrar</button>
+          </div>
+      </div>
+      )}
+      {modalOpen6 && (
+        <div className="contenedor3">
+          <div className="modal-overlay">
+              <h1 className="h1">Ingrese el ID que desea actualizar y los valores a actualizar</h1>
+              <input type="text" placeholder="Id"id="id" className="inputt"/>
+              <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
+              <input type="text" placeholder="Categoria" id="categoria" className="inputt"/>
+              <button onClick={()=>{ActualizarArticulo()}}>Cerrar</button>
           </div>
       </div>
       )}
@@ -198,13 +255,22 @@ export default function Inventario (){
           </div>
         </div>
        )}
+       {modalOpen7 && (
+        <div className="contenedor3">
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <input type="text" placeholder="ID" id="borrar"/>
+              <button onClick={BorrarArticulo}>Cerrar</button>
+            </div>
+          </div>
+        </div>
+       )}
       <header className="header" >
         <div className="perfil"/>
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
-          <div className="botoncabe2"/>
-          <div className="botoncabe3"/>
-          <div className="botoncabe4"/>
+          <div className="botoncabe2" onClick={openModal7}/>
+          <div className="botoncabe3" onClick={openModal6}/>
         </div>
       </header>
     <div className="contenedor">
@@ -231,7 +297,7 @@ export default function Inventario (){
             <table>
                 <tbody>
                   <tr>
-                      <td className="lista">Tipo</td>
+                      <td className="lista">Nombre</td>
                       <td className="lista">Fecha</td>
                       <td className="lista">ID</td>
                       <td className="lista">Categoria</td>
