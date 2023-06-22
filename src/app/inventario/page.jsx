@@ -5,6 +5,7 @@ import { Articulo } from "@/components/articulo";
 import axios from "axios";
 import { useParams} from 'next/navigation'
 import InfiniteScroll from "react-infinite-scroll-component";
+import Loading from "../loading";
 
 export default function Inventario (){
   useEffect(()=>{
@@ -228,7 +229,7 @@ export default function Inventario (){
         <div className="contenedor3">
           <div className="modal-overlay">
             <div className="modal-content">
-              <input type="text" placeholder="Nombre" id="nombre"/>
+              <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <button onClick={AgregarCat}>Cerrar</button>
             </div>
           </div>
@@ -238,8 +239,8 @@ export default function Inventario (){
         <div className="contenedor3">
           <div className="modal-overlay">
             <div className="modal-content">
-              <input type="text" placeholder="Actualizar" id="nombre"/>
-              <input type="text" placeholder="Nuevo" id="nuevo"/>
+              <input type="text" placeholder="Actualizar" id="nombre" className="inputt"/>
+              <input type="text" placeholder="Nuevo" id="nuevo" className="inputt"/>
               <button onClick={ActualizarCat}>Cerrar</button>
             </div>
           </div>
@@ -249,7 +250,7 @@ export default function Inventario (){
         <div className="contenedor3">
           <div className="modal-overlay">
             <div className="modal-content">
-              <input type="text" placeholder="Nombre" id="borrar"/>
+              <input type="text" placeholder="Nombre" id="borrar" className="inputt"/>
               <button onClick={BorrarCat}>Cerrar</button>
             </div>
           </div>
@@ -259,7 +260,7 @@ export default function Inventario (){
         <div className="contenedor3">
           <div className="modal-overlay">
             <div className="modal-content">
-              <input type="text" placeholder="ID" id="borrar"/>
+              <input type="text" placeholder="ID" id="borrar" className="inputt"/>
               <button onClick={BorrarArticulo}>Cerrar</button>
             </div>
           </div>
@@ -282,7 +283,7 @@ export default function Inventario (){
         </ul>
         <div className="medioizquierda">
           {modalOpen4 &&(
-            <div className="desplegable">
+            <div className={`desplegable ${modalOpen4 ? 'visible' : ''}`}>
               <li className="li2" onClick={openModal3}>Borrar Cat</li>
               <li className="li2" onClick={openModal5}>Editar Cat</li>
               <li className="li2" onClick={openModal2}>Añadir Cat</li>
