@@ -5,12 +5,13 @@ import { Articulo } from "@/components/articulo";
 import axios from "axios";
 import { useParams} from 'next/navigation'
 import InfiniteScroll from "react-infinite-scroll-component";
-import Loading from "../loading";
+import Loading from "./loading";
 
 export default function Inventario (){
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(()=>{
-    TraerArticulos()
     TraerCat()
+    TraerArticulos()
   },[])
   const [modalOpen, setModalOpen] = useState(false)
   const openModal = () => {
@@ -105,10 +106,11 @@ export default function Inventario (){
           <Articulo key={dato._id}nombre={dato.nombre}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}/>))
         setListaArticulo([...listaArticulo,newComponent])
         console.log(listaArticulo)
+        setIsLoading(false);
       })
-      
     }catch(error){
       console.log(error)
+      setIsLoading(false);
     }}
     const ActualizarArticulo = async () =>{//______________Actualizar Articulo___________//
       try{     
@@ -203,6 +205,11 @@ export default function Inventario (){
     }}
 //=====================================Return=======================================================//
   return (
+    <div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+    
     <div className="fondo3">
       {modalOpen && (
         <div className="contenedor3">
@@ -310,5 +317,6 @@ export default function Inventario (){
     </div>  
     </div>
   </div>
-    )
+      )}
+    </div>)
 }
