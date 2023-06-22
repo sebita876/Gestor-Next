@@ -4,7 +4,7 @@ import { Lista } from "@/components/lista";
 import { Articulo } from "@/components/articulo";
 import axios from "axios";
 import { useParams} from 'next/navigation'
-import { Resto } from "@/components/resto";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Inventario (){
   useEffect(()=>{
@@ -51,32 +51,26 @@ export default function Inventario (){
   }
 //_______________________________________________ARTICULO_________________________________________________//
   let [listaArticulo,setListaArticulo]=useState([])
-  const BorrarListaArticulos=()=>{ 
-    const array=[]
-    setListaArticulo(listaArticulo=array)
-    console.log('este es el que borra')
-    console.log(listaArticulo)
-  }
+  
   const AgregarArticulo=()=>{//_________________________Agregar Articulo__________________________//
+    
+    
     const tipo = document.getElementById("tipo").value
-    const fecha= document.getElementById("fecha").value
     const id = document.getElementById("id").value
     const categoria= document.getElementById("categoria").value
     const newComponent = <Articulo
       tipo={tipo}
-      fecha={fecha} 
       id={id} 
       categoria={categoria}/>
     setListaArticulo([...listaArticulo,newComponent])
-    GuardarArticulo(tipo,fecha,id,categoria);
+    GuardarArticulo(tipo,id,categoria);
     closeModal()
   }
-  const GuardarArticulo = async (tipo,fecha,id,categoria) => {//___________________Guardar Articulo_______________//
+  const GuardarArticulo = async (tipo,id,categoria) => {//___________________Guardar Articulo_______________//
     try{
       closeModal()
       await axios.post('/api/articulo',{
         tipo:tipo,
-        fecha:fecha,
         id:id,
         categoria:categoria
         })
@@ -86,13 +80,15 @@ export default function Inventario (){
     }};
   const TraerArticulos = async ()=>{//_________________________Traer Articulo__________________________//
     try{
+      
       const herramientas = await axios.get('/api/articulo').then( res =>{
         const lista=res.data.datos
-        console.log(listaArticulo)
         const newComponent = lista.map(dato=>(
           <Articulo key={dato._id}tipo={dato.tipo}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}/>))
         setListaArticulo([...listaArticulo,newComponent])
+        console.log(listaArticulo)
       })
+      
     }catch(error){
       console.log(error)
     }}
@@ -164,13 +160,10 @@ export default function Inventario (){
       {modalOpen && (
         <div className="contenedor3">
           <div className="modal-overlay">
-            <div className="modal-content">
-              <input type="text" placeholder="Tipo" id="tipo"/>
-              <input type="text" placeholder="Fecha" id="fecha"/>
-              <input type="text" placeholder="Id"id="id"/>
-              <input type="text" placeholder="Categoria" id="categoria"/>
+              <input type="text" placeholder="Tipo" id="tipo" className="inputt"/>
+              <input type="text" placeholder="Id"id="id" className="inputt"/>
+              <input type="text" placeholder="Categoria" id="categoria" className="inputt"/>
               <button onClick={()=>{AgregarArticulo()}}>Cerrar</button>
-            </div>
           </div>
       </div>
       )}
@@ -233,7 +226,21 @@ export default function Inventario (){
             <div className="btn" onClick={openModal4}/>
           </div>
       </div>
-      <Resto lista={listaArticulo}/>
+      <div className="resto" id="infiniteScroll">
+        <InfiniteScroll dataLength={listaArticulo.length} hasMore={true}scrollableTarget="infiniteScroll">
+            <table>
+                <tbody>
+                  <tr>
+                      <td className="lista">Tipo</td>
+                      <td className="lista">Fecha</td>
+                      <td className="lista">ID</td>
+                      <td className="lista">Categoria</td>
+                  </tr>
+                  {listaArticulo}
+                </tbody>
+            </table>
+        </InfiniteScroll>   
+    </div>  
     </div>
   </div>
     )

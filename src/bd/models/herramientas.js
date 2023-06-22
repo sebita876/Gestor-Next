@@ -6,8 +6,13 @@ const herramientasSchema = new mongoose.Schema({
     require:true
   },
   fecha:{
-    type: Number,
-    require:true
+    type: String,
+    require:true,
+    default: function () {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); 
+      return today.toLocaleDateString();
+    }
   },
   id:{
     type: Number,
