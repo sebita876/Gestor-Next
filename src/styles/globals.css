@@ -526,3 +526,7 @@ animation-timing-function: linear
 @keyframes s2{ 
 100%{transform: rotate(.5turn)}
 }
+option{
+  height: 20%;
+  width: 20%;
+}

@@ -8,11 +8,16 @@ import Loading from "./loading";
 
 export default function Inventario (){
   const [articulos, setArticulos]= useState([])
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);  
+  let [listaArticulo,setListaArticulo]=useState([])
+  const [busqueda, setBusqueda]= useState("")
+  const[select, setSelect]=useState([])
   useEffect(()=>{
     TraerCat()
     TraerArticulos()
   },[])
+  useEffect(() => {
+  }, [articulos,listaArticulo]);
   const [modalOpen, setModalOpen] = useState(false)
   const openModal = () => {
     setModalOpen(true)
@@ -66,7 +71,6 @@ export default function Inventario (){
     setModalOpen7(false)
   }
 //_______________________________________________ARTICULO_________________________________________________//
-  let [listaArticulo,setListaArticulo]=useState([])
   const BorrarListaArticulo=()=>{ 
     const array=[]
     setListaArticulo(listaArticulo=array)
@@ -105,11 +109,7 @@ export default function Inventario (){
     try{
       const herramientas = await axios.get('/api/articulo').then( res =>{
         const lista=res.data.datos
-        console.log(lista)
-        lista.forEach(element => {
-          setArticulos([element])
-          console.log(articulos)
-        });
+        setArticulos(res.data.datos)
         const newComponent = lista.map(dato=>(
           <Articulo key={dato._id}nombre={dato.nombre}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}cantidad={dato.cantidad}/>))
         setListaArticulo([...listaArticulo,newComponent])
@@ -120,23 +120,25 @@ export default function Inventario (){
       setIsLoading(false);
     }}
     const ActualizarArticulo = async () =>{//______________Actualizar Articulo___________//
-      try{     
-        closeModal6()
-        const id = document.getElementById("id").value
-        const nombre = document.getElementById("nombre").value
-        const categoria = document.getElementById("categoria").value
-        const cantidad = document.getElementById("cantidad").value
-        const CategoriaActualizar = await axios.put('/api/articulo', {
-          id:id,
-          nombre:nombre,
-          categoria:categoria,
-          cantidad:cantidad
-        })
-        BorrarListaArticulo()
-        TraerArticulos()
-      }catch(error){
-        console.log(error)
-      }}
+      console.log(document.getElementById("select").value)
+      // try{     
+      //   closeModal6()
+      //   const id = document.getElementById("id").value
+      //   const nombre = document.getElementById("nombre").value
+      //   const categoria = document.getElementById("categoria").value
+      //   const cantidad = document.getElementById("cantidad").value
+      //   const CategoriaActualizar = await axios.put('/api/articulo', {
+      //     id:id,
+      //     nombre:nombre,
+      //     categoria:categoria,
+      //     cantidad:cantidad
+      //   })
+      //   BorrarListaArticulo()
+      //   TraerArticulos()
+      // }catch(error){
+      //   console.log(error)
+      // }
+    }
       const BorrarArticulo = async ()=>{//------------------Borrar Articulos---------------------------------//
         closeModal7()
         try{
@@ -212,6 +214,23 @@ export default function Inventario (){
     }catch(error){
       console.log(error)
     }}
+  const cambios=e=>{
+    setBusqueda(e.target.value)
+    filtrar(e.target.value)
+  }
+  const filtrar=(params)=>{
+    var resultado=articulos.filter((elemento)=>{
+      if(elemento.nombre.toString().toLowerCase().includes(params.toLowerCase())){
+        return (elemento.nombre)
+      }
+      
+    })
+    console.log("este es resultado")
+    console.log(resultado)
+    setSelect(resultado)
+    console.log("este es select")
+    console.log(select)
+  }
 //=====================================Return=======================================================//
   return (
     <div>
@@ -234,11 +253,14 @@ export default function Inventario (){
       {modalOpen6 && (
         <div className="contenedor3">
           <div className="modal-overlay">
-              <h1 className="h1">Ingrese el ID que desea actualizar y los valores a actualizar</h1>
-              <input type="text" placeholder="Id"id="id" className="inputt"/>
-              <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
-              <input type="text" placeholder="Categoria" id="categoria" className="inputt"/>
-              <input type="text" placeholder="Cantidad" id="cantidad" className="inputt"/>
+              <h1 className="h1">Ingrese el nombre</h1>
+              <input type="search" className="inputt" placeholder="Nombre" onChange={cambios} value={busqueda}/>
+              <select name="" id="select">
+                {select.map((elemento)=>
+                  <option key={elemento.id} value={elemento.nombre}>{elemento.nombre}</option>
+                )}
+              </select>
+              
               <button onClick={()=>{ActualizarArticulo()}}>Cerrar</button>
           </div>
       </div>
@@ -288,7 +310,6 @@ export default function Inventario (){
         <div className="perfil"/>
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
-          <input type="search" className="inputt" />
           <div className="botoncabe2" onClick={openModal7}/>
           <div className="botoncabe3" onClick={openModal6}/>
         </div>
