@@ -3,11 +3,11 @@ import { useEffect, useState } from "react"
 import { Lista } from "@/components/lista";
 import { Articulo } from "@/components/articulo";
 import axios from "axios";
-import { useParams} from 'next/navigation'
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "./loading";
 
 export default function Inventario (){
+  const [articulos, setArticulos]= useState([])
   const [isLoading, setIsLoading] = useState(true);
   useEffect(()=>{
     TraerCat()
@@ -76,23 +76,26 @@ export default function Inventario (){
     const nombre = document.getElementById("nombre").value
     const id = document.getElementById("id").value
     const categoria= document.getElementById("categoria").value
+    const cantidad= document.getElementById("cantidad").value
     const newComponent = <Articulo
       nombre={nombre}
       id={id} 
-      categoria={categoria}/>
+      categoria={categoria}
+      cantidad={cantidad}/>
     setListaArticulo([...listaArticulo,newComponent])
-    GuardarArticulo(nombre,id,categoria);
+    GuardarArticulo(nombre,id,categoria,cantidad);
     BorrarListaArticulo()
     TraerArticulos()
     closeModal()
   }
-  const GuardarArticulo = async (nombre,id,categoria) => {//___________________Guardar Articulo_______________//
+  const GuardarArticulo = async (nombre,id,categoria,cantidad) => {//___________________Guardar Articulo_______________//
     try{
       closeModal()
       await axios.post('/api/articulo',{
         nombre:nombre,
         id:id,
-        categoria:categoria
+        categoria:categoria,
+        cantidad:cantidad
         })
         .then( data => console.log('guardao'))
     }catch (error) {
@@ -102,10 +105,14 @@ export default function Inventario (){
     try{
       const herramientas = await axios.get('/api/articulo').then( res =>{
         const lista=res.data.datos
+        console.log(lista)
+        lista.forEach(element => {
+          setArticulos([element])
+          console.log(articulos)
+        });
         const newComponent = lista.map(dato=>(
-          <Articulo key={dato._id}nombre={dato.nombre}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}/>))
+          <Articulo key={dato._id}nombre={dato.nombre}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}cantidad={dato.cantidad}/>))
         setListaArticulo([...listaArticulo,newComponent])
-        console.log(listaArticulo)
         setIsLoading(false);
       })
     }catch(error){
@@ -118,10 +125,12 @@ export default function Inventario (){
         const id = document.getElementById("id").value
         const nombre = document.getElementById("nombre").value
         const categoria = document.getElementById("categoria").value
+        const cantidad = document.getElementById("cantidad").value
         const CategoriaActualizar = await axios.put('/api/articulo', {
           id:id,
           nombre:nombre,
-          categoria:categoria
+          categoria:categoria,
+          cantidad:cantidad
         })
         BorrarListaArticulo()
         TraerArticulos()
@@ -217,6 +226,7 @@ export default function Inventario (){
               <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <input type="text" placeholder="Id"id="id" className="inputt"/>
               <input type="text" placeholder="Categoria" id="categoria" className="inputt"/>
+              <input type="text" placeholder="Cantidad" id="cantidad" className="inputt"/>
               <button onClick={()=>{AgregarArticulo()}}>Cerrar</button>
           </div>
       </div>
@@ -228,6 +238,7 @@ export default function Inventario (){
               <input type="text" placeholder="Id"id="id" className="inputt"/>
               <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <input type="text" placeholder="Categoria" id="categoria" className="inputt"/>
+              <input type="text" placeholder="Cantidad" id="cantidad" className="inputt"/>
               <button onClick={()=>{ActualizarArticulo()}}>Cerrar</button>
           </div>
       </div>
@@ -277,6 +288,7 @@ export default function Inventario (){
         <div className="perfil"/>
         <div className="contenedor2">
           <div className="botoncabe1" onClick={openModal}/>
+          <input type="search" className="inputt" />
           <div className="botoncabe2" onClick={openModal7}/>
           <div className="botoncabe3" onClick={openModal6}/>
         </div>
@@ -309,6 +321,7 @@ export default function Inventario (){
                       <td className="lista">Fecha</td>
                       <td className="lista">ID</td>
                       <td className="lista">Categoria</td>
+                      <td className="lista">Cantidad</td>
                   </tr>
                   {listaArticulo}
                 </tbody>

@@ -12,8 +12,8 @@ export async function GET(req,res) {
 export async function POST(request) {
   try {
     const requesData = await request.json()
-    const { nombre,fecha,id,categoria } = requesData
-    const nuevaHerramienta = new Herramienta({ nombre,fecha,id,categoria  });
+    const { nombre,cantidad,id,categoria } = requesData
+    const nuevaHerramienta = new Herramienta({ nombre,cantidad,id,categoria  });
     await nuevaHerramienta.save();
     console.log('Guardado exitosamente');
     return NextResponse.json({status: 200, message:'Guardado exitosamente', data: nuevaHerramienta})
@@ -25,15 +25,18 @@ export async function PUT(req){
   try{
     await Conectar()
     const requesData = await req.json()
-    let {id,nombre,categoria}=requesData
+    let {id,nombre,categoria,cantidad}=requesData
     const _id = await Herramienta.find({id:id})
+    if(cantidad == ""){
+      cantidad=_id.cantidad 
+    }
     if(nombre == ""){
       nombre=_id.nombre 
     }
     if(categoria == ""){
       categoria=_id.categoria
     }
-    if((nombre != undefined && id != undefined)|| (categoria != undefined && id != undefined)){
+    if((nombre != undefined && id != undefined) || (categoria != undefined && id != undefined) || (cantidad != undefined && id != undefined)){
       const Update = await Herramienta.findByIdAndUpdate(_id[0]._id,{nombre:nombre,categoria,categoria},{new:true})
       return NextResponse.json({status: 200, message:'Actualizado exitosamente', data: Update})
   }else{

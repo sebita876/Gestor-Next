@@ -14,17 +14,16 @@ export default function Base()
             <div className='fondo'/>
             <div className='fotoAdox'/>
             <div className='login'>
-                <div className='divFoto'/>
-                    <div className='container'>
-                        <input type="text"  placeholder="Nombre de usuario" className='inputTextLogin' />
-                        <input type="text"  placeholder="Contraseña" className='inputTextLogin'/>
-                        {links.map(({label,route})=>(
-                            <p  key={route}>
-                                <Link href={route} className="Link">{label}</Link>
-                            </p>
-                        ))}
-                    </div>
+                <div className='container'>
+                    <input type="text"  placeholder="Nombre de usuario" className='inputTextLogin' />
+                    <input type="text"  placeholder="Contraseña" className='inputTextLogin'/>
+                    {links.map(({label,route})=>(
+                        <p  key={route}>
+                            <Link href={route} className="Link">{label}</Link>
+                        </p>
+                    ))}
                 </div>
+            </div>
         </div>
     );
 }

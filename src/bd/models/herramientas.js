@@ -21,6 +21,10 @@ const herramientasSchema = new mongoose.Schema({
   categoria: {
     type: String,
     require:true
+  },
+  cantidad: {
+    type: Number,
+    require:true
   }
 });
 const Herramienta = mongoose.models.Herramienta || mongoose.model('Herramienta', herramientasSchema);
