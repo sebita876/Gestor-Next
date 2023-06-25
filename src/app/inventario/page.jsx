@@ -2,11 +2,13 @@
 import { useEffect, useState } from "react"
 import { Lista } from "@/components/lista";
 import { Articulo } from "@/components/articulo";
+import { useRef } from "react";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "./loading";
 
 export default function Inventario (){
+  const [mostarCampos, setMostarCampos]=useState(false)
   const [articulos, setArticulos]= useState([])
   const [isLoading, setIsLoading] = useState(true);  
   let [listaArticulo,setListaArticulo]=useState([])
@@ -70,26 +72,37 @@ export default function Inventario (){
   const closeModal7 = () => {
     setModalOpen7(false)
   }
+  const [modalOpen8, setModalOpen8] = useState(false)
+  const openModal8 = () => {
+    setModalOpen8(true)
+  }
+  const closeModal8 = () => {
+    setModalOpen8(false)
+  }
 //_______________________________________________ARTICULO_________________________________________________//
   const BorrarListaArticulo=()=>{ 
     const array=[]
     setListaArticulo(listaArticulo=array)
   }
-  
+  const funcion =()=> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+    return today.toLocaleDateString();
+  }
   const AgregarArticulo=()=>{//_________________________Agregar Articulo__________________________//
     const nombre = document.getElementById("nombre").value
     const id = document.getElementById("id").value
     const categoria= document.getElementById("categoria").value
     const cantidad= document.getElementById("cantidad").value
+    
     const newComponent = <Articulo
+    fecha={funcion()}
       nombre={nombre}
       id={id} 
       categoria={categoria}
       cantidad={cantidad}/>
     setListaArticulo([...listaArticulo,newComponent])
     GuardarArticulo(nombre,id,categoria,cantidad);
-    BorrarListaArticulo()
-    TraerArticulos()
     closeModal()
   }
   const GuardarArticulo = async (nombre,id,categoria,cantidad) => {//___________________Guardar Articulo_______________//
@@ -106,6 +119,7 @@ export default function Inventario (){
       console.log(error)
     }};
   const TraerArticulos = async ()=>{//_________________________Traer Articulo__________________________//
+    BorrarListaArticulo()
     try{
       const herramientas = await axios.get('/api/articulo').then( res =>{
         const lista=res.data.datos
@@ -119,25 +133,33 @@ export default function Inventario (){
       console.log(error)
       setIsLoading(false);
     }}
-    const ActualizarArticulo = async () =>{//______________Actualizar Articulo___________//
-      console.log(document.getElementById("select").value)
+    const SeleccionarArticulo = () =>{
+      const resultado = articulos.find(element => element.nombre === document.getElementById("select").value )
+      document.getElementById("inputnombre").value = resultado.nombre 
+      document.getElementById("inputcategoria").value=resultado.categoria
+      document.getElementById("inputcantidad").type=Number  
+      document.getElementById("inputcantidad").value=resultado.cantidad
+      document.getElementById("inputid").value=resultado.id
       // try{     
       //   closeModal6()
-      //   const id = document.getElementById("id").value
-      //   const nombre = document.getElementById("nombre").value
-      //   const categoria = document.getElementById("categoria").value
+      //   const nombre = document.getElementById("inputnombre").value
+      //   const categoria = document.getElementById("inputcategoria").value
       //   const cantidad = document.getElementById("cantidad").value
       //   const CategoriaActualizar = await axios.put('/api/articulo', {
-      //     id:id,
-      //     nombre:nombre,
-      //     categoria:categoria,
-      //     cantidad:cantidad
+      //     id:document.getElementById("inputid").value,
+      //     nombre:document.getElementById("inputnombre").value,
+      //     categoria:document.getElementById("inputcategoria").value,
+      //     cantidad:document.getElementById("inputcantidad").value,
+      //     fecha:document.getElementById("inputfecha").value
       //   })
       //   BorrarListaArticulo()
       //   TraerArticulos()
       // }catch(error){
       //   console.log(error)
       // }
+    }
+    const ActualizarArticulo = async ()=>{
+
     }
       const BorrarArticulo = async ()=>{//------------------Borrar Articulos---------------------------------//
         closeModal7()
@@ -146,7 +168,7 @@ export default function Inventario (){
           const response = await axios.put('/api/articulo', {
             id:id
           })
-          console.log(response)
+
           BorrarListaArticulo()
           TraerArticulos()
         }catch(error){
@@ -214,6 +236,13 @@ export default function Inventario (){
     }catch(error){
       console.log(error)
     }}
+  const inputRef = useRef(null)
+  const apretarTecla = (event)=>{
+    if(event.keyCode ===13)
+    {
+      inputRef.current.blur()
+    }
+  }
   const cambios=e=>{
     setBusqueda(e.target.value)
     filtrar(e.target.value)
@@ -223,13 +252,8 @@ export default function Inventario (){
       if(elemento.nombre.toString().toLowerCase().includes(params.toLowerCase())){
         return (elemento.nombre)
       }
-      
     })
-    console.log("este es resultado")
-    console.log(resultado)
     setSelect(resultado)
-    console.log("este es select")
-    console.log(select)
   }
 //=====================================Return=======================================================//
   return (
@@ -254,17 +278,35 @@ export default function Inventario (){
         <div className="contenedor3">
           <div className="modal-overlay">
               <h1 className="h1">Ingrese el nombre</h1>
-              <input type="search" className="inputt" placeholder="Nombre" onChange={cambios} value={busqueda}/>
+              <input 
+              type="search" 
+              className="inputt" 
+              placeholder="Nombre" 
+              onChange={cambios} 
+              onBlur={SeleccionarArticulo} 
+              onKeyDown={apretarTecla}
+              ref={inputRef}
+              value={busqueda}/>
               <select name="" id="select">
                 {select.map((elemento)=>
                   <option key={elemento.id} value={elemento.nombre}>{elemento.nombre}</option>
                 )}
               </select>
-              
-              <button onClick={()=>{ActualizarArticulo()}}>Cerrar</button>
+              <button onClick={()=>{SeleccionarArticulo()}}>Buscar</button>
+          <input type="number" id="inputid" hidden={true}  defaultValue={"0"}/>
+          <input type="text" id="inputnombre" className="inputt"  defaultValue={"nombre"} />
+          <input type="text" id="inputcategoria" className="inputt"  defaultValue={"categoria"}/>
+          <input type="text" id="inputcantidad" className="inputt" defaultValue={"cantidad"}/>
           </div>
       </div>
       )}
+      {modalOpen8 && (
+        <div className="contenedor3">
+          <div className="modal-overlay">
+              <button onClick={()=>{setMostarCampos(true)}}>Cerrar</button>
+            </div>
+          </div>
+              )}
       {modalOpen2 && (
         <div className="contenedor3">
           <div className="modal-overlay">
