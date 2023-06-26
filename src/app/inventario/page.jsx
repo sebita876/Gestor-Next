@@ -136,30 +136,31 @@ export default function Inventario (){
     const SeleccionarArticulo = () =>{
       const resultado = articulos.find(element => element.nombre === document.getElementById("select").value )
       document.getElementById("inputnombre").value = resultado.nombre 
-      document.getElementById("inputcategoria").value=resultado.categoria
       document.getElementById("inputcantidad").type=Number  
       document.getElementById("inputcantidad").value=resultado.cantidad
       document.getElementById("inputid").value=resultado.id
-      // try{     
-      //   closeModal6()
-      //   const nombre = document.getElementById("inputnombre").value
-      //   const categoria = document.getElementById("inputcategoria").value
-      //   const cantidad = document.getElementById("cantidad").value
-      //   const CategoriaActualizar = await axios.put('/api/articulo', {
-      //     id:document.getElementById("inputid").value,
-      //     nombre:document.getElementById("inputnombre").value,
-      //     categoria:document.getElementById("inputcategoria").value,
-      //     cantidad:document.getElementById("inputcantidad").value,
-      //     fecha:document.getElementById("inputfecha").value
-      //   })
-      //   BorrarListaArticulo()
-      //   TraerArticulos()
-      // }catch(error){
-      //   console.log(error)
-      // }
+      
     }
     const ActualizarArticulo = async ()=>{
-
+      try{     
+        console.log(listaCatBien)
+        const nombre = document.getElementById("inputnombre").value
+        const categoria = document.getElementById("inputcategoria").value
+        const cantidad = document.getElementById("inputcantidad").value
+        const id = document.getElementById("inputid").value
+        closeModal6()
+        const CategoriaActualizar = await axios.put('/api/articulo', {
+          id:id,
+          nombre:nombre,
+          categoria:categoria,
+          cantidad:cantidad,
+          fecha:funcion()
+        })
+        BorrarListaArticulo()
+        TraerArticulos()
+      }catch(error){
+        console.log(error)
+      }
     }
       const BorrarArticulo = async ()=>{//------------------Borrar Articulos---------------------------------//
         closeModal7()
@@ -176,6 +177,7 @@ export default function Inventario (){
         }}   
 //_______________________________________________CATEGORIA_______________________________________________//
   let [listaCat,setListaCat]=useState([])
+  const listaCatBien = listaCat[0]
   const BorrarListaCat=()=>{ 
     const array=[]
     setListaCat(listaCat=array)
@@ -185,13 +187,14 @@ export default function Inventario (){
   const AgregarCat=()=>{ //_________________________Agregar Categoria__________________________//
     closeModal2()
     const nombre = document.getElementById("nombre").value
-    const newComponent=<Lista nombre={nombre}/>
+    const newComponent=<Lista nombre={nombre} id={1}/>
     setListaCat([...listaCat,newComponent])
     guardarCat(nombre)
   }
   const guardarCat=async (nombre)=>{//_________________________Guardar Categoria__________________________//
     try{
       await axios.post('/api/categoria',{
+        id:1,
         nombre:nombre
         }).then
         ( data => console.log('guardao'))
@@ -268,7 +271,12 @@ export default function Inventario (){
           <div className="modal-overlay">
               <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <input type="text" placeholder="Id"id="id" className="inputt"/>
-              <input type="text" placeholder="Categoria" id="categoria" className="inputt"/>
+              <select name="" id="categoria">
+                {listaCatBien.map((elemento)=>{
+                  return <option key={elemento.props.nombre} value={elemento.props.nombre}>{elemento.props.nombre}</option>
+                }
+                )}
+              </select>
               <input type="text" placeholder="Cantidad" id="cantidad" className="inputt"/>
               <button onClick={()=>{AgregarArticulo()}}>Cerrar</button>
           </div>
@@ -295,8 +303,14 @@ export default function Inventario (){
               <button onClick={()=>{SeleccionarArticulo()}}>Buscar</button>
           <input type="number" id="inputid" hidden={true}  defaultValue={"0"}/>
           <input type="text" id="inputnombre" className="inputt"  defaultValue={"nombre"} />
-          <input type="text" id="inputcategoria" className="inputt"  defaultValue={"categoria"}/>
+          <select name="" id="inputcategoria">
+                {listaCatBien.map((elemento)=>{
+                  return <option key={elemento.props.nombre} value={elemento.props.nombre}>{elemento.props.nombre}</option>
+                }
+                )}
+              </select>
           <input type="text" id="inputcantidad" className="inputt" defaultValue={"cantidad"}/>
+          <button onClick={ActualizarArticulo}>Buscar</button>
           </div>
       </div>
       )}

@@ -25,7 +25,7 @@ export async function PUT(req){
   try{
     await Conectar()
     const requesData = await req.json()
-    let {id,nombre,categoria,cantidad}=requesData
+    let {id,nombre,categoria,cantidad,fecha}=requesData
     const _id = await Herramienta.find({id:id})
     if(cantidad == ""){
       cantidad=_id.cantidad 
@@ -37,7 +37,7 @@ export async function PUT(req){
       categoria=_id.categoria
     }
     if((nombre != undefined && id != undefined) || (categoria != undefined && id != undefined) || (cantidad != undefined && id != undefined)){
-      const Update = await Herramienta.findByIdAndUpdate(_id[0]._id,{nombre:nombre,categoria,categoria},{new:true})
+      const Update = await Herramienta.findByIdAndUpdate(_id[0]._id,{nombre:nombre,categoria:categoria,fecha:fecha,catidad:cantidad},{new:true})
       return NextResponse.json({status: 200, message:'Actualizado exitosamente', data: Update})
   }else{
       const Deleted = await Herramienta.findByIdAndDelete(_id[0]._id)

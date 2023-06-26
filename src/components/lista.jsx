@@ -1,4 +1,4 @@
-export function Lista ({nombre})
+export function Lista ({nombre,id})
 {   
-    return <li className="li">{nombre}</li>  
+    return <li className="li" key={id}>{nombre}</li>  
 }

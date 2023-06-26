@@ -14,7 +14,7 @@ export async function POST(req) {
   try {
     await Conectar()
     const requesData = await req.json()
-    const nuevaCategoria= new Categoria( {nombre:requesData.nombre}  );
+    const nuevaCategoria= new Categoria( {nombre:requesData.nombre,id:requesData.id}  );
     await nuevaCategoria.save();
     console.log('Guardado exitosamente');
     return NextResponse.json({status: 200, message:'Guardado exitosamente', data: nuevaCategoria})
