@@ -14,10 +14,12 @@ export default function Inventario (){
   let [listaArticulo,setListaArticulo]=useState([])
   const [busqueda, setBusqueda]= useState("")
   const[select, setSelect]=useState([])
+  
   useEffect(()=>{
     TraerCat()
     TraerArticulos()
   },[])
+  
   useEffect(() => {
   }, [articulos,listaArticulo]);
   const [modalOpen, setModalOpen] = useState(false)
@@ -90,17 +92,27 @@ export default function Inventario (){
     return today.toLocaleDateString();
   }
   const AgregarArticulo=()=>{//_________________________Agregar Articulo__________________________//
+    let id
+    const length = listaArticulo.length
+      if (length == 0){
+        id =1
+      }
+      else{
+        const resta = listaArticulo.length - 1
+        const objeto = listaArticulo[resta]
+        const props = objeto.props.id
+        id = props + 1
+      }
     const nombre = document.getElementById("nombre").value
-    const id = document.getElementById("id").value
     const categoria= document.getElementById("categoria").value
     const cantidad= document.getElementById("cantidad").value
-    
     const newComponent = <Articulo
     fecha={funcion()}
       nombre={nombre}
       id={id} 
       categoria={categoria}
-      cantidad={cantidad}/>
+      cantidad={cantidad}
+      />
     setListaArticulo([...listaArticulo,newComponent])
     GuardarArticulo(nombre,id,categoria,cantidad);
     closeModal()
@@ -126,7 +138,7 @@ export default function Inventario (){
         setArticulos(res.data.datos)
         const newComponent = lista.map(dato=>(
           <Articulo key={dato._id}nombre={dato.nombre}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}cantidad={dato.cantidad}/>))
-        setListaArticulo([...listaArticulo,newComponent])
+        setListaArticulo([...listaArticulo,...newComponent])
         setIsLoading(false);
       })
     }catch(error){
@@ -187,6 +199,7 @@ export default function Inventario (){
   const AgregarCat=()=>{ //_________________________Agregar Categoria__________________________//
     closeModal2()
     const nombre = document.getElementById("nombre").value
+    
     const newComponent=<Lista nombre={nombre} id={1}/>
     setListaCat([...listaCat,newComponent])
     guardarCat(nombre)
@@ -207,7 +220,7 @@ export default function Inventario (){
         const lista=res.data.datos
         const newComponent = lista.map(dato=>(
           <Lista key={dato._id}nombre={dato.nombre}/>))
-        setListaCat([...listaCat,newComponent])
+        setListaCat([...listaCat,...newComponent])
       })
     }catch(error){
       console.log(error)
