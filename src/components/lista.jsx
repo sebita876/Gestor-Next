@@ -1,4 +1,7 @@
-export function Lista ({nombre,id})
+export function Lista ({nombre,id,funcion,state})
 {   
-    return <li className="li" key={id}>{nombre}</li>  
+    const handleClick = () => {
+        funcion(nombre,state)
+      };
+    return <li className="li" onClick={handleClick} key={id}>{nombre}</li>  
 }

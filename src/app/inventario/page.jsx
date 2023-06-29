@@ -8,23 +8,33 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "./loading";
 
 export default function Inventario (){
-  const [mostarCampos, setMostarCampos]=useState(false)
+  const [mostarLista, setMostarList]=useState(false)
   const [articulos, setArticulos]= useState([])
   const [isLoading, setIsLoading] = useState(true);  
   let [listaArticulo,setListaArticulo]=useState([])
   const [busqueda, setBusqueda]= useState("")
   const[select, setSelect]=useState([])
-  
+  let [listaCat,setListaCat]=useState([])
+  let listaArtBien
   useEffect(()=>{
-    TraerCat()
-    TraerArticulos()
+    const init = async () =>{
+    await TraerArticulos()
+    }
+    init()
   },[])
+  useEffect(()=>{
+    listaCatBien=listaCat
+    console.log(listaCatBien)
+    
+  },[listaCat])
   
   useEffect(() => {
+    console.log(listaArticulo, "useEffect")
   }, [articulos,listaArticulo]);
   const [modalOpen, setModalOpen] = useState(false)
   const openModal = () => {
     setModalOpen(true)
+    console.log(listaCatBien)
   }
   const closeModal = () => {
     setModalOpen(false)
@@ -131,7 +141,6 @@ export default function Inventario (){
       console.log(error)
     }};
   const TraerArticulos = async ()=>{//_________________________Traer Articulo__________________________//
-    BorrarListaArticulo()
     try{
       const herramientas = await axios.get('/api/articulo').then( res =>{
         const lista=res.data.datos
@@ -139,7 +148,7 @@ export default function Inventario (){
         const newComponent = lista.map(dato=>(
           <Articulo key={dato._id}nombre={dato.nombre}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}cantidad={dato.cantidad}/>))
         setListaArticulo([...listaArticulo,...newComponent])
-        setIsLoading(false);
+        return TraerCat()
       })
     }catch(error){
       console.log(error)
@@ -155,7 +164,6 @@ export default function Inventario (){
     }
     const ActualizarArticulo = async ()=>{
       try{     
-        console.log(listaCatBien)
         const nombre = document.getElementById("inputnombre").value
         const categoria = document.getElementById("inputcategoria").value
         const cantidad = document.getElementById("inputcantidad").value
@@ -188,26 +196,33 @@ export default function Inventario (){
           console.log(error)
         }}   
 //_______________________________________________CATEGORIA_______________________________________________//
-  let [listaCat,setListaCat]=useState([])
-  const listaCatBien = listaCat[0]
+  let listaCatBien
   const BorrarListaCat=()=>{ 
     const array=[]
     setListaCat(listaCat=array)
-    console.log('este es el que borra')
     console.log(listaArticulo)
+  }
+  const [artFiltrado,setArtFiltrado]=useState([])
+  const filtrarCat=(nombre,state)=>{
+    console.log("entro")
+    console.log(nombre)
+    console.log(state)
+    const filtrado = listaArticulo.filter(elemento => elemento.props.categoria === nombre)
+    setArtFiltrado[filtrado]
+    setMostarList[true]
   }
   const AgregarCat=()=>{ //_________________________Agregar Categoria__________________________//
     closeModal2()
     const nombre = document.getElementById("nombre").value
-    
-    const newComponent=<Lista nombre={nombre} id={1}/>
+    let id =1
+    const newComponent=<Lista nombre={nombre} id={id} funcion={filtrarCat} state={listaArticulo}/>
     setListaCat([...listaCat,newComponent])
-    guardarCat(nombre)
+    guardarCat(nombre,id)
   }
-  const guardarCat=async (nombre)=>{//_________________________Guardar Categoria__________________________//
+  const guardarCat=async (nombre,id)=>{//_________________________Guardar Categoria__________________________//
     try{
       await axios.post('/api/categoria',{
-        id:1,
+        id:id,
         nombre:nombre
         }).then
         ( data => console.log('guardao'))
@@ -216,11 +231,14 @@ export default function Inventario (){
     }};
   const TraerCat = async ()=>{//_________________________Traer Categorias__________________________//
     try{
+      let nombre
+      console.log(listaArticulo,"traerCat ListaArticulo")
       const categorias = await axios.get('/api/categoria').then( res =>{
         const lista=res.data.datos
         const newComponent = lista.map(dato=>(
-          <Lista key={dato._id}nombre={dato.nombre}/>))
+          <Lista key={dato._id}nombre={dato.nombre} funcion={filtrarCat} state={listaArticulo}/>))
         setListaCat([...listaCat,...newComponent])
+        setIsLoading(false);
       })
     }catch(error){
       console.log(error)
@@ -285,10 +303,11 @@ export default function Inventario (){
               <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <input type="text" placeholder="Id"id="id" className="inputt"/>
               <select name="" id="categoria">
-                {listaCatBien.map((elemento)=>{
-                  return <option key={elemento.props.nombre} value={elemento.props.nombre}>{elemento.props.nombre}</option>
-                }
-                )}
+                {listaCat.map((elemento)=>(
+                   <option key={elemento.props.nombre} value={elemento.props.nombre}>
+                      {elemento.props.nombre}
+                    </option>
+                ))}
               </select>
               <input type="text" placeholder="Cantidad" id="cantidad" className="inputt"/>
               <button onClick={()=>{AgregarArticulo()}}>Cerrar</button>
@@ -385,6 +404,7 @@ export default function Inventario (){
       </header>
     <div className="contenedor">
       <div className="izquierda" >
+        <button onClick={()=>filtrarCat("dsds")}>example</button>
         <h1 className="h1">Categorias</h1>
         <ul>
           <li className="li" >Todos</li>
@@ -413,7 +433,8 @@ export default function Inventario (){
                       <td className="lista">Categoria</td>
                       <td className="lista">Cantidad</td>
                   </tr>
-                  {listaArticulo}
+                  {!mostarLista && listaArticulo}
+                  {mostarLista && artFiltrado}
                 </tbody>
             </table>
         </InfiniteScroll>   
