@@ -23,14 +23,20 @@ export default function Inventario (){
     init()
   },[])
   useEffect(()=>{
+    const init = async () =>{
+    if(listaArticulo.length !== 0){
+      BorrarListaCat()
+      await TraerCat()
+    }
+    }
+    init()
+  },[listaArticulo])
+  useEffect(()=>{
     listaCatBien=listaCat
-    console.log(listaCatBien)
-    
   },[listaCat])
-  
   useEffect(() => {
     console.log(listaArticulo, "useEffect")
-  }, [articulos,listaArticulo]);
+   }, [articulos,listaArticulo]);
   const [modalOpen, setModalOpen] = useState(false)
   const openModal = () => {
     setModalOpen(true)
@@ -148,7 +154,6 @@ export default function Inventario (){
         const newComponent = lista.map(dato=>(
           <Articulo key={dato._id}nombre={dato.nombre}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}cantidad={dato.cantidad}/>))
         setListaArticulo([...listaArticulo,...newComponent])
-        return TraerCat()
       })
     }catch(error){
       console.log(error)
@@ -238,6 +243,7 @@ export default function Inventario (){
         const newComponent = lista.map(dato=>(
           <Lista key={dato._id}nombre={dato.nombre} funcion={filtrarCat} state={listaArticulo}/>))
         setListaCat([...listaCat,...newComponent])
+        console.log("Ya creo cat")
         setIsLoading(false);
       })
     }catch(error){
