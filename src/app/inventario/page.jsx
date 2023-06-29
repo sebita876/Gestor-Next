@@ -4,6 +4,7 @@ import { Lista } from "@/components/lista";
 import { Articulo } from "@/components/articulo";
 import { useRef } from "react";
 import axios from "axios";
+import { ValidarCat } from "./validar";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "./loading";
 
@@ -34,6 +35,9 @@ export default function Inventario (){
   useEffect(()=>{
     listaCatBien=listaCat
   },[listaCat])
+  useEffect(()=>{
+    console.log(artFiltrado)
+  },[mostarLista])
   useEffect(() => {
     console.log(listaArticulo, "useEffect")
    }, [articulos,listaArticulo]);
@@ -165,7 +169,7 @@ export default function Inventario (){
       document.getElementById("inputcantidad").type=Number  
       document.getElementById("inputcantidad").value=resultado.cantidad
       document.getElementById("inputid").value=resultado.id
-      
+      document.getElementById("inputcategoria").value=resultado.categoria
     }
     const ActualizarArticulo = async ()=>{
       try{     
@@ -209,20 +213,25 @@ export default function Inventario (){
   }
   const [artFiltrado,setArtFiltrado]=useState([])
   const filtrarCat=(nombre,state)=>{
-    console.log("entro")
-    console.log(nombre)
-    console.log(state)
-    const filtrado = listaArticulo.filter(elemento => elemento.props.categoria === nombre)
-    setArtFiltrado[filtrado]
-    setMostarList[true]
+    const filtrado = state.filter(elemento => elemento.props.categoria === nombre)
+    console.log(filtrado,"Filtrado")
+    setArtFiltrado(filtrado)
+    console.log(artFiltrado,"Art Filtrado")
+
+    setMostarList(true)
   }
   const AgregarCat=()=>{ //_________________________Agregar Categoria__________________________//
-    closeModal2()
     const nombre = document.getElementById("nombre").value
+    const validacion = ValidarCat(listaCat,nombre)
+    if(validacion == true)
+    {closeModal2()
     let id =1
     const newComponent=<Lista nombre={nombre} id={id} funcion={filtrarCat} state={listaArticulo}/>
     setListaCat([...listaCat,newComponent])
-    guardarCat(nombre,id)
+    guardarCat(nombre,id)}
+    else{
+      document.getElementById("H1 hidden").hidden=false
+    }
   }
   const guardarCat=async (nombre,id)=>{//_________________________Guardar Categoria__________________________//
     try{
@@ -342,10 +351,11 @@ export default function Inventario (){
           <input type="number" id="inputid" hidden={true}  defaultValue={"0"}/>
           <input type="text" id="inputnombre" className="inputt"  defaultValue={"nombre"} />
           <select name="" id="inputcategoria">
-                {listaCatBien.map((elemento)=>{
-                  return <option key={elemento.props.nombre} value={elemento.props.nombre}>{elemento.props.nombre}</option>
-                }
-                )}
+          {listaCat.map((elemento)=>(
+                   <option key={elemento.props.nombre} value={elemento.props.nombre}>
+                      {elemento.props.nombre}
+                    </option>
+                ))}
               </select>
           <input type="text" id="inputcantidad" className="inputt" defaultValue={"cantidad"}/>
           <button onClick={ActualizarArticulo}>Buscar</button>
@@ -363,6 +373,7 @@ export default function Inventario (){
         <div className="contenedor3">
           <div className="modal-overlay">
             <div className="modal-content">
+              <h1 hidden={true} id="H1 hidden">Nombre Invaldio</h1>
               <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <button onClick={AgregarCat}>Cerrar</button>
             </div>
@@ -413,7 +424,7 @@ export default function Inventario (){
         <button onClick={()=>filtrarCat("dsds")}>example</button>
         <h1 className="h1">Categorias</h1>
         <ul>
-          <li className="li" >Todos</li>
+          <li className="li" onClick={()=>setMostarList(false)} >Todos</li>
           {listaCat}
         </ul>
         <div className="medioizquierda">
