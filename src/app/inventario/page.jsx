@@ -28,6 +28,8 @@ export default function Inventario (){
     if(listaArticulo.length !== 0){
       BorrarListaCat()
       await TraerCat()
+    }else{
+      setIsLoading(false);
     }
     }
     init()
@@ -174,13 +176,17 @@ export default function Inventario (){
       setIsLoading(false);
     }}
     const SeleccionarArticulo = () =>{
+      try{
       const resultado = articulos.find(element => element.nombre === document.getElementById("select").value )
       document.getElementById("inputnombre").value = resultado.nombre 
       document.getElementById("inputcantidad").type=Number  
       document.getElementById("inputcantidad").value=resultado.cantidad
       document.getElementById("inputid").value=resultado.id
       document.getElementById("inputcategoria").value=resultado.categoria
-    }
+      document.getElementById("H2 hidden").hidden = true
+    }catch{
+        document.getElementById("H2 hidden").hidden = false
+      }}
     const ActualizarArticulo = async ()=>{
       const nombre = document.getElementById("inputnombre").value
       const categoria = document.getElementById("inputcategoria").value
@@ -334,6 +340,7 @@ export default function Inventario (){
       {modalOpen && (
         <div className="contenedor3">
           <div className="modal-overlay">
+          <div className="close-button" onClick={()=>closeModal()}/>
               <h1 id="H1 hidden" hidden={true}>Nombre Invalido</h1>
               <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <input type="text" placeholder="Id"id="id" className="inputt"/>
@@ -352,6 +359,8 @@ export default function Inventario (){
       {modalOpen6 && (
         <div className="contenedor3">
           <div className="modal-overlay">
+          <div className="close-button" onClick={()=>closeModal6()}/>
+          <h1 id="H2 hidden" hidden={true}>Articulo no encontrado</h1>
             <h1 id="H1 hidden" hidden={true}>Articulo Invalido</h1>
               <h1 className="h1">Ingrese el nombre</h1>
               <input 
@@ -386,6 +395,7 @@ export default function Inventario (){
       {modalOpen8 && (
         <div className="contenedor3">
           <div className="modal-overlay">
+          <div className="close-button" onClick={()=>closeModal8()}/>
               <button onClick={()=>{setMostarCampos(true)}}>Cerrar</button>
             </div>
           </div>
@@ -393,6 +403,7 @@ export default function Inventario (){
       {modalOpen2 && (
         <div className="contenedor3">
           <div className="modal-overlay">
+          <div className="close-button" onClick={()=>closeModal2()}/>
             <div className="modal-content">
               <h1 hidden={true} id="H1 hidden">Nombre Invaldio</h1>
               <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
@@ -404,6 +415,7 @@ export default function Inventario (){
       {modalOpen5 && (
         <div className="contenedor3">
           <div className="modal-overlay">
+          <div className="close-button" onClick={()=>closeModal5()}/>
             <div className="modal-content">
               <input type="text" placeholder="Actualizar" id="nombre" className="inputt"/>
               <input type="text" placeholder="Nuevo" id="nuevo" className="inputt"/>
@@ -415,6 +427,7 @@ export default function Inventario (){
       {modalOpen3 && (
         <div className="contenedor3">
           <div className="modal-overlay">
+          <div className="close-button" onClick={()=>closeModal3()}/>
             <div className="modal-content">
               <input type="text" placeholder="Nombre" id="borrar" className="inputt"/>
               <button onClick={BorrarCat}>Cerrar</button>
@@ -425,6 +438,7 @@ export default function Inventario (){
        {modalOpen7 && (
         <div className="contenedor3">
           <div className="modal-overlay">
+          <div className="close-button" onClick={()=>closeModal7()}/>
             <div className="modal-content">
               <h1 id="H1 hidden" hidden={true}>ID invalido</h1>
               <input type="number" placeholder="ID" id="borrar" className="inputt" onKeyPress={handleKeyPress}/>
