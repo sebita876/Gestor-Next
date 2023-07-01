@@ -37,7 +37,7 @@ export async function PUT(req){
       categoria=_id.categoria
     }
     if((nombre != undefined && id != undefined) || (categoria != undefined && id != undefined) || (cantidad != undefined && id != undefined)){
-      const Update = await Herramienta.findByIdAndUpdate(_id[0]._id,{nombre:nombre,categoria:categoria,fecha:fecha,catidad:cantidad},{new:true})
+      const Update = await Herramienta.findByIdAndUpdate(_id[0]._id,{nombre:nombre,categoria:categoria,fecha:fecha,cantidad:cantidad},{new:true})
       return NextResponse.json({status: 200, message:'Actualizado exitosamente', data: Update})
   }else{
       const Deleted = await Herramienta.findByIdAndDelete(_id[0]._id)

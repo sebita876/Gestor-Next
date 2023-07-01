@@ -4,7 +4,7 @@ import { Lista } from "@/components/lista";
 import { Articulo } from "@/components/articulo";
 import { useRef } from "react";
 import axios from "axios";
-import { ValidarCat } from "./validar";
+import { ValidarCat,ValidarArticulo,ValidarId,ValidarEditarArticulo } from "./validar";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loading from "./loading";
 
@@ -111,9 +111,19 @@ export default function Inventario (){
     today.setHours(0, 0, 0, 0); 
     return today.toLocaleDateString();
   }
+  function handleKeyPress(event) {
+    if (event.key === "e") {
+      event.preventDefault();
+    }
+  }
   const AgregarArticulo=()=>{//_________________________Agregar Articulo__________________________//
     let id
-    const length = listaArticulo.length
+    const nombre = document.getElementById("nombre").value
+    const categoria= document.getElementById("categoria").value
+    const cantidad= document.getElementById("cantidad").value
+    const valido = ValidarArticulo(listaArticulo,nombre,cantidad)
+    if (valido == true){
+      const length = listaArticulo.length
       if (length == 0){
         id =1
       }
@@ -123,9 +133,6 @@ export default function Inventario (){
         const props = objeto.props.id
         id = props + 1
       }
-    const nombre = document.getElementById("nombre").value
-    const categoria= document.getElementById("categoria").value
-    const cantidad= document.getElementById("cantidad").value
     const newComponent = <Articulo
     fecha={funcion()}
       nombre={nombre}
@@ -136,6 +143,9 @@ export default function Inventario (){
     setListaArticulo([...listaArticulo,newComponent])
     GuardarArticulo(nombre,id,categoria,cantidad);
     closeModal()
+    }else{  
+      document.getElementById("H1 hidden").hidden= false
+    }
   }
   const GuardarArticulo = async (nombre,id,categoria,cantidad) => {//___________________Guardar Articulo_______________//
     try{
@@ -172,10 +182,13 @@ export default function Inventario (){
       document.getElementById("inputcategoria").value=resultado.categoria
     }
     const ActualizarArticulo = async ()=>{
-      try{     
-        const nombre = document.getElementById("inputnombre").value
-        const categoria = document.getElementById("inputcategoria").value
-        const cantidad = document.getElementById("inputcantidad").value
+      const nombre = document.getElementById("inputnombre").value
+      const categoria = document.getElementById("inputcategoria").value
+      const cantidad = document.getElementById("inputcantidad").value
+      console.log(cantidad)
+      const valido = ValidarEditarArticulo(listaArticulo,nombre,cantidad,categoria)
+      if(valido == true){
+        try{     
         const id = document.getElementById("inputid").value
         closeModal6()
         const CategoriaActualizar = await axios.put('/api/articulo', {
@@ -189,21 +202,27 @@ export default function Inventario (){
         TraerArticulos()
       }catch(error){
         console.log(error)
+      }}else{
+        document.getElementById("H1 hidden").hidden= false
       }
     }
       const BorrarArticulo = async ()=>{//------------------Borrar Articulos---------------------------------//
-        closeModal7()
-        try{
-          const id = document.getElementById("borrar").value
-          const response = await axios.put('/api/articulo', {
-            id:id
-          })
-
-          BorrarListaArticulo()
-          TraerArticulos()
-        }catch(error){
-          console.log(error)
-        }}   
+        const id = document.getElementById("borrar").value
+        const validar = ValidarId(listaArticulo,id)
+        if(validar == true){
+          closeModal7()
+          try{
+            const response = await axios.put('/api/articulo', {
+              id:id
+            })
+            BorrarListaArticulo()
+            TraerArticulos()
+          }catch(error){
+            console.log(error)
+          }}else{
+            document.getElementById("H1 hidden").hidden = false
+          }   
+        }
 //_______________________________________________CATEGORIA_______________________________________________//
   let listaCatBien
   const BorrarListaCat=()=>{ 
@@ -315,6 +334,7 @@ export default function Inventario (){
       {modalOpen && (
         <div className="contenedor3">
           <div className="modal-overlay">
+              <h1 id="H1 hidden" hidden={true}>Nombre Invalido</h1>
               <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <input type="text" placeholder="Id"id="id" className="inputt"/>
               <select name="" id="categoria">
@@ -324,7 +344,7 @@ export default function Inventario (){
                     </option>
                 ))}
               </select>
-              <input type="text" placeholder="Cantidad" id="cantidad" className="inputt"/>
+              <input type="number" placeholder="Cantidad" id="cantidad" className="inputt" onKeyPress={handleKeyPress}/>
               <button onClick={()=>{AgregarArticulo()}}>Cerrar</button>
           </div>
       </div>
@@ -332,6 +352,7 @@ export default function Inventario (){
       {modalOpen6 && (
         <div className="contenedor3">
           <div className="modal-overlay">
+            <h1 id="H1 hidden" hidden={true}>Articulo Invalido</h1>
               <h1 className="h1">Ingrese el nombre</h1>
               <input 
               type="search" 
@@ -357,7 +378,7 @@ export default function Inventario (){
                     </option>
                 ))}
               </select>
-          <input type="text" id="inputcantidad" className="inputt" defaultValue={"cantidad"}/>
+          <input type="number" id="inputcantidad" className="inputt" defaultValue={"cantidad"} onKeyPress={handleKeyPress}/>
           <button onClick={ActualizarArticulo}>Buscar</button>
           </div>
       </div>
@@ -405,7 +426,8 @@ export default function Inventario (){
         <div className="contenedor3">
           <div className="modal-overlay">
             <div className="modal-content">
-              <input type="text" placeholder="ID" id="borrar" className="inputt"/>
+              <h1 id="H1 hidden" hidden={true}>ID invalido</h1>
+              <input type="number" placeholder="ID" id="borrar" className="inputt" onKeyPress={handleKeyPress}/>
               <button onClick={BorrarArticulo}>Cerrar</button>
             </div>
           </div>
