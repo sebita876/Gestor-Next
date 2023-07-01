@@ -19,9 +19,8 @@ export default function Inventario (){
   let listaArtBien
   useEffect(()=>{
     const init = async () =>{
-    await TraerArticulos()
-    }
-    init()
+    await TraerArticulos()}
+  init()
   },[])
   useEffect(()=>{
     const init = async () =>{
@@ -30,23 +29,19 @@ export default function Inventario (){
       await TraerCat()
     }else{
       setIsLoading(false);
-    }
-    }
-    init()
+    }}
+  init()
   },[listaArticulo])
   useEffect(()=>{
     listaCatBien=listaCat
   },[listaCat])
   useEffect(()=>{
-    console.log(artFiltrado)
   },[mostarLista])
   useEffect(() => {
-    console.log(listaArticulo, "useEffect")
-   }, [articulos,listaArticulo]);
+   },[articulos,listaArticulo]);
   const [modalOpen, setModalOpen] = useState(false)
   const openModal = () => {
     setModalOpen(true)
-    console.log(listaCatBien)
   }
   const closeModal = () => {
     setModalOpen(false)
@@ -116,8 +111,7 @@ export default function Inventario (){
   function handleKeyPress(event) {
     if (event.key === "e") {
       event.preventDefault();
-    }
-  }
+    }}
   const AgregarArticulo=()=>{//_________________________Agregar Articulo__________________________//
     let id
     const nombre = document.getElementById("nombre").value
@@ -147,8 +141,7 @@ export default function Inventario (){
     closeModal()
     }else{  
       document.getElementById("H1 hidden").hidden= false
-    }
-  }
+    }}
   const GuardarArticulo = async (nombre,id,categoria,cantidad) => {//___________________Guardar Articulo_______________//
     try{
       closeModal()
@@ -168,15 +161,20 @@ export default function Inventario (){
         const lista=res.data.datos
         setArticulos(res.data.datos)
         const newComponent = lista.map(dato=>(
-          <Articulo key={dato._id}nombre={dato.nombre}fecha={dato.fecha}id={dato.id}categoria={dato.categoria}cantidad={dato.cantidad}/>))
+          <Articulo 
+          key={dato._id}
+          nombre={dato.nombre}
+          fecha={dato.fecha}
+          id={dato.id}
+          categoria={dato.categoria}
+          cantidad={dato.cantidad}/>))
         setListaArticulo([...listaArticulo,...newComponent])
       })
     }catch(error){
-      console.log(error)
       setIsLoading(false);
     }}
-    const SeleccionarArticulo = () =>{
-      try{
+  const SeleccionarArticulo = () =>{
+    try{
       const resultado = articulos.find(element => element.nombre === document.getElementById("select").value )
       document.getElementById("inputnombre").value = resultado.nombre 
       document.getElementById("inputcantidad").type=Number  
@@ -185,38 +183,37 @@ export default function Inventario (){
       document.getElementById("inputcategoria").value=resultado.categoria
       document.getElementById("H2 hidden").hidden = true
     }catch{
-        document.getElementById("H2 hidden").hidden = false
-      }}
-    const ActualizarArticulo = async ()=>{
-      const nombre = document.getElementById("inputnombre").value
-      const categoria = document.getElementById("inputcategoria").value
-      const cantidad = document.getElementById("inputcantidad").value
-      console.log(cantidad)
-      const valido = ValidarEditarArticulo(listaArticulo,nombre,cantidad,categoria)
+      document.getElementById("H2 hidden").hidden = false
+    }}
+  const ActualizarArticulo = async ()=>{
+    const nombre = document.getElementById("inputnombre").value
+    const categoria = document.getElementById("inputcategoria").value
+    const cantidad = document.getElementById("inputcantidad").value
+    const valido = ValidarEditarArticulo(listaArticulo,nombre,cantidad,categoria)
       if(valido == true){
         try{     
-        const id = document.getElementById("inputid").value
-        closeModal6()
-        const CategoriaActualizar = await axios.put('/api/articulo', {
-          id:id,
-          nombre:nombre,
-          categoria:categoria,
-          cantidad:cantidad,
-          fecha:funcion()
-        })
-        BorrarListaArticulo()
-        TraerArticulos()
-      }catch(error){
+          const id = document.getElementById("inputid").value
+          closeModal6()
+          const CategoriaActualizar = await axios.put('/api/articulo', {
+            id:id,
+            nombre:nombre,
+            categoria:categoria,
+            cantidad:cantidad,
+            fecha:funcion()
+          })
+          BorrarListaArticulo()
+          TraerArticulos()
+        }catch(error){
         console.log(error)
-      }}else{
-        document.getElementById("H1 hidden").hidden= false
       }
-    }
-      const BorrarArticulo = async ()=>{//------------------Borrar Articulos---------------------------------//
-        const id = document.getElementById("borrar").value
-        const validar = ValidarId(listaArticulo,id)
-        if(validar == true){
-          closeModal7()
+    }else{
+        document.getElementById("H1 hidden").hidden= false
+      }}
+  const BorrarArticulo = async ()=>{//------------------Borrar Articulos---------------------------------//
+    const id = document.getElementById("borrar").value
+    const validar = ValidarId(listaArticulo,id)
+      if(validar == true){
+        closeModal7()
           try{
             const response = await axios.put('/api/articulo', {
               id:id
@@ -225,10 +222,10 @@ export default function Inventario (){
             TraerArticulos()
           }catch(error){
             console.log(error)
-          }}else{
-            document.getElementById("H1 hidden").hidden = false
-          }   
-        }
+          }
+      }else{
+        document.getElementById("H1 hidden").hidden = false
+      }}
 //_______________________________________________CATEGORIA_______________________________________________//
   let listaCatBien
   const BorrarListaCat=()=>{ 
@@ -239,25 +236,21 @@ export default function Inventario (){
   const [artFiltrado,setArtFiltrado]=useState([])
   const filtrarCat=(nombre,state)=>{
     const filtrado = state.filter(elemento => elemento.props.categoria === nombre)
-    console.log(filtrado,"Filtrado")
     setArtFiltrado(filtrado)
-    console.log(artFiltrado,"Art Filtrado")
-
     setMostarList(true)
   }
   const AgregarCat=()=>{ //_________________________Agregar Categoria__________________________//
     const nombre = document.getElementById("nombre").value
     const validacion = ValidarCat(listaCat,nombre)
-    if(validacion == true)
-    {closeModal2()
-    let id =1
-    const newComponent=<Lista nombre={nombre} id={id} funcion={filtrarCat} state={listaArticulo}/>
-    setListaCat([...listaCat,newComponent])
-    guardarCat(nombre,id)}
-    else{
-      document.getElementById("H1 hidden").hidden=false
-    }
-  }
+      if(validacion == true){
+        closeModal2()
+        let id =1
+        const newComponent=<Lista nombre={nombre} id={id} funcion={filtrarCat} state={listaArticulo}/>
+        setListaCat([...listaCat,newComponent])
+        guardarCat(nombre,id)}
+      else{
+        document.getElementById("H1 hidden").hidden=false
+      }}
   const guardarCat=async (nombre,id)=>{//_________________________Guardar Categoria__________________________//
     try{
       await axios.post('/api/categoria',{
@@ -275,7 +268,11 @@ export default function Inventario (){
       const categorias = await axios.get('/api/categoria').then( res =>{
         const lista=res.data.datos
         const newComponent = lista.map(dato=>(
-          <Lista key={dato._id}nombre={dato.nombre} funcion={filtrarCat} state={listaArticulo}/>))
+          <Lista 
+          key={dato._id}
+          nombre={dato.nombre} 
+          funcion={filtrarCat} 
+          state={listaArticulo}/>))
         setListaCat([...listaCat,...newComponent])
         console.log("Ya creo cat")
         setIsLoading(false);
@@ -312,11 +309,9 @@ export default function Inventario (){
     }}
   const inputRef = useRef(null)
   const apretarTecla = (event)=>{
-    if(event.keyCode ===13)
-    {
+    if(event.keyCode ===13){
       inputRef.current.blur()
-    }
-  }
+    }}
   const cambios=e=>{
     setBusqueda(e.target.value)
     filtrar(e.target.value)
@@ -336,117 +331,107 @@ export default function Inventario (){
         <Loading />
       ) : (
     
-    <div className="fondo3">
-      {modalOpen && (
-        <div className="contenedor3">
-          <div className="modal-overlay">
-          <div className="close-button" onClick={()=>closeModal()}/>
-              <h1 id="H1 hidden" hidden={true}>Nombre Invalido</h1>
-              <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
-              <input type="text" placeholder="Id"id="id" className="inputt"/>
-              <select name="" id="categoria">
-                {listaCat.map((elemento)=>(
-                   <option key={elemento.props.nombre} value={elemento.props.nombre}>
+      <div className="fondo3">
+        {modalOpen && (
+          <div className="contenedor3">
+            <div className="modal-overlay">
+              <div className="close-button" onClick={()=>closeModal()}/>
+                <h1 id="H1 hidden" hidden={true}>Nombre Invalido</h1>
+                <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
+                <input type="text" placeholder="Id"id="id" className="inputt"/>
+                <select name="" id="categoria">
+                  {listaCat.map((elemento)=>(
+                    <option key={elemento.props.nombre} value={elemento.props.nombre}>
                       {elemento.props.nombre}
-                    </option>
-                ))}
-              </select>
-              <input type="number" placeholder="Cantidad" id="cantidad" className="inputt" onKeyPress={handleKeyPress}/>
-              <button onClick={()=>{AgregarArticulo()}}>Cerrar</button>
+                    </option>))}
+                </select>
+                <input type="number" placeholder="Cantidad" id="cantidad" className="inputt" onKeyPress={handleKeyPress}/>
+                <button onClick={()=>{AgregarArticulo()}}>Cerrar</button>
+            </div>
           </div>
-      </div>
-      )}
+        )}
       {modalOpen6 && (
         <div className="contenedor3">
           <div className="modal-overlay">
-          <div className="close-button" onClick={()=>closeModal6()}/>
-          <h1 id="H2 hidden" hidden={true}>Articulo no encontrado</h1>
-            <h1 id="H1 hidden" hidden={true}>Articulo Invalido</h1>
+            <div className="close-button" onClick={()=>closeModal6()}/>
+              <h1 id="H2 hidden" hidden={true}>Articulo no encontrado</h1>
+              <h1 id="H1 hidden" hidden={true}>Articulo Invalido</h1>
               <h1 className="h1">Ingrese el nombre</h1>
               <input 
-              type="search" 
-              className="inputt" 
-              placeholder="Nombre" 
-              onChange={cambios} 
-              onBlur={SeleccionarArticulo} 
-              onKeyDown={apretarTecla}
-              ref={inputRef}
-              value={busqueda}/>
+                type="search" 
+                className="inputt" 
+                placeholder="Nombre" 
+                onChange={cambios} 
+                onBlur={SeleccionarArticulo} 
+                onKeyDown={apretarTecla}
+                ref={inputRef}
+                value={busqueda}/>
               <select name="" id="select">
                 {select.map((elemento)=>
-                  <option key={elemento.id} value={elemento.nombre}>{elemento.nombre}</option>
-                )}
+                  <option key={elemento.id} value={elemento.nombre}>{elemento.nombre}</option>)}
               </select>
               <button onClick={()=>{SeleccionarArticulo()}}>Buscar</button>
-          <input type="number" id="inputid" hidden={true}  defaultValue={"0"}/>
-          <input type="text" id="inputnombre" className="inputt"  defaultValue={"nombre"} />
-          <select name="" id="inputcategoria">
-          {listaCat.map((elemento)=>(
-                   <option key={elemento.props.nombre} value={elemento.props.nombre}>
-                      {elemento.props.nombre}
-                    </option>
-                ))}
+              <input type="text" id="inputnombre" className="inputt"  defaultValue={"nombre"} />
+              <select name="" id="inputcategoria">
+                {listaCat.map((elemento)=>(
+                  <option key={elemento.props.nombre} value={elemento.props.nombre}>
+                    {elemento.props.nombre}
+                  </option>))}
               </select>
-          <input type="number" id="inputcantidad" className="inputt" defaultValue={"cantidad"} onKeyPress={handleKeyPress}/>
-          <button onClick={ActualizarArticulo}>Buscar</button>
+              <input type="number" id="inputcantidad" className="inputt" defaultValue={"cantidad"} onKeyPress={handleKeyPress}/>
+              <button onClick={ActualizarArticulo}>Buscar</button>
           </div>
-      </div>
-      )}
+        </div>)}
       {modalOpen8 && (
         <div className="contenedor3">
           <div className="modal-overlay">
-          <div className="close-button" onClick={()=>closeModal8()}/>
-              <button onClick={()=>{setMostarCampos(true)}}>Cerrar</button>
-            </div>
+            <div className="close-button" onClick={()=>closeModal8()}/>
+            <button onClick={()=>{setMostarCampos(true)}}>Cerrar</button>
           </div>
-              )}
+        </div>)}
       {modalOpen2 && (
         <div className="contenedor3">
           <div className="modal-overlay">
-          <div className="close-button" onClick={()=>closeModal2()}/>
+            <div className="close-button" onClick={()=>closeModal2()}/>
             <div className="modal-content">
               <h1 hidden={true} id="H1 hidden">Nombre Invaldio</h1>
               <input type="text" placeholder="Nombre" id="nombre" className="inputt"/>
               <button onClick={AgregarCat}>Cerrar</button>
             </div>
           </div>
-        </div>
-       )}
+        </div>)}
       {modalOpen5 && (
         <div className="contenedor3">
           <div className="modal-overlay">
-          <div className="close-button" onClick={()=>closeModal5()}/>
+            <div className="close-button" onClick={()=>closeModal5()}/>
             <div className="modal-content">
               <input type="text" placeholder="Actualizar" id="nombre" className="inputt"/>
               <input type="text" placeholder="Nuevo" id="nuevo" className="inputt"/>
               <button onClick={ActualizarCat}>Cerrar</button>
             </div>
           </div>
-        </div>
-       )}
+        </div>)}
       {modalOpen3 && (
         <div className="contenedor3">
           <div className="modal-overlay">
-          <div className="close-button" onClick={()=>closeModal3()}/>
+            <div className="close-button" onClick={()=>closeModal3()}/>
             <div className="modal-content">
               <input type="text" placeholder="Nombre" id="borrar" className="inputt"/>
               <button onClick={BorrarCat}>Cerrar</button>
             </div>
           </div>
-        </div>
-       )}
-       {modalOpen7 && (
+        </div>)}
+      {modalOpen7 && (
         <div className="contenedor3">
           <div className="modal-overlay">
-          <div className="close-button" onClick={()=>closeModal7()}/>
+            <div className="close-button" onClick={()=>closeModal7()}/>
             <div className="modal-content">
               <h1 id="H1 hidden" hidden={true}>ID invalido</h1>
               <input type="number" placeholder="ID" id="borrar" className="inputt" onKeyPress={handleKeyPress}/>
               <button onClick={BorrarArticulo}>Cerrar</button>
             </div>
           </div>
-        </div>
-       )}
+        </div>)}
       <header className="header" >
         <div className="perfil"/>
         <div className="contenedor2">
@@ -470,10 +455,9 @@ export default function Inventario (){
               <li className="li2" onClick={openModal5}>Editar Cat</li>
               <li className="li2" onClick={openModal2}>Añadir Cat</li>
               <button onClick={closeModal4}>Cerrar</button>
-            </div>
-            )}
-            <div className="btn" onClick={openModal4}/>
-          </div>
+            </div>)}
+          <div className="btn" onClick={openModal4}/>
+        </div>
       </div>
       <div className="resto" id="infiniteScroll">
         <InfiniteScroll dataLength={listaArticulo.length} hasMore={true}scrollableTarget="infiniteScroll">
