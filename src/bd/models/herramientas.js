@@ -1,30 +1,30 @@
 import mongoose from 'mongoose';
 
 const herramientasSchema = new mongoose.Schema({
-  nombre:{
+  nombre: {
     type: String,
-    require:true
+    require: true
   },
-  fecha:{
+  fecha: {
     type: String,
-    require:true,
+    require: true,
     default: function () {
       const today = new Date();
-      today.setHours(0, 0, 0, 0); 
+      today.setHours(0, 0, 0, 0);
       return today.toLocaleDateString();
     }
   },
-  id:{
+  id: {
     type: Number,
-    require:true
+    require: true
   },
   categoria: {
     type: String,
-    require:true
+    require: true
   },
   cantidad: {
     type: Number,
-    require:true
+    require: true
   }
 });
 const Herramienta = mongoose.models.Herramienta || mongoose.model('Herramienta', herramientasSchema);

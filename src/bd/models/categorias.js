@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 const categoriaSchema = new mongoose.Schema({
     nombre: {
         type: String,
-        required: true},
-    id:{
-        type:Number,
-        require:true
+        required: true
+    },
+    id: {
+        type: Number,
+        require: true
     }
 });
 
