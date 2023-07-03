@@ -48,8 +48,17 @@ export function ValidarBorrarCat(listaCat, nombre) {
     const validacionNombre = arrayNombre.includes(true)
     return validacionNombre
 }
-export function ValidarActualizarCat() {
-
+export function ValidarActualizarCat(listaCat, nombre, actualizar) {
+    const arrayNombreNuevo = listaCat.map(elemento => elemento.props.nombre === actualizar)
+    const validacionNombreNuevo = arrayNombreNuevo.includes(true)
+    const arrayNombreViejo = listaCat.map(elemento => elemento.props.nombre === nombre)
+    const validacionNombreViejo = arrayNombreViejo.includes(true)
+    if (validacionNombreNuevo == false && validacionNombreViejo  == true) {
+        return true
+    }else{
+        return false
+    }
+    
 }
 function validarSoloLetras(texto) {
     const regex = /^[a-zA-Z]+$/;

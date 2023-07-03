@@ -274,7 +274,6 @@ export default function Inventario() {
   };
   const TraerCat = async () => {//_________________________Traer Categorias__________________________//
     try {
-      let nombre
       console.log(listaArticulo, "traerCat ListaArticulo")
       const categorias = await axios.get('/api/categoria').then(res => {
         const lista = res.data.datos
@@ -318,7 +317,6 @@ export default function Inventario() {
     if (validar == true) {
       closeModal3()
       try {
-
         const response = await axios.put('/api/categoria', {
           nombre: nombre
         })
@@ -355,7 +353,6 @@ export default function Inventario() {
       {isLoading ? (
         <Loading />
       ) : (
-
         <div className="fondo3">
           {modalOpen && (
             <div className="contenedor3">
@@ -429,7 +426,7 @@ export default function Inventario() {
             <div className="contenedor3">
               <div className="modal-overlay">
                 <div className="close-button" onClick={() => closeModal5()} />
-                <h1 id="H1 hidden" hidden={true}>Nombre invalido </h1>
+                <h1 id="H1 hidden" hidden={true}>Nombre invalido</h1>
                 <div className="modal-content">
                   <input type="text" placeholder="Actualizar" id="nombre" className="inputt" />
                   <input type="text" placeholder="Nuevo" id="nuevo" className="inputt" />

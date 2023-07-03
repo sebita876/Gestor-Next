@@ -323,6 +323,10 @@ td {
   align-self: flex-start;
 }
 
+.li:hover{
+  color: #383838;
+}
+
 ul {
   list-style-position: inside;
   list-style-type: disc;
