@@ -166,6 +166,17 @@
   justify-content: center;
   height: 100vh;
 }
+.modalAdmin{
+  position: absolute;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  background-color: #64b2e6;
+}
+.containerCheck{
+  display: flex;
+  align-items: center;
+}
 
 .inventario {
   background-color: #64b2e6;
@@ -475,10 +486,13 @@ li::before {
   cursor: pointer;
   background-image: url(../../public/cerrar.png);
 }
-
+.check{
+  display:inline-block
+}
 .inputt {
   width: 150px;
   height: auto;
+  text-align: center;
   margin-bottom: 10px;
   border: 3px solid rgb(255, 0, 0);
   background-color: rgb(0, 0, 0);
@@ -506,7 +520,7 @@ li::before {
   justify-content: center;
   align-items: center;
   position: absolute;
-
+  z-index: 3;
 }
 
 .li2 {

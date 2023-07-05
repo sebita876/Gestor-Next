@@ -1,14 +1,14 @@
-import { Schema } from 'mongoose';
-import { Model } from 'mongoose';
+import mongoose from "mongoose";
 const usuariosSchema = new mongoose.Schema({
-    DNI: {
+    dni: {
         type: Number,
         required: true
     },
 
-    usuario: {
-        type: String,
-        required: true
+    admin: {
+        type: Boolean,
+        required: true,
+        default: false
     },
 
     contraseña: {
@@ -17,6 +17,8 @@ const usuariosSchema = new mongoose.Schema({
     }
 });
 
-const Usuarios = mongoose.model('Usuarios', usuariosSchema);
+const Usuarios = mongoose.models.Usuarios || mongoose.model('Usuarios', usuariosSchema);
 
-module.exports = Usuarios;
+
+
+export default Usuarios;
