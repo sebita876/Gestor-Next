@@ -60,5 +60,13 @@ export async function verificarAdmin(closeModal) {
     }
 }
 export async function validarInicio(user,pass){
-
+    const listaUsuarios = await traerUsuarios()
+    const array = listaUsuarios.data.datos.map(elemento => elemento.dni == user && elemento.contraseña == pass);
+    const validar = array.includes(true)
+    console.log(validar)
+    if (validar == true){
+        return true
+    }else{
+        return false
+    }
 }
