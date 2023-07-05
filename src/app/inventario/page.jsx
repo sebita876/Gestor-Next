@@ -182,12 +182,14 @@ export default function Inventario() {
     try {
       const resultado = articulos.find(element => element.nombre === document.getElementById("select").value)
       document.getElementById("inputnombre").value = resultado.nombre
-      document.getElementById("inputcantidad").type = Number
       document.getElementById("inputcantidad").value = resultado.cantidad
       document.getElementById("inputid").value = resultado.id
       document.getElementById("inputcategoria").value = resultado.categoria
       document.getElementById("H2 hidden").hidden = true
+      console.log("Try")
     } catch {
+      console.log("Catch")
+      document.getElementById("H1 hidden").hidden = true
       document.getElementById("H2 hidden").hidden = false
     }
   }
@@ -213,6 +215,7 @@ export default function Inventario() {
         console.log(error)
       }
     } else {
+      document.getElementById("H2 hidden").hidden = true
       document.getElementById("H1 hidden").hidden = false
     }
   }
@@ -384,7 +387,6 @@ export default function Inventario() {
                   className="inputt"
                   placeholder="Nombre"
                   onChange={cambios}
-                  onBlur={SeleccionarArticulo}
                   onKeyDown={apretarTecla}
                   ref={inputRef}
                   value={busqueda} />
@@ -394,13 +396,14 @@ export default function Inventario() {
                 </select>
                 <button onClick={() => { SeleccionarArticulo() }}>Buscar</button>
                 <input type="text" id="inputnombre" className="inputt" defaultValue={"nombre"} />
+                <input type="text" id="inputid" hidden />
                 <select name="" id="inputcategoria">
                   {listaCat.map((elemento) => (
                     <option key={elemento.props.nombre} value={elemento.props.nombre}>
                       {elemento.props.nombre}
                     </option>))}
                 </select>
-                <input type="number" id="inputcantidad" className="inputt" defaultValue={"cantidad"} onKeyPress={handleKeyPress} />
+                <input type="number" id="inputcantidad" className="inputt" placeholder="cantidad" onKeyPress={handleKeyPress} />
                 <button onClick={ActualizarArticulo}>Buscar</button>
               </div>
             </div>)}

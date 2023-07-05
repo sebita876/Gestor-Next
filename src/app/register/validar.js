@@ -59,3 +59,6 @@ export async function verificarAdmin(closeModal) {
         document.getElementById("H2 hidden").hidden = true
     }
 }
+export async function validarInicio(user,pass){
+
+}
