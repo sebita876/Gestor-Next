@@ -68,6 +68,7 @@
   transition: background-position 0.3s cubic-bezier(0.1, 0, 0.1, 1);
   border-radius: 100px;
   color: white;
+  text-align: center;
 }
 
 .inputTextLogin::placeholder {
@@ -166,14 +167,16 @@
   justify-content: center;
   height: 100vh;
 }
-.modalAdmin{
+
+.modalAdmin {
   position: absolute;
   align-items: center;
   height: 100px;
   width: 100px;
   background-color: #64b2e6;
 }
-.containerCheck{
+
+.containerCheck {
   display: flex;
   align-items: center;
 }
@@ -334,7 +337,7 @@ td {
   align-self: flex-start;
 }
 
-.li:hover{
+.li:hover {
   color: #ffffff;
 }
 
@@ -467,8 +470,9 @@ li::before {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  
+
 }
+
 .modal-overlay2 {
   border: #000000 3px solid;
   border-radius: 30px;
@@ -479,8 +483,9 @@ li::before {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  
+
 }
+
 .modal-overlay2 .close-button {
   background-size: cover;
   height: 30px;
@@ -491,6 +496,7 @@ li::before {
   cursor: pointer;
   background-image: url(../../public/cerrar.png);
 }
+
 .modal-overlay2 .close-button:hover {
   background-image: url(../../public/cerrarhover.png);
 }
@@ -512,22 +518,26 @@ li::before {
   cursor: pointer;
   background-image: url(../../public/cerrar.png);
 }
+
 .modal-overlay .close-button {
   background-size: cover;
   height: 30px;
   width: 30px;
   position: absolute;
   margin-top: -21%;
-  margin-left: 18%; 
+  margin-left: 18%;
   cursor: pointer;
   background-image: url(../../public/cerrar.png);
 }
+
 .modal-overlay .close-button:hover {
   background-image: url(../../public/cerrarhover.png);
 }
-.check{
-  display:inline-block
+
+.check {
+  display: inline-block
 }
+
 .inputt {
   width: 150px;
   height: auto;
@@ -539,17 +549,19 @@ li::before {
   Font-family: Consolas, monaco, monospace;
   text-align: center;
 }
-.inputt:hover{
+
+.inputt:hover {
   background-color: rgb(63, 45, 45);
 }
+
 .inputt::placeholder {
   text-align: center;
   color: rgb(255, 255, 255);
   Font-family: Consolas, monaco, monospace;
   font-size: 15px;
-}w
+}
 
-.modal-content button {
+w .modal-content button {
   margin-top: 10px;
 }
 
@@ -650,18 +662,20 @@ option {
   width: 20%;
 }
 
-.escondido{
-  color:#ffff;
+.escondido {
+  color: #ffff;
   Font-family: Consolas, monaco, monospace;
-font-size: x-large;
-} 
-.escondido2{
+  font-size: x-large;
+}
+
+.escondido2 {
   margin-bottom: none;
   color: #ffff;
   font-family: Consolas, monaco, monospace;
-  font-size:large;
+  font-size: large;
 }
-.selec{
+
+.selec {
   background-color: #160104;
   color: #ffff;
   margin-bottom: 3%;
@@ -671,10 +685,12 @@ font-size: x-large;
   text-align: center;
   appearance: none;
 }
-.selec:hover{
+
+.selec:hover {
   background-color: #2e0209;
 }
-.botonto{
+
+.botonto {
   width: 150px;
   height: auto;
   margin-bottom: 10px;
@@ -685,16 +701,59 @@ font-size: x-large;
   Font-family: Consolas, monaco, monospace;
   cursor: pointer;
 }
-.botonto:hover{
+
+.botonto:hover {
   background-color: rgb(214, 17, 17);
 }
+
 option {
   height: 20%;
   width: 20%;
 }
-.h3{
+
+.h3 {
   margin-top: 0;
   margin-bottom: 0;
   Font-family: Consolas, monaco, monospace;
   color: black
+}
+
+.botom {
+  border-radius: 20px;
+  margin-top: 6%;
+  background: linear-gradient(45deg, rgb(43, 4, 4), rgb(167, 17, 17));
+  border: 1px solid #160104;
+  color: white;
+  padding: 7.5px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  Font-family: Consolas, monaco, monospace;
+}
+
+.botom:hover {
+  background: linear-gradient(50deg, rgb(148, 14, 14), rgb(236, 41, 41));
+
+  -webkit-box-shadow: 0px 10px 30px 0px rgb(54, 5, 5);
+  -moz-box-shadow: 0px 10px 30px 0px rgb(56, 8, 8);
+  box-shadow: 0px 0px 20px 0px rgb(36, 3, 3);
+}
+
+.admin {
+  text-align: center;
+  flex-direction: column;
+  font-size: x-large;
+  Font-family: Consolas, monaco, monospace;
+}
+
+.sino {
+  text-align: center;
+  flex-direction: column;
+  font-size: large;
+  Font-family: Consolas, monaco, monospace;
+}
+.text{
+  text-align: center;
+  Font-family: Consolas, monaco, monospace;
+  font-size: x-large;
 }

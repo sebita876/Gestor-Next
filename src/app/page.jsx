@@ -28,10 +28,10 @@ export default function Base() {
             <div className='login'>
                 <div className='container'>
                     <h1 id="H1 hidden" hidden={true}>Usuario no encontrado</h1>
-                    <input type="number" id="user" placeholder="Nombre de usuario" className='inputTextLogin' />
+                    <input type="number" id="user" placeholder="DNI" className='inputTextLogin' />
                     <input type="text" id="pass" placeholder="Contraseña" className='inputTextLogin' />
-                    <button onClick={()=>handleClick(  ) }> inventario</button>
-                    <button onClick={()=>register()}>Register</button>
+                    <button className="botom" onClick={()=>handleClick(  ) }> Inventario</button>
+                    <button className="botom" onClick={()=>register()}>Registrarse</button>
                 </div>
             </div>
         </div>
