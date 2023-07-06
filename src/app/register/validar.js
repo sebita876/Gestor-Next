@@ -21,10 +21,16 @@ export async function validarUsuario(closeModal) {
     const listaUsuarios = await traerUsuarios()
     const arrayDni = listaUsuarios.data.datos.map(elemento => elemento.dni == dni)
     const validacionDni = arrayDni.includes(true)
-    if (contraseña == repContraseña) {
-        validarContraseña = true
-    } else {
-        validarContraseña = false
+    if(contraseña != ""){
+        if (contraseña == repContraseña) {
+            validarContraseña = true
+        } else {
+            validarContraseña = false
+        }
+    }else{
+        document.getElementById("H1hidden").hidden = false
+        document.getElementById("H2hidden").hidden = true
+        return
     }
     if (adminValidar.value == "true") {
         bool = true
@@ -38,7 +44,6 @@ export async function validarUsuario(closeModal) {
         document.getElementById("H2hidden").hidden = false
     } else {
         console.log("no guardado")
-        
         closeModal()
         document.getElementById("H2hidden").hidden = true
         document.getElementById("H1hidden").hidden = false

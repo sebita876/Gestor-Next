@@ -45,8 +45,10 @@ export default function Login() {
                 <div className='container'>
 
                     <div>
-                        <h1 id="H1hidden" hidden={true}>Usuario Invalido</h1>
-                        <h1 id="H2hidden" hidden={true}>Guardado Correctamente</h1>
+                        <div>
+                            <h1 id="H1hidden"className='text' hidden={true}>Usuario Invalido</h1>
+                            <h1 id="H2hidden" className='text'hidden={true}>Guardado Correctamente</h1>
+                        </div>
                         <input type="number" placeholder="DNI" className='inputTextRegister' id='DNI' onInput={(e) => {
                             if (e.target.value.length > 8) {
                                 e.target.value = e.target.value.slice(0, 8);
