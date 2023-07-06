@@ -211,6 +211,11 @@ export default function Inventario() {
         })
         BorrarListaArticulo()
         TraerArticulos()
+        document.getElementById("busqueda").value = ""
+        document.getElementById("inputcantidad").value = ""
+        document.getElementById("inputcategoria").value= ""
+        document.getElementById("inputnombre").value = ""
+        document.getElementById("select").value = ""
       } catch (error) {
         console.log(error)
       }
@@ -361,8 +366,9 @@ export default function Inventario() {
             <div className="contenedor3">
               <div className="modal-overlay">
                 <div className="close-button" onClick={() => closeModal()} />
-                <h1 id="H1 hidden" className="escondido" hidden={true}>Nombre Invalido</h1>
+                <h1 id="H1 hidden" className="escondido" hidden={true}>Articulo Invalido</h1>
                 <input type="text" placeholder="Nombre" id="nombre" className="inputt" />
+                <h3 className="h3">Categoria</h3>
                 <select name="" className="selec" id="categoria">
                   {listaCat.map((elemento) => (
                     <option key={elemento.props.nombre} value={elemento.props.nombre}>
@@ -376,7 +382,7 @@ export default function Inventario() {
           )}
           {modalOpen6 && (
             <div className="contenedor3">
-              <div className="modal-overlay">
+              <div className="modal-overlay2">
                 <div className="close-button" onClick={() => closeModal6()} />
                 <h1 id="H2 hidden" className="escondido2" hidden={true}>Articulo no encontrado</h1>
                 <h1 id="H1 hidden" className="escondido2" hidden={true}>Articulo Invalido</h1>
@@ -384,25 +390,27 @@ export default function Inventario() {
                 <input
                   type="search"
                   className="inputt"
-                  placeholder="Nombre"
+                  placeholder="Busqueda"
                   onChange={cambios}
                   onKeyDown={apretarTecla}
                   ref={inputRef}
-                  value={busqueda} />
-                <button className="botonto" onClick={() => { SeleccionarArticulo() }}>Buscar</button>
-                <select name="" className="selec" id="select">
+                  id = "busqueda"
+                  onBlur={SeleccionarArticulo}/>
+                <select name="" className="selec" id="select" onChange={SeleccionarArticulo}>
                   {select.map((elemento) =>
-                    <option key={elemento.id} value={elemento.nombre}>{elemento.nombre}</option>)}
+                    <option key={elemento.id} value={elemento.nombre} >{elemento.nombre}</option>)}
                 </select>
+                <h1 className="h1">Articulo</h1>
                 <input type="text" id="inputnombre" className="inputt" placeholder="Nombre" />
                 <input type="text" id="inputid" hidden />
+                <h3 className="h3">Categoria</h3>
                 <select name="" className="selec" id="inputcategoria">
                   {listaCat.map((elemento) => (
                     <option key={elemento.props.nombre} value={elemento.props.nombre}>
                       {elemento.props.nombre}
                     </option>))}
                 </select>
-                <input type="number" id="inputcantidad" className="inputt" placeholder="cantidad" onKeyPress={handleKeyPress} />
+                <input type="number" id="inputcantidad" className="inputt" placeholder="Cantidad" onKeyPress={handleKeyPress} />
                 <button className="botonto" onClick={ActualizarArticulo}>Actualizar</button>
               </div>
             </div>)}
@@ -420,7 +428,7 @@ export default function Inventario() {
                 <div className="modal-content">
                   <h1 className="escondido" hidden={true} id="H1 hidden">Nombre Invaldio</h1>
                   <input type="text" placeholder="Nombre" id="nombre" className="inputt" />
-                  <button className="botonto" onClick={AgregarCat}>Cerrar</button>
+                  <button className="botonto" onClick={AgregarCat}>Agregar</button>
                 </div>
               </div>
             </div>)}
@@ -432,7 +440,7 @@ export default function Inventario() {
                 <div className="modal-content">
                   <input type="text" placeholder="Actualizar" id="nombre" className="inputt" />
                   <input type="text" placeholder="Nuevo" id="nuevo" className="inputt" />
-                  <button className="botonto" onClick={ActualizarCat}>Cerrar</button>
+                  <button className="botonto" onClick={ActualizarCat}>Actualizar</button>
                 </div>
               </div>
             </div>)}
@@ -440,10 +448,10 @@ export default function Inventario() {
             <div className="contenedor3">
               <div className="modal-overlay">
                 <div className="close-button" onClick={() => closeModal3()} />
-                <h1 className="escondido" id="H1 hidden" hidden={true}>Nombre no encontrado</h1>
+                <h1 className="escondido" id="H1 hidden" hidden={true}>Categoria no encontrado</h1>
                 <div className="modal-content">
                   <input type="text" placeholder="Nombre" id="borrar" className="inputt" />
-                  <button className="botonto" onClick={BorrarCat}>Cerrar</button>
+                  <button className="botonto" onClick={BorrarCat}>Borrar</button>
                 </div>
               </div>
             </div>)}
