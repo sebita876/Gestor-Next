@@ -98,6 +98,13 @@ export default function Inventario() {
   const closeModal8 = () => {
     setModalOpen8(false)
   }
+  const [modalOpenAyuda, setModalOpenAyuda] = useState(false)
+  const openModalAyuda = () => {
+    setModalOpenAyuda(!modalOpenAyuda)
+  }
+  const closeModalAyuda = () => {
+    setModalOpenAyuda(false)
+  }
   //_______________________________________________ARTICULO_________________________________________________//
   const BorrarListaArticulo = () => {
     const array = []
@@ -362,6 +369,15 @@ export default function Inventario() {
         <Loading />
       ) : (
         <div className="fondo3">
+          {modalOpenAyuda &&(
+            <div className={`desplegable2 ${modalOpenAyuda ? 'visible' : ''}`}>
+              <p>
+                ssssssss sssss ssssss sssss sss ssssssss sssssss sssss sssssssss ssss sssss ssss sssss
+                ssssssss sssssss sssss ssssss sssss ssssss sssssssss ssssss ssssssss ssssss ssss ssssssss
+                sssss ss sssssssss sssssss
+              </p>
+            </div> 
+          )}
           {modalOpen && (
             <div className="contenedor3">
               <div className="modal-overlay">
@@ -467,6 +483,7 @@ export default function Inventario() {
               </div>
             </div>)}
           <header className="header" >
+              <div className="absolute" onClick={openModalAyuda}/>
             <div className="perfil" />
             <div className="contenedor2">
               <div className="botoncabe1" onClick={openModal} />

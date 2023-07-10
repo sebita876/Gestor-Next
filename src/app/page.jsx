@@ -23,14 +23,14 @@ export default function Base() {
     }
     return (
         <div>
-            <div className='fondo2' />
+            <div className='fondo' />
             <div className='fotoAdox' />
             <div className='login'>
                 <div className='container'>
-                    <h1 id="H1 hidden" hidden={true}>Usuario no encontrado</h1>
+                    <h1 id="H1 hidden" className="text"hidden={true}>Usuario no encontrado</h1>
                     <input type="number" id="user" placeholder="DNI" className='inputTextLogin' />
                     <input type="text" id="pass" placeholder="Contraseña" className='inputTextLogin' />
-                    <button className="botom" onClick={()=>handleClick(  ) }> Inventario</button>
+                    <button className="botom" onClick={()=>handleClick(  ) }> Iniciar Sesión</button>
                     <button className="botom" onClick={()=>register()}>Registrarse</button>
                 </div>
             </div>

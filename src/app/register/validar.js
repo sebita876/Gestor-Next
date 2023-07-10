@@ -58,6 +58,7 @@ export async function verificarAdmin(closeModal) {
     console.log(array, validar)
     if (validar == true) {
         validarUsuario(closeModal)
+        closeModal()
     } else {
         console.log("else")
         document.getElementById("HI hidden").hidden = false

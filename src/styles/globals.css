@@ -55,7 +55,7 @@
 
 .inputTextLogin {
   height: 30px;
-  width: 100%;
+  width: 180px;
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 10px;
@@ -664,6 +664,7 @@ option {
 
 .escondido {
   color: #ffff;
+  text-align: center;
   Font-family: Consolas, monaco, monospace;
   font-size: x-large;
 }
@@ -752,8 +753,55 @@ option {
   font-size: large;
   Font-family: Consolas, monaco, monospace;
 }
-.text{
+
+.text {
   text-align: center;
   Font-family: Consolas, monaco, monospace;
   font-size: x-large;
+}
+
+.absolute {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  background-image: url('../../public/descargar-removebg-preview.png');
+  background-size: cover;
+  background-position: center;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.desplegable2 {
+  top: 40px;
+  right: 10px;
+  position: absolute;
+  border-radius: 10px;
+  margin-bottom: 0;
+  margin-right: auto;
+  align-self: flex-end;
+  align-items: center;
+  background-color: #861010c2;
+  height: 60%;
+  width: 30%;
+  color: aliceblue;
+  animation: desplegar 0.3s ease-in-out forwards;
+  opacity: 0;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.desplegable2.visible {
+  height: 60%;
+
+}
+
+@keyframes desplegar {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
