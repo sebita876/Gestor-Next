@@ -22,7 +22,7 @@ export default function Login() {
     }
     return (
         <div>
-            <div className='fondo' />
+            <div className='fondo2' />
 
             <div className='fotoAdox' />
             {modalOpen && (

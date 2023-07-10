@@ -23,7 +23,7 @@ export default function Base() {
     }
     return (
         <div>
-            <div className='fondo' />
+            <div className='fondo2' />
             <div className='fotoAdox' />
             <div className='login'>
                 <div className='container'>
