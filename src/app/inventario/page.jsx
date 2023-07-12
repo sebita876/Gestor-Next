@@ -254,7 +254,7 @@ export default function Inventario() {
   const BorrarListaCat = () => {
     const array = []
     setListaCat(listaCat = array)
-    console.log(listaArticulo)
+
   }
   const [artFiltrado, setArtFiltrado] = useState([])
   const filtrarCat = (nombre, state) => {
@@ -289,7 +289,6 @@ export default function Inventario() {
   };
   const TraerCat = async () => {//_________________________Traer Categorias__________________________//
     try {
-      console.log(listaArticulo, "traerCat ListaArticulo")
       const categorias = await axios.get('/api/categoria').then(res => {
         const lista = res.data.datos
         const newComponent = lista.map(dato => (
@@ -300,7 +299,6 @@ export default function Inventario() {
             funcion={filtrarCat}
             state={listaArticulo} />))
         setListaCat([...listaCat, ...newComponent])
-        console.log("Ya creo cat")
         setIsLoading(false);
       })
     } catch (error) {
