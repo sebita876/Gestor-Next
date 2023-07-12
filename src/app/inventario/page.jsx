@@ -172,7 +172,7 @@ export default function Inventario() {
         setArticulos(res.data.datos)
         const newComponent = lista.map(dato => (
           <Articulo
-            key={dato._id}
+            key={dato.id}
             nombre={dato.nombre}
             fecha={dato.fecha}
             id={dato.id}
@@ -220,7 +220,7 @@ export default function Inventario() {
         TraerArticulos()
         document.getElementById("busqueda").value = ""
         document.getElementById("inputcantidad").value = ""
-        document.getElementById("inputcategoria").value= ""
+        document.getElementById("inputcategoria").value = ""
         document.getElementById("inputnombre").value = ""
         document.getElementById("select").value = ""
       } catch (error) {
@@ -295,6 +295,7 @@ export default function Inventario() {
         const newComponent = lista.map(dato => (
           <Lista
             key={dato._id}
+            id={dato.id}
             nombre={dato.nombre}
             funcion={filtrarCat}
             state={listaArticulo} />))
@@ -317,8 +318,19 @@ export default function Inventario() {
           nombre: nombre,
           actualizar: actualizar
         })
-        BorrarListaCat()
-        TraerCat()
+        const copia = [...listaCat]
+        const encontrarComponente = copia.find((componente) => componente.props.nombre === nombre)
+        if (encontrarComponente) {
+          const indice = copia.indexOf(encontrarComponente)
+          const componente = <Lista
+            nombre={actualizar}
+            key={encontrarComponente.key}
+            id={encontrarComponente.props.id}
+            funcion={filtrarCat}
+            state={listaArticulo} />
+          copia[indice] = componente
+          setListaCat(copia)
+        }
       } catch (error) {
         console.log(error)
       }
@@ -335,8 +347,8 @@ export default function Inventario() {
         const response = await axios.put('/api/categoria', {
           nombre: nombre
         })
-        BorrarListaCat()
-        TraerCat()
+        const array = listaCat.filter(element => element.props.nombre !== nombre)
+        setListaCat(array)
       } catch (error) {
         console.log(error)
       }
@@ -369,14 +381,14 @@ export default function Inventario() {
         <Loading />
       ) : (
         <div className="fondo3">
-          {modalOpenAyuda &&(
+          {modalOpenAyuda && (
             <div className={`desplegable2 ${modalOpenAyuda ? 'visible' : ''}`}>
               <p>
                 ssssssss sssss ssssss sssss sss ssssssss sssssss sssss sssssssss ssss sssss ssss sssss
                 ssssssss sssssss sssss ssssss sssss ssssss sssssssss ssssss ssssssss ssssss ssss ssssssss
                 sssss ss sssssssss sssssss
               </p>
-            </div> 
+            </div>
           )}
           {modalOpen && (
             <div className="contenedor3">
@@ -410,8 +422,8 @@ export default function Inventario() {
                   onChange={cambios}
                   onKeyDown={apretarTecla}
                   ref={inputRef}
-                  id = "busqueda"
-                  onBlur={SeleccionarArticulo}/>
+                  id="busqueda"
+                  onBlur={SeleccionarArticulo} />
                 <select name="" className="selec" id="select" onChange={SeleccionarArticulo}>
                   {select.map((elemento) =>
                     <option key={elemento.id} value={elemento.nombre} >{elemento.nombre}</option>)}
@@ -483,7 +495,7 @@ export default function Inventario() {
               </div>
             </div>)}
           <header className="header" >
-              <div className="absolute" onClick={openModalAyuda}/>
+            <div className="absolute" onClick={openModalAyuda} />
             <div className="perfil" />
             <div className="contenedor2">
               <div className="botoncabe1" onClick={openModal} />
@@ -494,7 +506,7 @@ export default function Inventario() {
           <div className="contenedor">
             <div className="izquierda" >
               <h1 className="h1">Categorias</h1>
-              <ul>
+              <ul className='ul' style={{ listStyle: 'none' }}>
                 <li className="li" onClick={() => setMostarList(false)} >Todos</li>
                 {listaCat}
               </ul>
@@ -504,7 +516,6 @@ export default function Inventario() {
                     <li className="li2" onClick={openModal3}>Borrar Cat</li>
                     <li className="li2" onClick={openModal5}>Editar Cat</li>
                     <li className="li2" onClick={openModal2}>Añadir Cat</li>
-                    <button onClick={closeModal4}>Cerrar</button>
                   </div>)}
                 <div className="btn" onClick={openModal4} />
               </div>

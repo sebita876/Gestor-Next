@@ -269,26 +269,6 @@
     height: 20%;
   }
 }
-
-.desplegable button {
-  margin-top: 10%;
-  font-family: 'trebuchet ms';
-  color: #420913;
-  font-size: 15px;
-  text-shadow: 0px 1px 0px #8C3131;
-  box-shadow: 1px 1px 1px #821717;
-  padding: 10px 25px;
-  border-radius: 10px;
-  border: 2px solid #A31F1F;
-  background: #EB6060;
-  background: linear-gradient(to top, #EB6060, #DE0000);
-  height: auto;
-  width: auto;
-  text-align: center;
-  margin-left: 11%;
-  cursor: pointer;
-}
-
 .perfil {
   float: left;
   border-radius: 30px;
@@ -335,22 +315,12 @@ td {
   align-items: center;
   cursor: pointer;
   align-self: flex-start;
+  list-style: none;
 }
 
 .li:hover {
   color: #ffffff;
 }
-
-ul {
-  list-style-position: inside;
-  list-style-type: disc;
-}
-
-li::before {
-  content: '•';
-  margin-right: 5px;
-}
-
 .contenedor2 {
   margin-left: 5%;
   margin-top: 2.5%;
@@ -362,18 +332,11 @@ li::before {
 
 .botoncabe1 {
   float: left;
-  padding: 0px;
-  margin: 0px;
-  margin-left: 2.5%;
-  background-color: #c4001a;
-  background-image: url(../../public/mas-removebg-preview.png);
-  background-size: 40px;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #c4001a url(../../public/mas-removebg-preview.png) center/40px no-repeat;
   height: 100%;
   width: 6.5%;
   border-radius: 15px;
-  aspect-ratio: 1;
+  cursor: pointer;
 }
 
 .botoncabe1:hover {
@@ -387,18 +350,12 @@ li::before {
 
 .botoncabe2 {
   float: left;
-  padding: 0px;
-  margin: 0px;
-  margin-left: 2.5%;
-  background-color: #c4001a;
-  background-image: url(../../public/equis-removebg-preview.png);
-  background-size: 40px;
-  background-position: center;
-  background-repeat: no-repeat;
+  margin: 0 2.5%;
+  background: #c4001a url(../../public/equis-removebg-preview.png) center/40px no-repeat;
   height: 100%;
   width: 6.5%;
   border-radius: 15px;
-  aspect-ratio: 1;
+  cursor: pointer;
 }
 
 .botoncabe2:hover {
@@ -412,46 +369,16 @@ li::before {
 
 .botoncabe3 {
   float: left;
-  padding: 0px;
-  margin: 0px;
-  margin-left: 2.5%;
-  background-color: #c4001a;
-  background-image: url(../../public/pincel-removebg-preview.png);
-  background-size: 40px;
-  background-position: center;
-  background-repeat: no-repeat;
+  margin: 0 2.5% 0 0;
+  background: #c4001a url(../../public/pincel-removebg-preview.png) center/40px no-repeat;
   height: 100%;
   width: 6.5%;
   border-radius: 15px;
-  aspect-ratio: 1;
+  cursor: pointer;
 }
+
 
 .botoncabe3:hover {
-
-  -webkit-box-shadow: 0px 10px 30px 0px rgba(255, 255, 255, 1);
-  -moz-box-shadow: 0px 10px 30px 0px rgba(255, 255, 255, 1);
-  box-shadow: 0px 0px 30px 0px rgba(255, 255, 255, 1);
-  height: 100.5%;
-  width: 7%;
-}
-
-.botoncabe4 {
-  float: left;
-  padding: 0px;
-  margin: 0px;
-  margin-left: 2.5%;
-  background-color: #c4001a;
-  background-image: url(../../public/tilde-removebg-preview.png);
-  background-size: 40px;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100%;
-  width: 6.5%;
-  border-radius: 15px;
-  aspect-ratio: 1;
-}
-
-.botoncabe4:hover {
 
   -webkit-box-shadow: 0px 10px 30px 0px rgba(255, 255, 255, 1);
   -moz-box-shadow: 0px 10px 30px 0px rgba(255, 255, 255, 1);
@@ -566,6 +493,8 @@ w .modal-content button {
 }
 
 .contenedor3 {
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   background-color: #000000a2;
@@ -583,8 +512,8 @@ w .modal-content button {
   align-items: center;
   cursor: pointer;
   align-self: flex-start;
+  list-style: none; /* Agregar esta línea para eliminar los puntos de lista */
 }
-
 .lista {
   background-size: contain;
   border-color: #160104;
@@ -595,12 +524,8 @@ w .modal-content button {
   text-align: center;
   font-family: Consolas, monaco, monospace;
   color: white;
-  cursor: pointer;
+  cursor: default;
   background-color: rgb(51, 47, 47);
-}
-
-.lista:hover {
-  background-color: rgb(107, 95, 95);
 }
 
 .resto table {
