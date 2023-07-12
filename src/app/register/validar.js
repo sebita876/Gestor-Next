@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setCookie } from "nookies";
 async function traerUsuarios() {
     const listaUsuarios = await axios.get('/api/usuarios')
     return listaUsuarios
@@ -64,14 +65,20 @@ export async function verificarAdmin(closeModal) {
         document.getElementById("H2 hidden").hidden = true
     }
 }
-export async function validarInicio(user,pass){
+export async function validarInicio(user,pass,router){
     const listaUsuarios = await traerUsuarios()
     const array = listaUsuarios.data.datos.map(elemento => elemento.dni == user && elemento.contraseña == pass);
     const validar = array.includes(true)
-    console.log(validar)
     if (validar == true){
-        return true
+        console.log("entra if")
+        setCookie(null, "isLogged", "true", {
+            maxAge: 3600,
+            path: "/",
+        });
+        router.push('/inventario')
+        document.getElementById("H2").hidden = false
     }else{
-        return false
+        console.log("entra else")
+        document.getElementById("H1").hidden = false
     }
 }
