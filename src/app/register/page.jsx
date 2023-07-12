@@ -1,7 +1,9 @@
 'use client'
 import { useState } from 'react'
+import { useRouter } from "next/navigation";
 import * as Validaciones from './validar'
 export default function Login() {
+    const router = useRouter()
     const [modalOpen, setModalOpen] = useState(false)
     const openModal = () => {
         setModalOpen(true)
@@ -10,14 +12,13 @@ export default function Login() {
         setModalOpen(false)
     }
     const guardarUsuario = () => {
-        
         const opcion = document.querySelector('input[name="opcion"]:checked')
         const id = opcion.id
         const admin = document.getElementById(id).value
         if (opcion && opcion.value === "true") {
             setModalOpen(true)
         } else {
-            const validar = Validaciones.validarUsuario(closeModal)
+            const validar = Validaciones.validarUsuario(closeModal,router)
         }
     }
     return (

@@ -188,14 +188,13 @@ export default function Inventario() {
   const SeleccionarArticulo = () => {
     try {
       const resultado = articulos.find(element => element.nombre === document.getElementById("select").value)
+      document.getElementById("busqueda").value = resultado.nombre
       document.getElementById("inputnombre").value = resultado.nombre
       document.getElementById("inputcantidad").value = resultado.cantidad
       document.getElementById("inputid").value = resultado.id
       document.getElementById("inputcategoria").value = resultado.categoria
       document.getElementById("H2 hidden").hidden = true
-      console.log("Try")
     } catch {
-      console.log("Catch")
       document.getElementById("H1 hidden").hidden = true
       document.getElementById("H2 hidden").hidden = false
     }
@@ -204,7 +203,8 @@ export default function Inventario() {
     const nombre = document.getElementById("inputnombre").value
     const categoria = document.getElementById("inputcategoria").value
     const cantidad = document.getElementById("inputcantidad").value
-    const valido = Validaciones.ValidarEditarArticulo(listaArticulo, nombre, cantidad, categoria)
+    const busqueda = document.getElementById("busqueda").value
+    const valido = Validaciones.ValidarEditarArticulo(listaArticulo, nombre, cantidad, categoria,busqueda)
     if (valido == true) {
       try {
         const id = document.getElementById("inputid").value

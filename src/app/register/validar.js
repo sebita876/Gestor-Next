@@ -10,7 +10,7 @@ async function guardarUsuario(dni, contraseña, admin) {
         admin: admin
     }).then(data => console.log("guardado|"))
 }
-export async function validarUsuario(closeModal) {
+export async function validarUsuario(closeModal,router) {
     const dni = document.getElementById('DNI').value
     const contraseña = document.getElementById('contraseña').value
     const repContraseña = document.getElementById('RepContraseña').value
@@ -40,8 +40,7 @@ export async function validarUsuario(closeModal) {
     if (validacionDni == false && validarContraseña == true && (bool == true || bool == false)) {
         guardarUsuario(dni, contraseña, bool)
         closeModal()
-        document.getElementById("H1hidden").hidden = true
-        document.getElementById("H2hidden").hidden = false
+        router.push('/')
     } else {
         console.log("no guardado")
         closeModal()
