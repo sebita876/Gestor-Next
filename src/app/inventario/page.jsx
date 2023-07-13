@@ -14,6 +14,7 @@ export default function Inventario() {
   const [isLoading, setIsLoading] = useState(true);
   let [listaArticulo, setListaArticulo] = useState([])
   const [busqueda, setBusqueda] = useState("")
+  const [busquedaArt, setBusquedaArt] = useState("")
   const [select, setSelect] = useState([])
   let [listaCat, setListaCat] = useState([])
   let listaArtBien
@@ -376,6 +377,23 @@ export default function Inventario() {
     })
     setSelect(resultado)
   }
+  const cambiosArticulo = e => {
+    setBusquedaArt(e.target.value)
+    filtrarArticulo(e.target.value)
+  }
+  const filtrarArticulo = (params) => {
+    var resultado = listaArticulo.filter((elemento) => {
+      if (elemento.props.nombre.toString().toLowerCase().includes(params.toLowerCase())) {
+        return elemento
+      }
+    })
+    setArtFiltrado(resultado)
+    if(params==""){
+      setMostarList(false)
+    }else{
+      setMostarList(true)
+    }
+  }
   //=====================================Return=======================================================//
   return (
     <div>
@@ -540,6 +558,7 @@ export default function Inventario() {
               <div className="botoncabe1" onClick={openModal} />
               <div className="botoncabe2" onClick={openModal7} />
               <div className="botoncabe3" onClick={openModal6} />
+              <input type="search" name="" id="filtrarArt" onChange={cambiosArticulo} />
             </div>
           </header>
           <div className="contenedor">
