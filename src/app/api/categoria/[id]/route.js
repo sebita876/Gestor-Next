@@ -7,7 +7,6 @@ export async function GET(req,res) {
   await Conectar()
   const data = req.json()
   const Categorias = await Categoria.find({nombre:'sebita'});
-  console.log(Categorias) 
   return NextResponse.json({status: 200, message:'Categorias', datos: Categorias})
 }
 

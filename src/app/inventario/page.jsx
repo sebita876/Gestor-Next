@@ -104,9 +104,6 @@ export default function Inventario() {
   const openModalAyuda = () => {
     setModalOpenAyuda(!modalOpenAyuda)
   }
-  const closeModalAyuda = () => {
-    setModalOpenAyuda(false)
-  }
   //_______________________________________________ARTICULO_________________________________________________//
   const funcion = () => {
     const today = new Date();
@@ -372,7 +369,6 @@ export default function Inventario() {
     filtrar(e.target.value)
   }
   const filtrar = (params) => {
-    console.log(articulos)
     var resultado = articulos.filter((elemento) => {
       if (elemento.nombre.toString().toLowerCase().includes(params.toLowerCase())) {
         return (elemento.nombre)

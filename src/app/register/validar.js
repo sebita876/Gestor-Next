@@ -55,12 +55,10 @@ export async function verificarAdmin(closeModal) {
     const listaUsuarios = await traerUsuarios()
     const array = listaUsuarios.data.datos.map(elemento => elemento.dni == dni && elemento.contraseña == contraseña);
     const validar = array.includes(true)
-    console.log(array, validar)
     if (validar == true) {
         validarUsuario(closeModal)
         closeModal()
     } else {
-        console.log("else")
         document.getElementById("HI hidden").hidden = false
         document.getElementById("H2 hidden").hidden = true
     }
@@ -70,7 +68,6 @@ export async function validarInicio(user,pass,router){
     const array = listaUsuarios.data.datos.map(elemento => elemento.dni == user && elemento.contraseña == pass);
     const validar = array.includes(true)
     if (validar == true){
-        console.log("entra if")
         setCookie(null, "isLogged", "true", {
             maxAge: 3600,
             path: "/",
@@ -78,7 +75,6 @@ export async function validarInicio(user,pass,router){
         router.push('/inventario')
         document.getElementById("H2").hidden = false
     }else{
-        console.log("entra else")
         document.getElementById("H1").hidden = false
     }
 }
