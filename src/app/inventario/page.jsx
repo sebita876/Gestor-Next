@@ -31,6 +31,8 @@ export default function Inventario() {
       }
     }
     init()
+    const array = listaArticulo.map(elemento => elemento.props)
+    setArticulos(array)
   }, [listaArticulo])
   useEffect(() => {
     listaCatBien = listaCat
@@ -106,10 +108,6 @@ export default function Inventario() {
     setModalOpenAyuda(false)
   }
   //_______________________________________________ARTICULO_________________________________________________//
-  const BorrarListaArticulo = () => {
-    const array = []
-    setListaArticulo(listaArticulo = array)
-  }
   const funcion = () => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -204,25 +202,31 @@ export default function Inventario() {
     const categoria = document.getElementById("inputcategoria").value
     const cantidad = document.getElementById("inputcantidad").value
     const busqueda = document.getElementById("busqueda").value
-    const valido = Validaciones.ValidarEditarArticulo(listaArticulo, nombre, cantidad, categoria,busqueda)
+    const valido = Validaciones.ValidarEditarArticulo(listaArticulo, nombre, cantidad, categoria, busqueda)
     if (valido == true) {
       try {
         const id = document.getElementById("inputid").value
-        closeModal6()
-        const CategoriaActualizar = await axios.put('/api/articulo', {
+        const ArticuloActualizar = await axios.put('/api/articulo', {
           id: id,
           nombre: nombre,
           categoria: categoria,
           cantidad: cantidad,
           fecha: funcion()
         })
-        BorrarListaArticulo()
-        TraerArticulos()
-        document.getElementById("busqueda").value = ""
-        document.getElementById("inputcantidad").value = ""
+        const copia = [...listaArticulo]
+        const encontrarComp = copia.find(elemento => elemento.props.nombre === busqueda)
+        const indice = copia.indexOf(encontrarComp)
+        const componente = <Articulo
+          key={id}
+          nombre={nombre}
+          fecha={funcion()}
+          id={id}
+          categoria={categoria}
+          cantidad={cantidad} />
+        copia[indice] = componente
+        setListaArticulo(copia)
+        closeModal6()
         document.getElementById("inputcategoria").value = ""
-        document.getElementById("inputnombre").value = ""
-        document.getElementById("select").value = ""
       } catch (error) {
         console.log(error)
       }
@@ -235,13 +239,16 @@ export default function Inventario() {
     const id = document.getElementById("borrar").value
     const validar = Validaciones.ValidarId(listaArticulo, id)
     if (validar == true) {
-      closeModal7()
       try {
         const response = await axios.put('/api/articulo', {
           id: id
         })
-        BorrarListaArticulo()
-        TraerArticulos()
+        const componente = listaArticulo.find(element => element.props.id ==id)
+        const index = listaArticulo.indexOf(componente)
+        const copia = [...listaArticulo]
+        copia.splice(index,1)
+        setListaArticulo(copia)
+        closeModal7()
       } catch (error) {
         console.log(error)
       }
@@ -365,6 +372,7 @@ export default function Inventario() {
     filtrar(e.target.value)
   }
   const filtrar = (params) => {
+    console.log(articulos)
     var resultado = articulos.filter((elemento) => {
       if (elemento.nombre.toString().toLowerCase().includes(params.toLowerCase())) {
         return (elemento.nombre)
