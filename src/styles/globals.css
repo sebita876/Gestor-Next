@@ -720,7 +720,19 @@ option {
   height: 60%;
 
 }
+.desplegable2::-webkit-scrollbar {
+  width: 10px; 
+}
 
+.desplegable2::-webkit-scrollbar-thumb {
+  background-color: #616161; 
+  border-radius: 10px; 
+}
+
+.desplegable2::-webkit-scrollbar-track {
+  background-color: transparent;
+  opacity: 0;
+}
 @keyframes desplegar {
   from {
     opacity: 0;
