@@ -48,6 +48,9 @@ export default function Inventario() {
   const openModalError = () => {
     setModalOpenError(true)
   }
+  const closeModalError = () => {
+    setModalOpenError(false)
+  }
   const openModal = () => {
     const lista = listaCat.length
     if(lista !== 0){
@@ -61,6 +64,7 @@ export default function Inventario() {
   }
   const [modalOpen2, setModalOpen2] = useState(false)
   const openModal2 = () => {
+    setModalOpenError(false)
     setModalOpen2(true)
     setModalOpen4(false)
   }
@@ -92,14 +96,25 @@ export default function Inventario() {
   }
   const [modalOpen6, setModalOpen6] = useState(false)
   const openModal6 = () => {
-    setModalOpen6(true)
+    const lista = listaCat.length
+    if(lista !== 0){
+      setModalOpen6(true)
+    }else{
+      openModalError(true)
+    }
+    
   }
   const closeModal6 = () => {
     setModalOpen6(false)
   }
   const [modalOpen7, setModalOpen7] = useState(false)
   const openModal7 = () => {
-    setModalOpen7(true)
+    const lista = listaCat.length
+    if(lista !== 0){
+      setModalOpen7(true)
+    }else{
+      openModalError(true)
+    }
   }
   const closeModal7 = () => {
     setModalOpen7(false)
@@ -435,13 +450,15 @@ export default function Inventario() {
         <div className="fondo3">
           {modalOpenAyuda && (
             <div className={`desplegable2 ${modalOpenAyuda ? 'visible' : ''}`}>
-              <p>
+              <p className="Error"> 
+                TEXTO
               </p>
             </div>
           )}
           {modalOpenError && (
             <div className="modalError">
-              
+              <div className="close-button" onClick={closeModalError}/>
+              <p className="Error">Ingrese una categoria antes</p>
             </div>
           )}
           {modalOpen && (

@@ -395,7 +395,18 @@ td {
   flex-direction: column;
 
 }
-
+.modalError .close-button{
+  background-size: cover;
+  height: 30px;
+  width: 30px;
+  margin-bottom: -5%;
+  margin-left: 90%;
+  cursor: pointer;
+  background-image: url(../../public/cerrar.png);
+}
+.modalError .close-button:hover{
+  background-image: url(../../public/cerrarhover.png);
+}
 .modal-overlay2 .close-button {
   background-size: cover;
   height: 30px;
@@ -727,25 +738,14 @@ option {
   }
 }
 .modalError {
-  height: 70px;
+  height: 80px;
   width: 300px;
-  background-color: #7a1e1ea4;
+  background-color: #c4001a;
   position: absolute;
   top: 16%;
   left: 15%;
   border-radius: 10px;
   overflow: visible; 
-}
-.modalError::before {
-  content: "";
-  position: absolute;
-  top: -10px; 
-  left: 3%; 
-  transform: translateX(-50%); 
-  width: 15px;
-  height: 15px;
-  background-color: #7a1e1ea4;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%); 
 }
 .filter {
   padding: 8px 25px; 
@@ -784,4 +784,9 @@ option {
 
 .selec2:hover {
   background-color: #2e0209;
+}
+.Error{
+  text-align: center;
+  color: white;
+  Font-family: Consolas, monaco, monospace;
 }
