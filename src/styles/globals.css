@@ -790,3 +790,9 @@ option {
   color: white;
   Font-family: Consolas, monaco, monospace;
 }
+.Error2{
+  color: white;
+  Font-family:  Arial, Helvetica Neue, Helvetica, sans-serif;
+  line-height: 1.5em;
+  font-size: 20px;
+}

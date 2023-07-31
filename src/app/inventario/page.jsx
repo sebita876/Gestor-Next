@@ -51,11 +51,18 @@ export default function Inventario() {
   const closeModalError = () => {
     setModalOpenError(false)
   }
+  const [modalOpenError2, setModalOpenError2] = useState(false)
+  const openModalError2 = () => {
+    setModalOpenError2(true)
+  }
+  const closeModalError2 = () => {
+    setModalOpenError2(false)
+  }
   const openModal = () => {
     const lista = listaCat.length
-    if(lista !== 0){
+    if (lista !== 0) {
       setModalOpen(true)
-    }else{
+    } else {
       openModalError(true)
     }
   }
@@ -97,12 +104,17 @@ export default function Inventario() {
   const [modalOpen6, setModalOpen6] = useState(false)
   const openModal6 = () => {
     const lista = listaCat.length
-    if(lista !== 0){
-      setModalOpen6(true)
-    }else{
+    const lista2 = listaArticulo.length
+    if (lista !== 0) {
+      if (lista2 == 0) {
+        openModalError2()
+      } else {
+        setModalOpen6(true)
+      }
+    } else {
       openModalError(true)
     }
-    
+
   }
   const closeModal6 = () => {
     setModalOpen6(false)
@@ -110,9 +122,14 @@ export default function Inventario() {
   const [modalOpen7, setModalOpen7] = useState(false)
   const openModal7 = () => {
     const lista = listaCat.length
-    if(lista !== 0){
-      setModalOpen7(true)
-    }else{
+    const lista2 = listaArticulo.length
+    if (lista !== 0) {
+      if (lista2 == 0) {
+        openModalError2()
+      } else {
+        setModalOpen7(true)
+      }
+    } else {
       openModalError(true)
     }
   }
@@ -142,35 +159,35 @@ export default function Inventario() {
     }
   }
   const AgregarArticulo = () => {//_________________________Agregar Articulo__________________________//
-      let id
-      const nombre = document.getElementById("nombre").value
-      const categoria = document.getElementById("categoria").value
-      const cantidad = document.getElementById("cantidad").value
-      const valido = Validaciones.ValidarArticulo(listaArticulo, nombre, cantidad)
-      if (valido == true) {
-        const length = listaArticulo.length
-        if (length == 0) {
-          id = 1
-        }
-        else {
-          const resta = listaArticulo.length - 1
-          const objeto = listaArticulo[resta]
-          const props = objeto.props.id
-          id = props + 1
-        }
-        const newComponent = <Articulo
-          fecha={funcion()}
-          nombre={nombre}
-          id={id}
-          categoria={categoria}
-          cantidad={cantidad}
-        />
-        setListaArticulo([...listaArticulo, newComponent])
-        GuardarArticulo(nombre, id, categoria, cantidad);
-        closeModal()
-      } else {
-        document.getElementById("H1 hidden").hidden = false
+    let id
+    const nombre = document.getElementById("nombre").value
+    const categoria = document.getElementById("categoria").value
+    const cantidad = document.getElementById("cantidad").value
+    const valido = Validaciones.ValidarArticulo(listaArticulo, nombre, cantidad)
+    if (valido == true) {
+      const length = listaArticulo.length
+      if (length == 0) {
+        id = 1
       }
+      else {
+        const resta = listaArticulo.length - 1
+        const objeto = listaArticulo[resta]
+        const props = objeto.props.id
+        id = props + 1
+      }
+      const newComponent = <Articulo
+        fecha={funcion()}
+        nombre={nombre}
+        id={id}
+        categoria={categoria}
+        cantidad={cantidad}
+      />
+      setListaArticulo([...listaArticulo, newComponent])
+      GuardarArticulo(nombre, id, categoria, cantidad);
+      closeModal()
+    } else {
+      document.getElementById("H1 hidden").hidden = false
+    }
   }
   const GuardarArticulo = async (nombre, id, categoria, cantidad) => {//___________________Guardar Articulo_______________//
     try {
@@ -418,28 +435,28 @@ export default function Inventario() {
       setMostarList(true)
     }
   }
-  const filtrarAZ = () =>{
+  const filtrarAZ = () => {
     const valor = document.getElementById("ordenar").value
     setMostarList(true)
-    if(valor == "a-z"){
-      const filtrador = [...listaArticulo].sort((a,b)=>{
+    if (valor == "a-z") {
+      const filtrador = [...listaArticulo].sort((a, b) => {
         return a.props.nombre.localeCompare(b.props.nombre)
       })
-      setArtFiltrado(filtrador)   
-    }else if(valor == "z-a"){
-      const filtrador = [...listaArticulo].sort((a,b)=>{
+      setArtFiltrado(filtrador)
+    } else if (valor == "z-a") {
+      const filtrador = [...listaArticulo].sort((a, b) => {
         return b.props.nombre.localeCompare(a.props.nombre)
       })
       setArtFiltrado(filtrador)
-    }else if(valor == "+/-"){
+    } else if (valor == "+/-") {
       setMostarList(false)
-    }else if(valor == "-/+"){
-      const filtrador = [...listaArticulo].sort((a,b)=>b.props.id - a.props.id)
+    } else if (valor == "-/+") {
+      const filtrador = [...listaArticulo].sort((a, b) => b.props.id - a.props.id)
       setArtFiltrado(filtrador)
-    }else{
+    } else {
       setMostarList(false)
     }
-    
+
   }
   //=====================================Return=======================================================//
   return (
@@ -450,15 +467,23 @@ export default function Inventario() {
         <div className="fondo3">
           {modalOpenAyuda && (
             <div className={`desplegable2 ${modalOpenAyuda ? 'visible' : ''}`}>
-              <p className="Error"> 
-                TEXTO
+              <p className="Error2">
+                * Para poder agregar un articulo deberas hacer una categoria, la cual la podras hacer apretando en las 3 rayas de
+                abajo a la izquierda, ahi presionaras "añadir cat", ahora si, apretando el boton con un simbolo de mas, podras agregar el articulo, donde colocaras el nombre, la categoria en la que quiere en la que este y la cantidad, la fecha e id se pondran automaticamente.
+                <br/><br/>* El editor de articulo, tendras que buscar el nombre de este para editar las siguientes caracteristicas: nombre, categoria y cantidad. El id no lo podras modificar
               </p>
             </div>
           )}
           {modalOpenError && (
             <div className="modalError">
-              <div className="close-button" onClick={closeModalError}/>
+              <div className="close-button" onClick={closeModalError} />
               <p className="Error">Ingrese una categoria antes</p>
+            </div>
+          )}
+          {modalOpenError2 && (
+            <div className="modalError">
+              <div className="close-button" onClick={closeModalError2} />
+              <p className="Error">Ingrese un articulo primero</p>
             </div>
           )}
           {modalOpen && (
@@ -572,7 +597,7 @@ export default function Inventario() {
               <div className="botoncabe1" onClick={openModal} />
               <div className="botoncabe2" onClick={openModal7} />
               <div className="botoncabe3" onClick={openModal6} />
-              <select className="selec2" id="ordenar" onChange={()=>{filtrarAZ()}} defaultValue="a">
+              <select className="selec2" id="ordenar" onChange={() => { filtrarAZ() }} defaultValue="a">
                 <option value="" selected>Ordenar</option>
                 <option value="a-z">A-Z</option>
                 <option value="z-a">Z-A</option>
