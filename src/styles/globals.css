@@ -56,12 +56,9 @@
 .inputTextLogin {
   height: 30px;
   width: 180px;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: 10px;
+  margin: 10% auto 10px;
   display: block;
   align-items: center;
-  margin-top: 10%;
   border: 3px solid black;
   background: linear-gradient(45deg, black, gray);
   background-size: 200% 100%;
@@ -70,7 +67,6 @@
   color: white;
   text-align: center;
 }
-
 .inputTextLogin::placeholder {
   text-align: center;
   color: white;
@@ -84,12 +80,9 @@
 .inputTextRegister {
   height: 30px;
   width: 200px;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: 10px;
+  margin: 10% auto 10px;
   display: block;
   align-items: center;
-  margin-top: 10%;
   border: 3px solid black;
   background: linear-gradient(45deg, black, gray);
   background-size: 200% 100%;
@@ -98,7 +91,6 @@
   color: white;
   font-size: 15px;
 }
-
 .inputTextRegister::placeholder {
   text-align: center;
   color: white;
@@ -110,31 +102,24 @@
 }
 
 .divFoto {
-  margin-bottom: 30px;
-  margin-top: 20%;
-  margin-right: auto;
-  margin-left: auto;
-  background-position: center;
+  margin: 20% auto 30px;
   width: 20%;
   height: 20%;
   background-image: url('../../public/usuario.png');
   background-size: cover;
-
-
+  background-position: center;
 }
 
 .sumbmit {
   border: 3px solid black;
   border-radius: 100px;
-  margin-top: 10%;
-  margin-left: 10px;
+  margin: 10% 10px 10%;
   background: linear-gradient(45deg, black, gray);
   cursor: pointer;
   width: 200px;
   height: 35px;
-  Font-family: Consolas, monaco, monospace;
+  font-family: Consolas, monaco, monospace;
   color: white;
-  margin-bottom: 10%;
 }
 
 .Link {
@@ -147,15 +132,13 @@
   display: inline-block;
   border: 3px solid black;
   border-radius: 100px;
-  margin-top: 5%;
-  margin-left: 10px;
+  margin: 5% 10px 10%;
   background: linear-gradient(45deg, black, gray);
   cursor: pointer;
   width: 90%;
   height: 25px;
   font-family: Consolas, monaco, monospace;
   color: white;
-  margin-bottom: 10%;
   font-size: 100%;
   text-decoration: none;
 }
@@ -475,6 +458,7 @@ td {
   color: rgb(255, 255, 255);
   Font-family: Consolas, monaco, monospace;
   text-align: center;
+  appearance: none;
 }
 
 .inputt:hover {
@@ -512,7 +496,7 @@ w .modal-content button {
   align-items: center;
   cursor: pointer;
   align-self: flex-start;
-  list-style: none; /* Agregar esta línea para eliminar los puntos de lista */
+  list-style: none;
 }
 .lista {
   background-size: contain;
@@ -741,4 +725,52 @@ option {
   to {
     opacity: 1;
   }
+}
+.modalError {
+  height: 70px;
+  width: 300px;
+  background-color: #7a1e1ea4;
+  position: absolute;
+  top: 16%;
+  left: 15%;
+  border-radius: 10px;
+  overflow: visible; 
+}
+.modalError::before {
+  content: "";
+  position: absolute;
+  top: -10px; 
+  left: 3%; 
+  transform: translateX(-50%); 
+  width: 15px;
+  height: 15px;
+  background-color: #7a1e1ea4;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%); 
+}
+.filter{
+  background-color: #c4001a;
+  border: solid rgb(66, 4, 4);
+  float: left;
+  margin-top: 30px;
+  margin-left: 30px;
+  width: 200px;
+  color: #ffff;
+  height: 30px;
+  border-radius: 12px;
+  position: relative;
+}
+.selec2 {
+  margin-left: 55px;
+  position: absolute;
+  background-color: #160104;
+  color: #ffff;
+  margin-bottom: 3%;
+  border-radius: 100px;
+  width: 150px;
+  height: 20px;
+  text-align: center;
+}
+
+.selec2:hover {
+  background-color: #2e0209;
 }

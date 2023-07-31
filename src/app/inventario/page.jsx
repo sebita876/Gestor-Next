@@ -21,6 +21,7 @@ export default function Inventario() {
   useEffect(() => {
     const init = async () => {
       await TraerArticulos()
+      await TraerCat()
     }
     init()
   }, [])
@@ -28,7 +29,7 @@ export default function Inventario() {
     const init = async () => {
       if (listaArticulo.length !== 0) {
         BorrarListaCat()
-        await TraerCat()
+        TraerCat()
       }
     }
     init()
@@ -43,8 +44,17 @@ export default function Inventario() {
   useEffect(() => {
   }, [articulos, listaArticulo]);
   const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpenError, setModalOpenError] = useState(false)
+  const openModalError = () => {
+    setModalOpenError(true)
+  }
   const openModal = () => {
-    setModalOpen(true)
+    const lista = listaCat.length
+    if(lista !== 0){
+      setModalOpen(true)
+    }else{
+      openModalError(true)
+    }
   }
   const closeModal = () => {
     setModalOpen(false)
@@ -117,35 +127,35 @@ export default function Inventario() {
     }
   }
   const AgregarArticulo = () => {//_________________________Agregar Articulo__________________________//
-    let id
-    const nombre = document.getElementById("nombre").value
-    const categoria = document.getElementById("categoria").value
-    const cantidad = document.getElementById("cantidad").value
-    const valido = Validaciones.ValidarArticulo(listaArticulo, nombre, cantidad)
-    if (valido == true) {
-      const length = listaArticulo.length
-      if (length == 0) {
-        id = 1
+      let id
+      const nombre = document.getElementById("nombre").value
+      const categoria = document.getElementById("categoria").value
+      const cantidad = document.getElementById("cantidad").value
+      const valido = Validaciones.ValidarArticulo(listaArticulo, nombre, cantidad)
+      if (valido == true) {
+        const length = listaArticulo.length
+        if (length == 0) {
+          id = 1
+        }
+        else {
+          const resta = listaArticulo.length - 1
+          const objeto = listaArticulo[resta]
+          const props = objeto.props.id
+          id = props + 1
+        }
+        const newComponent = <Articulo
+          fecha={funcion()}
+          nombre={nombre}
+          id={id}
+          categoria={categoria}
+          cantidad={cantidad}
+        />
+        setListaArticulo([...listaArticulo, newComponent])
+        GuardarArticulo(nombre, id, categoria, cantidad);
+        closeModal()
+      } else {
+        document.getElementById("H1 hidden").hidden = false
       }
-      else {
-        const resta = listaArticulo.length - 1
-        const objeto = listaArticulo[resta]
-        const props = objeto.props.id
-        id = props + 1
-      }
-      const newComponent = <Articulo
-        fecha={funcion()}
-        nombre={nombre}
-        id={id}
-        categoria={categoria}
-        cantidad={cantidad}
-      />
-      setListaArticulo([...listaArticulo, newComponent])
-      GuardarArticulo(nombre, id, categoria, cantidad);
-      closeModal()
-    } else {
-      document.getElementById("H1 hidden").hidden = false
-    }
   }
   const GuardarArticulo = async (nombre, id, categoria, cantidad) => {//___________________Guardar Articulo_______________//
     try {
@@ -175,7 +185,6 @@ export default function Inventario() {
             categoria={dato.categoria}
             cantidad={dato.cantidad} />))
         setListaArticulo([...listaArticulo, ...newComponent])
-        setIsLoading(false);
       })
     } catch (error) {
       setIsLoading(false);
@@ -241,10 +250,10 @@ export default function Inventario() {
         const response = await axios.put('/api/articulo', {
           id: id
         })
-        const componente = listaArticulo.find(element => element.props.id ==id)
+        const componente = listaArticulo.find(element => element.props.id == id)
         const index = listaArticulo.indexOf(componente)
         const copia = [...listaArticulo]
-        copia.splice(index,1)
+        copia.splice(index, 1)
         setListaArticulo(copia)
         closeModal7()
       } catch (error) {
@@ -388,11 +397,34 @@ export default function Inventario() {
       }
     })
     setArtFiltrado(resultado)
-    if(params==""){
+    if (params == "") {
       setMostarList(false)
-    }else{
+    } else {
       setMostarList(true)
     }
+  }
+  const filtrarAZ = () =>{
+    const valor = document.getElementById("ordenar").value
+    setMostarList(true)
+    if(valor == "a-z"){
+      const filtrador = [...listaArticulo].sort((a,b)=>{
+        return a.props.nombre.localeCompare(b.props.nombre)
+      })
+      setArtFiltrado(filtrador)   
+    }else if(valor == "z-a"){
+      const filtrador = [...listaArticulo].sort((a,b)=>{
+        return b.props.nombre.localeCompare(a.props.nombre)
+      })
+      setArtFiltrado(filtrador)
+    }else if(valor == "+/-"){
+      setMostarList(false)
+    }else if(valor == "-/+"){
+      const filtrador = [...listaArticulo].sort((a,b)=>b.props.id - a.props.id)
+      setArtFiltrado(filtrador)
+    }else{
+      setMostarList(false)
+    }
+    
   }
   //=====================================Return=======================================================//
   return (
@@ -404,47 +436,12 @@ export default function Inventario() {
           {modalOpenAyuda && (
             <div className={`desplegable2 ${modalOpenAyuda ? 'visible' : ''}`}>
               <p>
-                ssssssss sssss ssssss sssss sss ssssssss sssssss sssss sssssssss ssss sssss ssss sssss
-                ssssssss sssssss sssss ssssss sssss ssssss sssssssss ssssss ssssssss ssssss ssss ssssssss
-                sssss ss sssssssss sssssss s
-                saa
-                ar get
-                getg
-                getg
-                getg
-                getg
-                getg
-                g
-                getg
-                getg
-                getgg
-                g
-                g
-
-                getggg
-                g
-                g <br/>
-                seeeeee
-                <br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee<br/>
-                seeeeee
               </p>
+            </div>
+          )}
+          {modalOpenError && (
+            <div className="modalError">
+              
             </div>
           )}
           {modalOpen && (
@@ -558,7 +555,14 @@ export default function Inventario() {
               <div className="botoncabe1" onClick={openModal} />
               <div className="botoncabe2" onClick={openModal7} />
               <div className="botoncabe3" onClick={openModal6} />
-              <input type="search" name="" id="filtrarArt" onChange={cambiosArticulo} />
+              <select className="selec2" id="ordenar" onChange={()=>{filtrarAZ()}} defaultValue="a">
+                <option value="" selected>Ordenar</option>
+                <option value="a-z">A-Z</option>
+                <option value="z-a">Z-A</option>
+                <option value="+/-">+/-</option>
+                <option value="-/+">-/+</option>
+              </select>
+              <input className="filter" type="search" name="" id="filtrarArt" onChange={cambiosArticulo} />
             </div>
           </header>
           <div className="contenedor">

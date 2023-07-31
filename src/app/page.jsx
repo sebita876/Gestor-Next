@@ -18,18 +18,13 @@ export default function Base() {
             <div className="fotoAdox" />
             <div className="login">
                 <div className="container">
-                    <h1 id="H1" className="text" hidden={true}>
-                        Usuario no encontrado
-                    </h1>
+                    <h1 id="H1" className="text" hidden={true}>Usuario no encontrado</h1>
+                    <h3 className="text" id = "H2" hidden={true}>Cargando...</h3>
                     <input type="number" id="user" placeholder="DNI" className="inputTextLogin" />
                     <input type="text" id="pass" placeholder="Contraseña" className="inputTextLogin" />
-                    <h3 className="text" id = "H2" hidden={true}>Cargando...</h3>
-                    <button className="botom" onClick={() => handleClick()}>
-                        Iniciar Sesión
-                    </button>
-                    <button className="botom" onClick={() => register()}>
-                        Registrarse
-                    </button>
+                    
+                    <button className="botom" onClick={() => handleClick()}>Iniciar Sesión</button>
+                    <button className="botom" onClick={() => register()}>Registrarse</button>
                 </div>
             </div>
         </div>

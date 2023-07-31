@@ -73,6 +73,7 @@ export async function validarInicio(user,pass,router){
             path: "/",
         });
         router.push('/inventario')
+        document.getElementById("H1").hidden = true
         document.getElementById("H2").hidden = false
     }else{
         document.getElementById("H1").hidden = false
