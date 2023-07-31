@@ -747,7 +747,8 @@ option {
   background-color: #7a1e1ea4;
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%); 
 }
-.filter{
+.filter {
+  padding: 8px 25px; 
   background-color: #c4001a;
   border: solid rgb(66, 4, 4);
   float: left;
@@ -758,6 +759,15 @@ option {
   height: 30px;
   border-radius: 12px;
   position: relative;
+  background-image: url('../../public/lupa.png'); 
+  background-position: 5px center; 
+  background-repeat: no-repeat; 
+  background-size: 15px; 
+}
+.filter::placeholder {
+  text-align: center;
+  color: white;
+  Font-family: Consolas, monaco, monospace;
 }
 .selec2 {
   margin-left: 55px;
@@ -769,6 +779,7 @@ option {
   width: 150px;
   height: 20px;
   text-align: center;
+  appearance: none;
 }
 
 .selec2:hover {

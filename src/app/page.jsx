@@ -21,7 +21,7 @@ export default function Base() {
                     <h1 id="H1" className="text" hidden={true}>Usuario no encontrado</h1>
                     <h3 className="text" id = "H2" hidden={true}>Cargando...</h3>
                     <input type="number" id="user" placeholder="DNI" className="inputTextLogin" />
-                    <input type="text" id="pass" placeholder="Contraseña" className="inputTextLogin" />
+                    <input type="password" id="pass" placeholder="Contraseña" className="inputTextLogin" />
                     
                     <button className="botom" onClick={() => handleClick()}>Iniciar Sesión</button>
                     <button className="botom" onClick={() => register()}>Registrarse</button>

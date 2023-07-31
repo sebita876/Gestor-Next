@@ -562,7 +562,7 @@ export default function Inventario() {
                 <option value="+/-">+/-</option>
                 <option value="-/+">-/+</option>
               </select>
-              <input className="filter" type="search" name="" id="filtrarArt" onChange={cambiosArticulo} />
+              <input className="filter" type="search" name="" id="filtrarArt" placeholder="Buscar" onChange={cambiosArticulo} />
             </div>
           </header>
           <div className="contenedor">
