@@ -464,13 +464,15 @@ export default function Inventario() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="fondo3">
+        <div className="fondo3" id="fondo3">
           {modalOpenAyuda && (
             <div className={`desplegable2 ${modalOpenAyuda ? 'visible' : ''}`}>
               <p className="Error2">
                 * Para poder agregar un articulo deberas hacer una categoria, la cual la podras hacer apretando en las 3 rayas de
                 abajo a la izquierda, ahi presionaras "añadir cat", ahora si, apretando el boton con un simbolo de mas, podras agregar el articulo, donde colocaras el nombre, la categoria en la que quiere en la que este y la cantidad, la fecha e id se pondran automaticamente.
-                <br/><br/>* El editor de articulo, tendras que buscar el nombre de este para editar las siguientes caracteristicas: nombre, categoria y cantidad. El id no lo podras modificar
+                <br /><br />* El editor de articulo, tendras que buscar el nombre de este para editar las siguientes caracteristicas: nombre, categoria y cantidad. El id y la fecha no se podra modificar
+                <br /><br />* Para eliminar un articulo se debe precionar el boton que tiene una equis e ingresar el ID del articulo que desea eliminar
+                <br /><br />* Si quiere editar una categoria, debe precionar en las 3 rayas de la izquierda, editar cat y a continuacion ingresar el nombre de la cat que quiere cambiar y el nuevo n
               </p>
             </div>
           )}
@@ -562,7 +564,7 @@ export default function Inventario() {
                 <div className="close-button" onClick={() => closeModal5()} />
                 <h1 className="escondido" id="H1 hidden" hidden={true}>Nombre invalido</h1>
                 <div className="modal-content">
-                  <input type="text" placeholder="Actualizar" id="nombre" className="inputt" />
+                  <input type="text" placeholder="Viejo" id="nombre" className="inputt" />
                   <input type="text" placeholder="Nuevo" id="nuevo" className="inputt" />
                   <button className="botonto" onClick={ActualizarCat}>Actualizar</button>
                 </div>
@@ -591,6 +593,8 @@ export default function Inventario() {
               </div>
             </div>)}
           <header className="header" >
+            <input type="checkbox" id="toggleButton" class="toggle-checkbox"/>
+            <label for="toggleButton" class="toggle-label"></label>
             <div className="absolute" onClick={openModalAyuda} />
             <div className="perfil" />
             <div className="contenedor2">

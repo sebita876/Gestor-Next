@@ -188,7 +188,6 @@
   flex-direction: column;
   background-color: rgb(51, 47, 47);
 }
-
 .contenedor {
   flex: 1;
   display: flex;
@@ -795,4 +794,64 @@ option {
   Font-family:  Arial, Helvetica Neue, Helvetica, sans-serif;
   line-height: 1.5em;
   font-size: 20px;
+}
+/* Estilo base del toggle button */
+.toggle-checkbox {
+  display: none; /* Ocultar el checkbox predeterminado */
+}
+
+/* Estilo del botón */
+.toggle-label {
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 15px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Estilo del círculo (marcado) */
+.toggle-label::before {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background-color: #fff;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+/* Estilo del texto (opcional) */
+.toggle-label::after {
+  content: "OFF";
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #555;
+}
+
+/* Estilo del círculo cuando está marcado (activado) */
+.toggle-checkbox:checked + .toggle-label::before {
+  transform: translateX(30px);
+  background-color: #fff;
+}
+
+/* Estilo del texto cuando está marcado (opcional) */
+.toggle-checkbox:checked + .toggle-label::after {
+  content: "ON";
+  left: 27px;
+  color: #fff;
+}
+
+/* Cambiar el fondo y el círculo cuando está marcado (activado) */
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #000;
+}
+.toggle-checkbox:checked + .toggle-label::before {
+  background-color: #fff;
 }
