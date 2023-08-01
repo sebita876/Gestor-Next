@@ -181,6 +181,7 @@ export default function Inventario() {
         id={id}
         categoria={categoria}
         cantidad={cantidad}
+        tema={tema}
       />
       setListaArticulo([...listaArticulo, newComponent])
       GuardarArticulo(nombre, id, categoria, cantidad);
@@ -215,7 +216,8 @@ export default function Inventario() {
             fecha={dato.fecha}
             id={dato.id}
             categoria={dato.categoria}
-            cantidad={dato.cantidad} />))
+            cantidad={dato.cantidad} 
+            tema={tema}/>))
         setListaArticulo([...listaArticulo, ...newComponent])
       })
     } catch (error) {
@@ -261,7 +263,8 @@ export default function Inventario() {
           fecha={funcion()}
           id={id}
           categoria={categoria}
-          cantidad={cantidad} />
+          cantidad={cantidad} 
+          tema={tema}/>
         copia[indice] = componente
         setListaArticulo(copia)
         closeModal6()
@@ -456,7 +459,18 @@ export default function Inventario() {
     } else {
       setMostarList(false)
     }
-
+  }
+  const [tema, setTema] = useState(false)
+  const modo = () => {
+    setTema(!tema)
+    const modal = document.querySelectorAll(".modal-overlay")
+    modal.forEach(element => {
+      element.className = tema ? 'modal-overlay-white' : 'modal-overlay'
+    });
+    const inputts = document.querySelectorAll(".inputt")
+    inputts.forEach(element => {
+      element.className = tema ? 'inputt-white' : 'inputt'
+    });
   }
   //=====================================Return=======================================================//
   return (
@@ -464,10 +478,10 @@ export default function Inventario() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="fondo3" id="fondo3">
+        <div className={tema ? 'fondo3-white' : 'fondo3'} id="fondo3">
           {modalOpenAyuda && (
             <div className={`desplegable2 ${modalOpenAyuda ? 'visible' : ''}`}>
-              <p className="Error2">
+              <p className={tema ? 'Error2-white' : 'Error2'}>
                 * Para poder agregar un articulo deberas hacer una categoria, la cual la podras hacer apretando en las 3 rayas de
                 abajo a la izquierda, ahi presionaras "añadir cat", ahora si, apretando el boton con un simbolo de mas, podras agregar el articulo, donde colocaras el nombre, la categoria en la que quiere en la que este y la cantidad, la fecha e id se pondran automaticamente.
                 <br /><br />* El editor de articulo, tendras que buscar el nombre de este para editar las siguientes caracteristicas: nombre, categoria y cantidad. El id y la fecha no se podra modificar
@@ -477,13 +491,13 @@ export default function Inventario() {
             </div>
           )}
           {modalOpenError && (
-            <div className="modalError">
+            <div className={tema ? 'modalError-white' : 'modalError'}>
               <div className="close-button" onClick={closeModalError} />
               <p className="Error">Ingrese una categoria antes</p>
             </div>
           )}
           {modalOpenError2 && (
-            <div className="modalError">
+            <div className={tema ? 'modalError-white' : 'modalError'}>
               <div className="close-button" onClick={closeModalError2} />
               <p className="Error">Ingrese un articulo primero</p>
             </div>
@@ -495,7 +509,7 @@ export default function Inventario() {
                 <h1 id="H1 hidden" className="escondido" hidden={true}>Articulo Invalido</h1>
                 <input type="text" placeholder="Nombre" id="nombre" className="inputt" />
                 <h3 className="h3">Categoria</h3>
-                <select name="" className="selec" id="categoria">
+                <select name="" className={tema ? 'selec-white' : 'selec'} id="categoria">
                   {listaCat.map((elemento) => (
                     <option key={elemento.props.nombre} value={elemento.props.nombre}>
                       {elemento.props.nombre}
@@ -522,7 +536,7 @@ export default function Inventario() {
                   ref={inputRef}
                   id="busqueda"
                   onBlur={SeleccionarArticulo} />
-                <select name="" className="selec" id="select" onChange={SeleccionarArticulo}>
+                <select name="" className={tema ? 'selec-white' : 'selec'} id="select" onChange={SeleccionarArticulo}>
                   {select.map((elemento) =>
                     <option key={elemento.id} value={elemento.nombre} >{elemento.nombre}</option>)}
                 </select>
@@ -530,7 +544,7 @@ export default function Inventario() {
                 <input type="text" id="inputnombre" className="inputt" placeholder="Nombre" />
                 <input type="text" id="inputid" hidden />
                 <h3 className="h3">Categoria</h3>
-                <select name="" className="selec" id="inputcategoria">
+                <select name="" className={tema ? 'selec-white' : 'selec'} id="inputcategoria">
                   {listaCat.map((elemento) => (
                     <option key={elemento.props.nombre} value={elemento.props.nombre}>
                       {elemento.props.nombre}
@@ -592,27 +606,27 @@ export default function Inventario() {
                 </div>
               </div>
             </div>)}
-          <header className="header" >
-            <input type="checkbox" id="toggleButton" class="toggle-checkbox"/>
+          <header className={tema ? 'header-white' : 'header'} id="header" >
+            <input type="checkbox" id="toggleButton" class="toggle-checkbox" onClick={modo} />
             <label for="toggleButton" class="toggle-label"></label>
             <div className="absolute" onClick={openModalAyuda} />
-            <div className="perfil" />
+            <div className={tema ? 'perfil-white' : 'perfil'} />
             <div className="contenedor2">
-              <div className="botoncabe1" onClick={openModal} />
-              <div className="botoncabe2" onClick={openModal7} />
-              <div className="botoncabe3" onClick={openModal6} />
-              <select className="selec2" id="ordenar" onChange={() => { filtrarAZ() }} defaultValue="a">
+              <div className={tema ? 'botoncabe1-white' : 'botoncabe1'} id="botoncabe1" onClick={openModal} />
+              <div className={tema ? 'botoncabe2-white' : 'botoncabe2'} id="botoncabe2" onClick={openModal7} />
+              <div className={tema ? 'botoncabe3-white' : 'botoncabe3'} id="botoncabe3" onClick={openModal6} />
+              <select className={tema ? 'selec2-white' : 'selec2'} id="ordenar" onChange={() => { filtrarAZ() }} defaultValue="a">
                 <option value="" selected>Ordenar</option>
                 <option value="a-z">A-Z</option>
                 <option value="z-a">Z-A</option>
                 <option value="+/-">+/-</option>
                 <option value="-/+">-/+</option>
               </select>
-              <input className="filter" type="search" name="" id="filtrarArt" placeholder="Buscar" onChange={cambiosArticulo} />
+              <input className={tema ? 'filter-white' : 'filter'} type="search" name="" id="filtrarArt" placeholder="Buscar" onChange={cambiosArticulo} />
             </div>
           </header>
           <div className="contenedor">
-            <div className="izquierda" >
+            <div className={tema ? 'izquierda-white' : 'izquierda'} >
               <h1 className="h1">Categorias</h1>
               <ul className='ul' style={{ listStyle: 'none' }}>
                 <li className="li" onClick={() => setMostarList(false)} >Todos</li>
