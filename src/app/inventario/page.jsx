@@ -463,14 +463,6 @@ export default function Inventario() {
   const [tema, setTema] = useState(false)
   const modo = () => {
     setTema(!tema)
-    const modal = document.querySelectorAll(".modal-overlay")
-    modal.forEach(element => {
-      element.className = tema ? 'modal-overlay-white' : 'modal-overlay'
-    });
-    const inputts = document.querySelectorAll(".inputt")
-    inputts.forEach(element => {
-      element.className = tema ? 'inputt-white' : 'inputt'
-    });
   }
   //=====================================Return=======================================================//
   return (
@@ -504,10 +496,10 @@ export default function Inventario() {
           )}
           {modalOpen && (
             <div className="contenedor3">
-              <div className="modal-overlay">
+              <div className={tema ? 'modal-overlay-white' : 'modal-overlay'}>
                 <div className="close-button" onClick={() => closeModal()} />
                 <h1 id="H1 hidden" className="escondido" hidden={true}>Articulo Invalido</h1>
-                <input type="text" placeholder="Nombre" id="nombre" className="inputt" />
+                <input type="text" placeholder="Nombre" id="nombre" className={tema ? 'inputt-white' : 'inputt'} />
                 <h3 className="h3">Categoria</h3>
                 <select name="" className={tema ? 'selec-white' : 'selec'} id="categoria">
                   {listaCat.map((elemento) => (
@@ -515,21 +507,21 @@ export default function Inventario() {
                       {elemento.props.nombre}
                     </option>))}
                 </select>
-                <input type="number" placeholder="Cantidad" id="cantidad" className="inputt" onKeyPress={handleKeyPress} />
+                <input type="number" placeholder="Cantidad" id="cantidad" className={tema ? 'inputt-white' : 'inputt'} onKeyPress={handleKeyPress} />
                 <button className="botonto" onClick={() => { AgregarArticulo() }}>Agregar</button>
               </div>
             </div>
           )}
           {modalOpen6 && (
             <div className="contenedor3">
-              <div className="modal-overlay2">
+              <div className={tema ? 'modal-overlay2-white' : 'modal-overlay2'}>
                 <div className="close-button" onClick={() => closeModal6()} />
                 <h1 id="H2 hidden" className="escondido2" hidden={true}>Articulo no encontrado</h1>
                 <h1 id="H1 hidden" className="escondido2" hidden={true}>Articulo Invalido</h1>
                 <h1 className="h1">Ingrese el nombre</h1>
                 <input
                   type="search"
-                  className="inputt"
+                  className={tema ? 'inputt-white' : 'inputt'}
                   placeholder="Busqueda"
                   onChange={cambios}
                   onKeyDown={apretarTecla}
@@ -541,7 +533,7 @@ export default function Inventario() {
                     <option key={elemento.id} value={elemento.nombre} >{elemento.nombre}</option>)}
                 </select>
                 <h1 className="h1">Articulo</h1>
-                <input type="text" id="inputnombre" className="inputt" placeholder="Nombre" />
+                <input type="text" id="inputnombre" className={tema ? 'inputt-white' : 'inputt'} placeholder="Nombre" />
                 <input type="text" id="inputid" hidden />
                 <h3 className="h3">Categoria</h3>
                 <select name="" className={tema ? 'selec-white' : 'selec'} id="inputcategoria">
@@ -550,58 +542,58 @@ export default function Inventario() {
                       {elemento.props.nombre}
                     </option>))}
                 </select>
-                <input type="number" id="inputcantidad" className="inputt" placeholder="Cantidad" onKeyPress={handleKeyPress} />
+                <input type="number" id="inputcantidad" className={tema ? 'inputt-white' : 'inputt'} placeholder="Cantidad" onKeyPress={handleKeyPress} />
                 <button className="botonto" onClick={ActualizarArticulo}>Actualizar</button>
               </div>
             </div>)}
           {modalOpen8 && (
             <div className="contenedor3">
-              <div className="modal-overlay">
+              <div className={tema ? 'modal-overlay-white' : 'modal-overlay'}>
                 <div className="close-button" onClick={() => closeModal8()} />
                 <button className="botonto" onClick={() => { setMostarCampos(true) }}>Cerrar</button>
               </div>
             </div>)}
           {modalOpen2 && (
             <div className="contenedor3">
-              <div className="modal-overlay">
+              <div className={tema ? 'modal-overlay-white' : 'modal-overlay'}>
                 <div className="close-button" onClick={() => closeModal2()} />
                 <div className="modal-content">
                   <h1 className="escondido" hidden={true} id="H1 hidden">Nombre Invaldio</h1>
-                  <input type="text" placeholder="Nombre" id="nombre" className="inputt" />
+                  <input type="text" placeholder="Nombre" id="nombre" className={tema ? 'inputt-white' : 'inputt'} />
                   <button className="botonto" onClick={AgregarCat}>Agregar</button>
                 </div>
               </div>
             </div>)}
           {modalOpen5 && (
             <div className="contenedor3">
-              <div className="modal-overlay">
+              <div className={tema ? 'modal-overlay-white' : 'modal-overlay'}>
                 <div className="close-button" onClick={() => closeModal5()} />
                 <h1 className="escondido" id="H1 hidden" hidden={true}>Nombre invalido</h1>
                 <div className="modal-content">
-                  <input type="text" placeholder="Viejo" id="nombre" className="inputt" />
-                  <input type="text" placeholder="Nuevo" id="nuevo" className="inputt" />
+                  <input type="text" placeholder="Viejo" id="nombre" className={tema ? 'inputt-white' : 'inputt'} />
+                  <input type="text" placeholder="Nuevo" id="nuevo" className={tema ? 'inputt-white' : 'inputt'} />
                   <button className="botonto" onClick={ActualizarCat}>Actualizar</button>
                 </div>
               </div>
             </div>)}
           {modalOpen3 && (
             <div className="contenedor3">
-              <div className="modal-overlay">
+              <div className={tema ? 'modal-overlay-white' : 'modal-overlay'}>
                 <div className="close-button" onClick={() => closeModal3()} />
                 <h1 className="escondido" id="H1 hidden" hidden={true}>Categoria no encontrado</h1>
                 <div className="modal-content">
-                  <input type="text" placeholder="Nombre" id="borrar" className="inputt" />
+                  <input type="text" placeholder="Nombre" id="borrar" className={tema ? 'inputt-white' : 'inputt'} />
                   <button className="botonto" onClick={BorrarCat}>Borrar</button>
                 </div>
               </div>
             </div>)}
           {modalOpen7 && (
             <div className="contenedor3">
-              <div className="modal-overlay">
+              <div className={tema ? 'modal-overlay-white' : 'modal-overlay'}>
                 <div className="close-button" onClick={() => closeModal7()} />
                 <div className="modal-content">
                   <h1 className="escondido" id="H1 hidden" hidden={true}>ID invalido</h1>
-                  <input type="number" placeholder="ID" id="borrar" className="inputt" onKeyPress={handleKeyPress} />
+                  <input type="number" placeholder="ID" id="borrar" className={tema ? 'inputt-white' : 'inputt'} onKeyPress={handleKeyPress} />
                   <button className="botonto" onClick={BorrarArticulo}>Eliminar</button>
                 </div>
               </div>

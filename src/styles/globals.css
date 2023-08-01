@@ -315,6 +315,7 @@ td {
   cursor: pointer;
   align-self: flex-start;
   list-style: none;
+  font-size: 18px;
 }
 
 .li:hover {
@@ -828,7 +829,8 @@ option {
 
 /* Estilo base del toggle button */
 .toggle-checkbox {
-  display: none; /* Ocultar el checkbox predeterminado */
+  display: none;
+  /* Ocultar el checkbox predeterminado */
 }
 
 /* Estilo del botón */
@@ -859,18 +861,18 @@ option {
 }
 
 /* Cambiar el fondo y el círculo cuando está marcado (activado) */
-.toggle-checkbox:checked + .toggle-label {
+.toggle-checkbox:checked+.toggle-label {
   background-color: #000;
   border-color: #000;
 }
 
-.toggle-checkbox:checked + .toggle-label::before {
+.toggle-checkbox:checked+.toggle-label::before {
   transform: translateX(30px);
   background-color: #fff;
 }
 
 .modal-overlay-white {
-  border: #6d3333 3px solid;
+  border: #000000 3px solid;
   border-radius: 30px;
   width: 22%;
   height: 50%;
@@ -908,6 +910,7 @@ option {
 }
 
 .selec-white {
+  border: #000000 3px solid;
   background-color: #cea1a8;
   color: #000000;
   margin-bottom: 3%;
@@ -917,6 +920,7 @@ option {
   text-align: center;
   appearance: none;
 }
+
 .filter-white {
   padding: 8px 25px;
   background-color: #d48690;
@@ -934,6 +938,7 @@ option {
   background-repeat: no-repeat;
   background-size: 15px;
 }
+
 .selec2-white {
   margin-left: 55px;
   position: absolute;
@@ -948,14 +953,17 @@ option {
   text-align: center;
   appearance: none;
 }
+
 .selec2-white:hover {
   background-color: #741b2a;
 }
+
 .filter-white::placeholder {
   text-align: center;
   color: rgb(0, 0, 0);
   Font-family: Consolas, monaco, monospace;
 }
+
 .izquierda-white {
   background-color: rgb(194, 78, 78);
   width: 15%;
@@ -964,32 +972,36 @@ option {
   flex-direction: column;
   border-right: 2px solid black;
 }
+
 .botoncabe1-white {
   float: left;
-  background:  rgb(194, 78, 78) url(../../public/mas-removebg-preview.png) center/40px no-repeat;
+  background: rgb(194, 78, 78) url(../../public/mas-removebg-preview.png) center/40px no-repeat;
   height: 100%;
   width: 6.5%;
   border-radius: 15px;
   cursor: pointer;
-} 
+}
+
 .botoncabe2-white {
   float: left;
   margin: 0 2.5%;
-  background:rgb(194, 78, 78) url(../../public/equis-removebg-preview.png) center/40px no-repeat;
+  background: rgb(194, 78, 78) url(../../public/equis-removebg-preview.png) center/40px no-repeat;
   height: 100%;
   width: 6.5%;
   border-radius: 15px;
   cursor: pointer;
 }
+
 .botoncabe3-white {
   float: left;
   margin: 0 2.5% 0 0;
-  background: rgb(194, 78, 78)  url(../../public/pincel-removebg-preview.png) center/40px no-repeat;
+  background: rgb(194, 78, 78) url(../../public/pincel-removebg-preview.png) center/40px no-repeat;
   height: 100%;
   width: 6.5%;
   border-radius: 15px;
   cursor: pointer;
 }
+
 .botoncabe1-white:hover {
 
   -webkit-box-shadow: 0px 10px 30px 0px rgb(0, 0, 0);
@@ -998,6 +1010,7 @@ option {
   height: 100.5%;
   width: 7%;
 }
+
 .botoncabe2-white:hover {
 
   -webkit-box-shadow: 0px 10px 30px 0px rgb(0, 0, 0);
@@ -1006,6 +1019,7 @@ option {
   height: 100.5%;
   width: 7%;
 }
+
 .botoncabe3-white:hover {
 
   -webkit-box-shadow: 0px 10px 30px 0px rgb(0, 0, 0);
@@ -1014,6 +1028,7 @@ option {
   height: 100.5%;
   width: 7%;
 }
+
 .header-white {
   background-color: rgb(158, 46, 46);
   border-bottom: 2px solid black;
@@ -1023,12 +1038,14 @@ option {
   width: 100%;
   z-index: -1;
 }
+
 .Error2-white {
   color: rgb(0, 0, 0);
   Font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   line-height: 1.5em;
   font-size: 20px;
 }
+
 .lista-white {
   background-size: contain;
   border-color: rgb(22, 1, 4);
@@ -1041,6 +1058,7 @@ option {
   color: rgb(0, 0, 0);
   cursor: default;
 }
+
 .perfil-white {
   float: left;
   border-radius: 30px;
@@ -1051,4 +1069,28 @@ option {
   background-position: center;
   background-image: url('../../public/perfil-white.png');
   background-size: cover;
+}
+
+.modal-overlay2-white {
+  border: #000000 3px solid;
+  border-radius: 30px;
+  width: 22%;
+  height: 60%;
+  background: #eb8386;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.inputt-white::placeholder {
+  text-align: center;
+  color: rgb(0, 0, 0);
+  Font-family: Consolas, monaco, monospace;
+  font-size: 15px;
+}
+
+.selec-white:hover {
+  background-color: #8f3443;
 }
